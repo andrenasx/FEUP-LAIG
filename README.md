@@ -4,7 +4,7 @@
 | Name             | Number    | E-Mail               |
 | ---------------- | --------- | ---------------------|
 | Ana Teresa Cruz  | 201806460 | up201806460@fe.up.pt |
-| André Nascimento | 201804461 | up201806460@fe.up.pt |
+| André Nascimento | 201806461 | up201806460@fe.up.pt |
 
 ----
 
