@@ -1,11 +1,11 @@
 # LAIG 2020/2021 - TP2
 
-## Group: T0xG0y
+## Group: T02G01
 
-| Name             | Number    | E-Mail             |
-| ---------------- | --------- | ------------------ |
-| John Doe         | 201801010 | ...                |
-| Jane Doe         | 201801011 | ...                |
+| Name             | Number    | E-Mail               |
+| ---------------- | --------- | -------------------- |
+| Ana Teresa Cruz  | 201806460 | up201806460@fe.up.pt |
+| André Nascimento | 201806461 | up201806461@fe.up.pt |
 
 ----
 ## Project information
