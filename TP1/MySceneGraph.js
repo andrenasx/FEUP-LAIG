@@ -457,27 +457,57 @@ class MySceneGraph {
 
             this.onXMLMinorError("To do: Parse nodes.");
             // Transformations
-            let x=0;
-            let y=0;
-            let z=0;
+            let transformations = [];
             const transformationsNode = grandChildren[transformationsIndex].childNodes;
             for (let j = 0; j < transformationsNode.length; j++){
                 if (transformationsNode[j].nodeName === "translation"){
-                    x = this.reader.getFloat(transformationsNode[j], "x");
-                    y = this.reader.getFloat(transformationsNode[j], "y");
-                    z = this.reader.getFloat(transformationsNode[j], "z");
+                    const x = this.reader.getFloat(transformationsNode[j], "x");
+                    const y = this.reader.getFloat(transformationsNode[j], "y");
+                    const z = this.reader.getFloat(transformationsNode[j], "z");
 
                     if (x == null || y == null || z == null) {
-                        return "Missing values for translation - node id: " + nodeID;
+                        return "Missing values for translation. Node id: " + nodeID;
                     }
                     if (isNaN(x) || isNaN(y) || isNaN(z)) {
-                        return "Wrong values for translation - node id: " + nodeID;
+                        return "Wrong values for translation. Node id: " + nodeID;
                     }
+
+                    transformations.push({
+                        type: "translation",
+                        x: x,
+                        y: y,
+                        z: z
+                    })
+                }
+                else if (transformationsNode[j].nodeName === "rotation") {
+                    const axis = this.reader.getString(transformationsNode[j], 'axis');
+                    const angle = this.reader.getFloat(transformationsNode[j], 'angle');
+
+                    if (axis == null || (axis !== "xx" && axis !== "yy" && axis !== "zz")) {
+                        return "Wrong value for axis on rotation. Node id: " + nodeID;
+                    }
+                    if (angle == null || isNaN(angle)) {
+                        return "Wrong value for angle on rotation. Node id: " + nodeID;
+                    }
+
+                    transformations.push({
+                        type: "rotation",
+                        angle: angle * DEGREE_TO_RAD,
+                        axis: axis
+                    })
+
                 }
             }
 
             const transformationsMatrix = mat4.create();
-            mat4.translate(transformationsMatrix, transformationsMatrix, [x, y, z]);
+            for (let transf of transformations) {
+                if (transf.type === "translation") {
+                    mat4.translate(transformationsMatrix, transformationsMatrix, [transf.x, transf.y, transf.z]);
+                }
+                else if (transf.type === "rotation") {
+                    mat4.rotate(transformationsMatrix, transformationsMatrix, transf.angle, this.axisCoords[transf.axis[0]]);
+                }
+            }
 
 
             // Material
@@ -492,7 +522,7 @@ class MySceneGraph {
                     const descendantID = this.reader.getString(descendantsNodes[j],'id');
 
                     if (descendantID == null)
-                        return "Undefined ID for descendant. node id: " + nodeID;
+                        return "Undefined ID for descendant. Node id: " + nodeID;
                     else if (descendantID === nodeID)
                         return "Duplicated node id: " + nodeID;
 
