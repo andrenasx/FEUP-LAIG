@@ -446,7 +446,7 @@ class MySceneGraph {
             grandChildren = children[i].children;
 
             nodeNames = [];
-            for (var j = 0; j < grandChildren.length; j++) {
+            for (let j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
 
@@ -457,14 +457,36 @@ class MySceneGraph {
 
             this.onXMLMinorError("To do: Parse nodes.");
             // Transformations
+            let x=0;
+            let y=0;
+            let z=0;
+            const transformationsNode = grandChildren[transformationsIndex].childNodes;
+            for (let j = 0; j < transformationsNode.length; j++){
+                if (transformationsNode[j].nodeName === "translation"){
+                    x = this.reader.getFloat(transformationsNode[j], "x");
+                    y = this.reader.getFloat(transformationsNode[j], "y");
+                    z = this.reader.getFloat(transformationsNode[j], "z");
+
+                    if (x == null || y == null || z == null) {
+                        return "Missing values for translation - node id: " + nodeID;
+                    }
+                    if (isNaN(x) || isNaN(y) || isNaN(z)) {
+                        return "Wrong values for translation - node id: " + nodeID;
+                    }
+                }
+            }
+
+            const transformationsMatrix = mat4.create();
+            mat4.translate(transformationsMatrix, transformationsMatrix, [x, y, z]);
+
 
             // Material
 
             // Texture
 
             // Descendants
-            const descendants = []
-            const descendantsNodes = grandChildren[descendantsIndex].childNodes
+            const descendants = [];
+            const descendantsNodes = grandChildren[descendantsIndex].childNodes;
             for (let j = 0; j < descendantsNodes.length; j++) {
                 if (descendantsNodes[j].nodeName === "noderef") {
                     const descendantID = this.reader.getString(descendantsNodes[j],'id');
@@ -596,6 +618,7 @@ class MySceneGraph {
             }
 
             this.nodes[nodeID] = {
+                matrix: transformationsMatrix,
                 descendants: descendants
             }
         }
@@ -699,8 +722,10 @@ class MySceneGraph {
     }
 
     processNode(node) {
+        this.scene.multMatrix(node.matrix);
+
         for (let descendant of node.descendants) {
-            if (descendant.type === "leaf") {
+            if (descendant.type !== "noderef") {
                 switch (descendant.type) {
                     case "rectangle":
                         new MyRectangle(this.scene, descendant.x1, descendant.y1, descendant.x2, descendant.y2).display()
@@ -723,7 +748,7 @@ class MySceneGraph {
             }
             else {
                 this.scene.pushMatrix();
-                this.processNode(this.nodes[descendant.id], node.matrix);
+                this.processNode(this.nodes[descendant.id]);
                 this.scene.popMatrix();
             }
         }
