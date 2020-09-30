@@ -495,7 +495,25 @@ class MySceneGraph {
                         angle: angle * DEGREE_TO_RAD,
                         axis: axis
                     })
+                }
+                else if (transformationsNode[j].nodeName === "scale") {
+                    const sx = this.reader.getFloat(transformationsNode[j], "sx")
+                    const sy = this.reader.getFloat(transformationsNode[j], "sy")
+                    const sz = this.reader.getFloat(transformationsNode[j], "sz")
 
+                    if (sx == null || sy == null || sz == null) {
+                        return "Missing values for scale. Node id: " + nodeID
+                    }
+                    if (isNaN(sx) || isNaN(sy) || isNaN(sz)) {
+                        return "Wrong values for scale. Node id: " + nodeID
+                    }
+
+                    transformations.push({
+                        type: "scale",
+                        sx: sx,
+                        sy: sy,
+                        sz: sz
+                    })
                 }
             }
 
@@ -506,6 +524,9 @@ class MySceneGraph {
                 }
                 else if (transf.type === "rotation") {
                     mat4.rotate(transformationsMatrix, transformationsMatrix, transf.angle, this.axisCoords[transf.axis[0]]);
+                }
+                else if (transf.type === "scale") {
+                    mat4.scale(transformationsMatrix, transformationsMatrix, [transf.sx, transf.sy, transf.sz]);
                 }
             }
 
