@@ -463,7 +463,144 @@ class MySceneGraph {
             // Texture
 
             // Descendants
+            const descendants = []
+            const descendantsNodes = grandChildren[descendantsIndex].childNodes
+            for (let j = 0; j < descendantsNodes.length; j++) {
+                if (descendantsNodes[j].nodeName === "noderef") {
+                    const descendantID = this.reader.getString(descendantsNodes[j],'id');
+
+                    if (descendantID == null)
+                        return "Undefined ID for descendant. node id: " + nodeID;
+                    else if (descendantID === nodeID)
+                        return "Duplicated node id: " + nodeID;
+
+                    descendants.push({
+                        type: "noderef",
+                        id: descendantID
+                    })
+                }
+                else if (descendantsNodes[j].nodeName === "leaf") {
+                    const type = this.reader.getString(descendantsNodes[j], "type", ['triangle', 'rectangle', 'cylinder', 'sphere', 'torus'])
+                    if (type === "rectangle") {
+                        const x1 = this.reader.getFloat(descendantsNodes[j], 'x1')
+                        const y1 = this.reader.getFloat(descendantsNodes[j], 'y1')
+                        const x2 = this.reader.getFloat(descendantsNodes[j], 'x2')
+                        const y2 = this.reader.getFloat(descendantsNodes[j], 'y2')
+
+                        if (x1 == null || x2 == null || y1 == null || y2 == null) {
+                            return "Missing values for rectangle leaf. Node id: " + nodeID;
+                        }
+                        if (isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2)) {
+                            return "Invalid values for rectangle leaf. Node id: " + nodeID;
+                        }
+
+                        descendants.push({
+                            type: "rectangle",
+                            x1: x1,
+                            y1: y1,
+                            x2: x2,
+                            y2: y2
+                        })
+                    }
+                    else if (type === "triangle") {
+                        const x1 = this.reader.getFloat(descendantsNodes[j], 'x1')
+                        const y1 = this.reader.getFloat(descendantsNodes[j], 'y1')
+                        const x2 = this.reader.getFloat(descendantsNodes[j], 'x2')
+                        const y2 = this.reader.getFloat(descendantsNodes[j], 'y2')
+                        const x3 = this.reader.getFloat(descendantsNodes[j], 'x3')
+                        const y3 = this.reader.getFloat(descendantsNodes[j], 'y3')
+
+                        if (x1 == null || x2 == null || y1 == null || y2 == null || x3 == null || y3 == null ) {
+                            return "Missing values for triangle leaf. Node id: " + nodeID;
+                        }
+                        if (isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2) || isNaN(x3) || isNaN(y3)) {
+                            return "Invalid values for triangle leaf. Node id: " + nodeID;
+                        }
+
+                        descendants.push({
+                            type: "triangle",
+                            x1: x1,
+                            y1: y1,
+                            x2: x2,
+                            y2: y2,
+                            x3: x3,
+                            y3: y3
+                        })
+                    }
+                    else if (type === "cylinder") {
+                        const height = this.reader.getFloat(descendantsNodes[j],'height')
+                        const topRadius = this.reader.getFloat(descendantsNodes[j],'topRadius')
+                        const bottomRadius = this.reader.getFloat(descendantsNodes[j],'bottomRadius')
+                        const stacks = this.reader.getInteger(descendantsNodes[j],'stacks')
+                        const slices = this.reader.getInteger(descendantsNodes[j],'slices')
+
+                        if (height==null || topRadius==null || bottomRadius==null || stacks==null || slices==null) {
+                            return "Missing values for cylinder leaf. Node id: " + nodeID;
+                        }
+                        else if (isNaN(height) || isNaN(topRadius) || isNaN(bottomRadius) || isNaN(stacks) || isNaN(slices)) {
+                            return "Invalid values for cylinder leaf. Node id: " + nodeID;
+                        }
+
+                        descendants.push({
+                            type: "cylinder",
+                            height: height,
+                            topRadius: topRadius,
+                            bottomRadius: bottomRadius,
+                            stacks: stacks,
+                            slices: slices
+                        })
+                    }
+                    else if (type === "sphere") {
+                        const radius = this.reader.getFloat(descendantsNodes[j], 'radius')
+                        const stacks = this.reader.getInteger(descendantsNodes[j], 'stacks')
+                        const slices = this.reader.getInteger(descendantsNodes[j], 'slices')
+
+                        if (radius == null || stacks == null || slices == null)
+                            return "Missing values for sphere leaf. Node id: " + nodeID;
+                        else if (isNaN(radius) || isNaN(stacks) || isNaN(slices))
+                            return "Invalid values for sphere leaf. Node id: " + nodeID;
+
+                        this.log("stacks: " + stacks)
+                        this.log("slices: " + slices)
+
+                        descendants.push({
+                            type: "sphere",
+                            radius: radius,
+                            stacks: stacks,
+                            slices: slices
+                        })
+                    }
+                    else if (type === "torus") {
+                        const inner = this.reader.getFloat(descendantsNodes[j],'inner')
+                        const outer = this.reader.getFloat(descendantsNodes[j],'outer')
+                        const loops = this.reader.getInteger(descendantsNodes[j],'loops')
+                        const slices = this.reader.getInteger(descendantsNodes[j],'slices')
+
+                        if (inner == null || outer == null || loops == null || slices == null)
+                            return "Missing values for torus leaf. Node id: " + nodeID;
+                        else if (isNaN(inner) || isNaN(outer) || isNaN(loops) || isNaN(slices))
+                            return "Invalid values for torus leaf. Node id: " + nodeID;
+
+                        descendants.push({
+                            type: "torus",
+                            inner: inner,
+                            outer: outer,
+                            loops: loops,
+                            slices: slices
+                        })
+                    }
+                }
+            }
+            if (descendants.length === 0) {
+                return "No descendants! Node id: " + nodeID;
+            }
+
+            this.nodes[nodeID] = {
+                descendants: descendants
+            }
         }
+
+        return null;
     }
 
 
@@ -561,13 +698,43 @@ class MySceneGraph {
         return color;
     }
 
+    processNode(node) {
+        for (let descendant of node.descendants) {
+            if (descendant.type === "leaf") {
+                switch (descendant.type) {
+                    case "rectangle":
+                        new MyRectangle(this.scene, descendant.x1, descendant.y1, descendant.x2, descendant.y2).display()
+                        break
+                    case "triangle":
+                        new MyTriangle(this.scene, descendant.x1, descendant.y1, descendant.x2, descendant.y2, descendant.x3, descendant.y3).display()
+                        break
+                    case "sphere":
+                        new MySphere(this.scene, descendant.radius, descendant.slices, descendant.stacks).display()
+                        break
+                    case "cylinder":
+                        new MyCylinder(this.scene, descendant.height, descendant.topRadius, descendant.bottomRadius, descendant.stacks, descendant.slices).display()
+                        break
+                    case "torus":
+                        new MyTorus(this.scene, descendant.inner, descendant.outer, descendant.slices, descendant.loops).display()
+                        break
+                    default:
+                        break
+                }
+            }
+            else {
+                this.scene.pushMatrix();
+                this.processNode(this.nodes[descendant.id], node.matrix);
+                this.scene.popMatrix();
+            }
+        }
+    }
+
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        
-        //To do: Create display loop for transversing the scene graph, calling the root node's display function
-        
-        //this.nodes[this.idRoot].display()
+        this.scene.pushMatrix();
+        this.processNode(this.nodes[this.idRoot]);
+        this.scene.popMatrix();
     }
 }
