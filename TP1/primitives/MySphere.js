@@ -5,7 +5,7 @@
     * @param  {CGFscene} scene - MyScene object
     * @param  {integer} slices - number of slices around Y axis
     * @param  {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
-    * @param  {integer} radius - radius
+    * @param  {float} radius - radius
 */
 class MySphere extends CGFobject {
     constructor(scene, slices, stacks, radius) {
