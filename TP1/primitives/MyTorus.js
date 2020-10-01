@@ -24,19 +24,23 @@ class MyTorus extends CGFobject {
 				var beta = j * 2 * Math.PI / this.slices;
 				
 				var x = (this.outer + this.inner * Math.cos(beta)) * Math.cos(alpha);
-				var y = (this.outer+ this.inner * Math.cos(beta)) * Math.sin(alpha);
+				var y = (this.outer + this.inner * Math.cos(beta)) * Math.sin(alpha);
 				var z = this.inner * Math.sin(beta);
 				
 				this.vertices.push(x,y,z);
 				this.normals.push(x,y,z);
 
+			}
+
+		}
+
+		for(var i = 0; i < this.loops; i++){
+			for(var j = 0; j < this.slices; j++){
 				var ind1 = (i * (this.slices+1))+j;
 				var ind2 = ind1 + this.slices+1;
 				this.indices.push(ind1, ind2, ind1+1);
 				this.indices.push(ind2,ind2+1,ind1+1);
-
 			}
-
 		}
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
