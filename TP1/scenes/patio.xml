@@ -182,7 +182,94 @@
             </transformations>
 
             <descendants>
-                <noderef id="cube" />
+                <noderef id="floor" />
+            </descendants>
+        </node>
+
+        <node id="floor">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="floor_side_1" />
+                <noderef id="floor_side_2" />
+                <noderef id="floor_side_3" />
+                <noderef id="floor_side_4" />
+            </descendants>
+        </node>
+
+        <node id="floor_side_1">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="5" />
+                <rotation axis="xx" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="14" y2="5"/>
+            </descendants>
+        </node>
+
+        <node id="floor_side_2">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="zz" angle="-90" />
+                <rotation axis="yy" angle="-90" />
+                <translation x="5" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="5" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="floor_side_3">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="11" y="0" z="0" />
+                <scale sx="3" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="floor_side_2" />
+            </descendants>
+        </node>
+
+        <node id="floor_side_4">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1" y="0" z="10" />
+                <rotation axis="xx" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="10" y2="1"/>
             </descendants>
         </node>
     </nodes>
