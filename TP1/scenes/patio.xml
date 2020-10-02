@@ -195,7 +195,7 @@
                 <amplification afs="1.0" aft="1.0" />
             </texture>
             <transformations>
-                <translation x="5.0" y="0.01" z="2.0" />
+                <translation x="5.0" y="0.0" z="2.5" />
             </transformations>
 
             <descendants>
@@ -353,6 +353,8 @@
                 <noderef id="floor" />
                 <noderef id="floater" />
                 <noderef id="table" />
+                <noderef id="chair_left" />
+                <noderef id="chair_right" />
             </descendants>
         </node>
 
@@ -559,8 +561,8 @@
             <descendants>
                 <noderef id="chair_seat" />
                 <noderef id="chair_back" />
-                <noderef id="chair_left" />
-                <noderef id="chair_right" />
+                <noderef id="chair_right_arm" />
+                <noderef id="chair_left_arm" />
             </descendants>
         </node>
 
@@ -597,7 +599,7 @@
             </descendants>
         </node>
 
-        <node id="chair_left">
+        <node id="chair_right_arm">
             <material id="demoMaterial" />
 
             <texture id="demoTexture">
@@ -614,7 +616,7 @@
             </descendants>
         </node>
 
-        <node id="chair_right">
+        <node id="chair_left_arm">
             <material id="demoMaterial" />
 
             <texture id="demoTexture">
@@ -626,7 +628,41 @@
             </transformations>
 
             <descendants>
-                <noderef id="chair_left" />
+                <noderef id="chair_right_arm" />
+            </descendants>
+        </node>
+
+        <node id="chair_left">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="3.5" y="0.2" z="2" />
+                <rotation axis="yy" angle="50" />
+            </transformations>
+
+            <descendants>
+                <noderef id="chair" />
+            </descendants>
+        </node>
+
+        <node id="chair_right">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="6.5" y="0.2" z="2" />
+                <rotation axis="yy" angle="-50" />
+            </transformations>
+
+            <descendants>
+                <noderef id="chair" />
             </descendants>
         </node>
     </nodes>
