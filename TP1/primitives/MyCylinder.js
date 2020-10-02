@@ -31,7 +31,12 @@ class MyCylinder extends CGFobject {
 				this.vertices.push(x_ang, z_ang, h);
 				this.normals.push(x_ang, z_ang, 0);
 				angle += beta;
+			}
 
+		}
+
+		for(var i = 0; i < this.stacks; i++){
+			for(var j = 0; j < this.slices; j++){
 				var ind1 = j + i * (this.slices+1);
 				var ind2 = j + i *(this.slices+1)+1;
 				var ind3 = j + (i+1)*(this.slices+1);
@@ -42,6 +47,8 @@ class MyCylinder extends CGFobject {
 			}
 
 		}
+
+
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
