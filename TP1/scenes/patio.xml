@@ -179,7 +179,7 @@
             </texture>
 
             <transformations>
-                <translation x="13" y="0" z="6" />
+                <translation x="13" y="0.1" z="6" />
                 <rotation axis="xx" angle="90"/>
             </transformations>
 
@@ -187,6 +187,156 @@
                 <leaf type="torus" inner="0.1" outer="0.4" slices="200" loops="50"/>
             </descendants>
 
+        </node>
+
+        <node id="table">
+            <material id="null" />
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+            <transformations>
+                <translation x="5.0" y="0.01" z="2.0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="table_top" />
+                <noderef id="table_legs" />
+            </descendants>
+        </node>
+
+        <node id="table_top">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="top_center" />
+                <noderef id="top_edge" />
+            </descendants>
+        </node>
+
+        <node id="top_center">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="1" z="0" />
+                <rotation axis="xx" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.2" topRadius="0.8" bottomRadius="0.8" stacks="100" slices="50"/>
+            </descendants>
+
+        </node>
+
+         <node id="top_edge">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.9" z="0" />
+                <rotation axis="xx" angle="90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="0.1" outer="0.9" slices="100" loops="40"/>
+            </descendants>
+
+        </node>
+
+        <node id="table_legs">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="table_legs_1" />
+                <noderef id="table_legs_2" />
+                <noderef id="table_legs_3" />
+                <noderef id="table_legs_4" />
+            </descendants>
+        </node>
+
+        <node id="table_legs_1">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.3" y="0" z="0.3" />
+                <rotation axis="xx" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.84" topRadius="0.1" bottomRadius="0.08" stacks="60" slices="50"/>
+            </descendants>
+        </node>
+
+        <node id="table_legs_2">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.8" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="table_legs_1" />
+            </descendants>
+        </node>
+
+        <node id="table_legs_3">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="-0.8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="table_legs_1" />
+            </descendants>
+        </node>
+
+        <node id="table_legs_4">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.7" y="0" z="-0.8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="table_legs_1" />
+            </descendants>
         </node>
 
         <node id="root">
@@ -202,6 +352,7 @@
             <descendants>
                 <noderef id="floor" />
                 <noderef id="floater" />
+                <noderef id="table" />
             </descendants>
         </node>
 
