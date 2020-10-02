@@ -394,5 +394,89 @@
                 <leaf type="rectangle" x1="1.25" y1="0" x2="10.75" y2="3.5" />
             </descendants>
         </node>
+
+        <node id="chair">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_seat" />
+                <noderef id="chair_back" />
+                <noderef id="chair_left" />
+                <noderef id="chair_right" />
+            </descendants>
+        </node>
+
+        <node id="chair_seat">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>    
+                <scale sx="1" sy="0.4" sz="0.8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="chair_back">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.4" z="-0.5" />
+                <scale sx="1" sy="1.2" sz="0.2" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="chair_left">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.6" y="0.2" z="-0.1"/>
+                <scale sx="0.2" sy="0.8" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="chair_right">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-1.2" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_left" />
+            </descendants>
+        </node>
     </nodes>
 </lsf>
