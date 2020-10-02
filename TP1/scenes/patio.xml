@@ -228,12 +228,12 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="1" z="0" />
+                <translation x="0" y="0.8" z="0" />
                 <rotation axis="xx" angle="90"/>
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="0.2" topRadius="0.8" bottomRadius="0.8" stacks="100" slices="50"/>
+                <leaf type="cylinder" height="0.2" topRadius="0.8" bottomRadius="0.8" stacks="10" slices="50"/>
             </descendants>
 
         </node>
@@ -246,12 +246,12 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0.9" z="0" />
+                <translation x="0" y="0.7" z="0" />
                 <rotation axis="xx" angle="90"/>
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.1" outer="0.9" slices="100" loops="40"/>
+                <leaf type="torus" inner="0.1" outer="0.8" slices="100" loops="40"/>
             </descendants>
 
         </node>
@@ -282,12 +282,12 @@
             </texture>
 
             <transformations>
-                <translation x="0.3" y="0" z="0.3" />
+                <translation x="0.4" y="0" z="0.4" />
                 <rotation axis="xx" angle="-90"/>
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="0.84" topRadius="0.1" bottomRadius="0.08" stacks="60" slices="50"/>
+                <leaf type="cylinder" height="0.6" topRadius="0.1" bottomRadius="0.08" stacks="60" slices="50"/>
             </descendants>
         </node>
 
@@ -331,7 +331,7 @@
             </texture>
 
             <transformations>
-                <translation x="-0.7" y="0" z="-0.8" />
+                <translation x="-0.8" y="0" z="-0.8" />
             </transformations>
 
             <descendants>
