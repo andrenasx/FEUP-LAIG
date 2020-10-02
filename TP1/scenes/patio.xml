@@ -99,7 +99,7 @@
 
             <transformations>
                 <translation x="0.5" y="-0.5" z="0.5" />
-                <rotation axis="yy" angle="90" />
+                <rotation axis="y" angle="90" />
             </transformations>
 
             <descendants>
@@ -114,7 +114,7 @@
             </texture>
 
             <transformations>
-                <rotation axis="yy" angle="180" />
+                <rotation axis="y" angle="180" />
                 <translation x="-0.5" y="-0.5" z="0.5" />
             </transformations>
 
@@ -131,7 +131,7 @@
 
             <transformations>
                 <translation x="-0.5" y="-0.5" z="-0.5" />
-                <rotation axis="yy" angle="-90" />
+                <rotation axis="y" angle="-90" />
             </transformations>
 
             <descendants>
@@ -147,7 +147,7 @@
 
             <transformations>
                 <translation x="-0.5" y="0.5" z="0.5" />
-                <rotation axis="xx" angle="-90" />
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
@@ -163,7 +163,7 @@
 
             <transformations>
                 <translation x="-0.5" y="-0.5" z="-0.5" />
-                <rotation axis="xx" angle="90" />
+                <rotation axis="x" angle="90" />
             </transformations>
 
             <descendants>
@@ -180,7 +180,7 @@
 
             <transformations>
                 <translation x="13" y="0.1" z="6" />
-                <rotation axis="xx" angle="90"/>
+                <rotation axis="x" angle="90"/>
             </transformations>
 
             <descendants>
@@ -229,7 +229,7 @@
 
             <transformations>
                 <translation x="0" y="0.8" z="0" />
-                <rotation axis="xx" angle="90"/>
+                <rotation axis="x" angle="90"/>
             </transformations>
 
             <descendants>
@@ -247,7 +247,7 @@
 
             <transformations>
                 <translation x="0" y="0.7" z="0" />
-                <rotation axis="xx" angle="90"/>
+                <rotation axis="x" angle="90"/>
             </transformations>
 
             <descendants>
@@ -283,7 +283,7 @@
 
             <transformations>
                 <translation x="0.4" y="0" z="0.4" />
-                <rotation axis="xx" angle="-90"/>
+                <rotation axis="x" angle="-90"/>
             </transformations>
 
             <descendants>
@@ -386,7 +386,7 @@
 
             <transformations>
                 <translation x="0" y="0" z="5" />
-                <rotation axis="xx" angle="-90"/>
+                <rotation axis="x" angle="-90"/>
             </transformations>
 
             <descendants>
@@ -402,8 +402,8 @@
             </texture>
 
             <transformations>
-                <rotation axis="zz" angle="-90" />
-                <rotation axis="yy" angle="-90" />
+                <rotation axis="z" angle="-90" />
+                <rotation axis="y" angle="-90" />
             </transformations>
 
             <descendants>
@@ -437,7 +437,7 @@
 
             <transformations>
                 <translation x="1" y="0" z="10" />
-                <rotation axis="xx" angle="-90" />
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
@@ -473,7 +473,7 @@
 
             <transformations>
                 <translation x="0" y="0" z="5.25" />
-                <rotation axis="xx" angle="-90" />
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
@@ -506,8 +506,8 @@
 
             <transformations>
                 <translation x="1" y="0" z="0" />
-                <rotation axis="yy" angle="-90" />
-                <rotation axis="xx" angle="-90" />
+                <rotation axis="y" angle="-90" />
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
@@ -540,7 +540,7 @@
 
             <transformations>
                 <translation x="0" y="0" z="8.75" />
-                <rotation axis="xx" angle="-90" />
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
@@ -641,7 +641,7 @@
 
             <transformations>
                 <translation x="3.5" y="0.2" z="2" />
-                <rotation axis="yy" angle="50" />
+                <rotation axis="y" angle="50" />
             </transformations>
 
             <descendants>
@@ -658,7 +658,7 @@
 
             <transformations>
                 <translation x="6.5" y="0.2" z="2" />
-                <rotation axis="yy" angle="-50" />
+                <rotation axis="y" angle="-50" />
             </transformations>
 
             <descendants>
