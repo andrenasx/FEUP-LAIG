@@ -457,7 +457,7 @@ class MySceneGraph {
 
             this.onXMLMinorError("To do: Parse nodes.");
             // Transformations
-            let transformations = [];
+            let transformationsMatrix = mat4.create();
             const transformationsNode = grandChildren[transformationsIndex].childNodes;
             for (let j = 0; j < transformationsNode.length; j++){
                 if (transformationsNode[j].nodeName === "translation"){
@@ -472,12 +472,7 @@ class MySceneGraph {
                         return "Wrong values for translation. Node id: " + nodeID;
                     }
 
-                    transformations.push({
-                        type: "translation",
-                        x: x,
-                        y: y,
-                        z: z
-                    })
+                    mat4.translate(transformationsMatrix, transformationsMatrix, [x, y, z]);
                 }
                 else if (transformationsNode[j].nodeName === "rotation") {
                     const axis = this.reader.getString(transformationsNode[j], 'axis');
@@ -490,11 +485,7 @@ class MySceneGraph {
                         return "Wrong value for angle on rotation. Node id: " + nodeID;
                     }
 
-                    transformations.push({
-                        type: "rotation",
-                        angle: angle * DEGREE_TO_RAD,
-                        axis: axis
-                    })
+                    mat4.rotate(transformationsMatrix, transformationsMatrix, angle*DEGREE_TO_RAD, this.axisCoords[axis[0]]);
                 }
                 else if (transformationsNode[j].nodeName === "scale") {
                     const sx = this.reader.getFloat(transformationsNode[j], "sx")
@@ -508,28 +499,9 @@ class MySceneGraph {
                         return "Wrong values for scale. Node id: " + nodeID
                     }
 
-                    transformations.push({
-                        type: "scale",
-                        sx: sx,
-                        sy: sy,
-                        sz: sz
-                    })
+                    mat4.scale(transformationsMatrix, transformationsMatrix, [sx, sy, sz]);
                 }
-            }
-
-            const transformationsMatrix = mat4.create();
-            for (let transf of transformations) {
-                if (transf.type === "translation") {
-                    mat4.translate(transformationsMatrix, transformationsMatrix, [transf.x, transf.y, transf.z]);
-                }
-                else if (transf.type === "rotation") {
-                    mat4.rotate(transformationsMatrix, transformationsMatrix, transf.angle, this.axisCoords[transf.axis[0]]);
-                }
-                else if (transf.type === "scale") {
-                    mat4.scale(transformationsMatrix, transformationsMatrix, [transf.sx, transf.sy, transf.sz]);
-                }
-            }
-
+            }          
 
             // Material
 
@@ -568,11 +540,8 @@ class MySceneGraph {
                         }
 
                         descendants.push({
-                            type: "rectangle",
-                            x1: x1,
-                            y1: y1,
-                            x2: x2,
-                            y2: y2
+                            type: "leaf",
+                            primitive: new MyRectangle(this.scene, x1, y1, x2, y2)
                         })
                     }
                     else if (type === "triangle") {
@@ -591,13 +560,8 @@ class MySceneGraph {
                         }
 
                         descendants.push({
-                            type: "triangle",
-                            x1: x1,
-                            y1: y1,
-                            x2: x2,
-                            y2: y2,
-                            x3: x3,
-                            y3: y3
+                            type: "leaf",
+                            primitive: new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3)
                         })
                     }
                     else if (type === "cylinder") {
@@ -615,32 +579,23 @@ class MySceneGraph {
                         }
 
                         descendants.push({
-                            type: "cylinder",
-                            height: height,
-                            topRadius: topRadius,
-                            bottomRadius: bottomRadius,
-                            stacks: stacks,
-                            slices: slices
+                            type: "leaf",
+                            primitive: new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks, slices)
                         })
                     }
                     else if (type === "sphere") {
                         const radius = this.reader.getFloat(descendantsNodes[j], 'radius')
-                        const stacks = this.reader.getInteger(descendantsNodes[j], 'stacks')
-                        const slices = this.reader.getInteger(descendantsNodes[j], 'slices')
+                        const stacks = this.reader.getInteger(descendantsNodes[j], 'slices')
+                        const slices = this.reader.getInteger(descendantsNodes[j], 'stacks')
 
-                        if (radius == null || stacks == null || slices == null)
+                        if (radius == null || slices == null || stacks == null)
                             return "Missing values for sphere leaf. Node id: " + nodeID;
-                        else if (isNaN(radius) || isNaN(stacks) || isNaN(slices))
+                        else if (isNaN(radius) || isNaN(slices) || isNaN(stacks))
                             return "Invalid values for sphere leaf. Node id: " + nodeID;
 
-                        this.log("stacks: " + stacks)
-                        this.log("slices: " + slices)
-
                         descendants.push({
-                            type: "sphere",
-                            radius: radius,
-                            stacks: stacks,
-                            slices: slices
+                            type: "leaf",
+                            primitive: new MySphere(this.scene, radius, slices, stacks)
                         })
                     }
                     else if (type === "torus") {
@@ -655,11 +610,8 @@ class MySceneGraph {
                             return "Invalid values for torus leaf. Node id: " + nodeID;
 
                         descendants.push({
-                            type: "torus",
-                            inner: inner,
-                            outer: outer,
-                            loops: loops,
-                            slices: slices
+                            type: "leaf",
+                            primitive: new MyTorus(this.scene, inner, outer, slices, loops)
                         })
                     }
                 }
@@ -776,26 +728,8 @@ class MySceneGraph {
         this.scene.multMatrix(node.matrix);
 
         for (let descendant of node.descendants) {
-            if (descendant.type !== "noderef") {
-                switch (descendant.type) {
-                    case "rectangle":
-                        new MyRectangle(this.scene, descendant.x1, descendant.y1, descendant.x2, descendant.y2).display()
-                        break
-                    case "triangle":
-                        new MyTriangle(this.scene, descendant.x1, descendant.y1, descendant.x2, descendant.y2, descendant.x3, descendant.y3).display()
-                        break
-                    case "sphere":
-                        new MySphere(this.scene, descendant.radius, descendant.slices, descendant.stacks).display()
-                        break
-                    case "cylinder":
-                        new MyCylinder(this.scene, descendant.height, descendant.topRadius, descendant.bottomRadius, descendant.stacks, descendant.slices).display()
-                        break
-                    case "torus":
-                        new MyTorus(this.scene, descendant.inner, descendant.outer, descendant.slices, descendant.loops).display()
-                        break
-                    default:
-                        break
-                }
+            if (descendant.type === "leaf") {
+                descendant.primitive.display();
             }
             else {
                 this.scene.pushMatrix();
