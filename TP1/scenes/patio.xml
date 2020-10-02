@@ -339,6 +339,157 @@
             </descendants>
         </node>
 
+        <node id="parasol">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5" y="0" z="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="parasol_sides" />
+                <noderef id="parasol_support" />
+            </descendants>
+        </node>
+
+        <node id="parasol_sides">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="3" z="0" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="parasol_sides_1" />
+                <noderef id="parasol_sides_2" />
+                <noderef id="parasol_sides_3" />
+                <noderef id="parasol_sides_4" />
+                <noderef id="parasol_sides_5" />
+                <noderef id="parasol_sides_6" />
+            </descendants>
+        </node>
+
+        <node id="parasol_sides_1">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="-50" />
+            </transformations>
+
+            <descendants>
+                <leaf type="triangle" x1="0" y1="0" x2="0.631" y2="-1.7" x3="-0.631" y3="-1.7"/>               
+            </descendants>
+        </node>
+
+        <node id="parasol_sides_2">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="60" />
+            </transformations>
+
+            <descendants>
+                <noderef id="parasol_sides_1" />               
+            </descendants>
+        </node>
+
+        <node id="parasol_sides_3">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="60" />
+            </transformations>
+
+            <descendants>
+                <noderef id="parasol_sides_2" />               
+            </descendants>
+        </node>
+
+        <node id="parasol_sides_4">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="60" />
+            </transformations>
+
+            <descendants>
+                <noderef id="parasol_sides_3" />               
+            </descendants>
+        </node>
+
+        <node id="parasol_sides_5">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="60" />
+            </transformations>
+
+            <descendants>
+                <noderef id="parasol_sides_4" />               
+            </descendants>
+        </node>
+
+        <node id="parasol_sides_6">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="60" />
+            </transformations>
+
+            <descendants>
+                <noderef id="parasol_sides_5" />               
+            </descendants>
+        </node>
+
+        <node id="parasol_support">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="2.8" topRadius="0.07" bottomRadius="0.07" stacks="10" slices="20"/>               
+            </descendants>
+        </node>
+        
         <node id="root">
             <material id="demoMaterial" />
 
@@ -355,6 +506,7 @@
                 <noderef id="table" />
                 <noderef id="chair_left" />
                 <noderef id="chair_right" />
+                <noderef id="parasol" />
             </descendants>
         </node>
 
