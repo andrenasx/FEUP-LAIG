@@ -548,7 +548,7 @@ class MySceneGraph {
                 this.onXMLMinorError("Material ID is not valid. Node ID: " + nodeID);
             }
             if (materialID !== "null") {
-                if (this.materials[materialI] == null) {
+                if (this.materials[materialID] == null) {
                     this.onXMLMinorError("Material with ID: " + materialID + " does not exist. Error on node ID: " + nodeID);
                 }
             }
@@ -774,11 +774,17 @@ class MySceneGraph {
         return color;
     }
 
-    processNode(node) {
+    processNode(node, material) {
         this.scene.multMatrix(node.matrix);
 
-        if (node.material != null) {
-            node.material.apply();
+        let currentMaterial = material;
+
+        if (node.material !== "null") {
+            currentMaterial = node.material;
+        }
+
+        if (currentMaterial != null) {
+            currentMaterial.apply()
         }
 
         for (let descendant of node.descendants) {
@@ -798,7 +804,7 @@ class MySceneGraph {
      */
     displayScene() {
         this.scene.pushMatrix();
-        this.processNode(this.nodes[this.idRoot]);
+        this.processNode(this.nodes[this.idRoot], this.nodes[this.idRoot].material);
         this.scene.popMatrix();
     }
 }
