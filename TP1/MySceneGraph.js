@@ -405,11 +405,51 @@ class MySceneGraph {
             if (this.materials[materialID] != null)
                 return "ID must be unique for each light (conflict: ID = " + materialID + ")";
 
-            //Continue here
-            this.onXMLMinorError("To do: Parse materials.");
+            //Parsing
+            grandChildren = children[i].children;
+
+            if(grandChildren.length === 0) {
+                this.onXMLMinorError("No materials defined!");
+                return null;
+            }
+
+            for (let j = 0; j < grandChildren.length; j++) {
+                nodeNames.push(grandChildren[j].nodeName);
+            }
+
+            const shininessIndex = nodeNames.indexOf("shininess");
+            const ambientIndex = nodeNames.indexOf("ambient");
+            const diffuseIndex = nodeNames.indexOf("diffuse");
+            const specularIndex = nodeNames.indexOf("specular");
+            const emissiveIndex = nodeNames.indexOf("specular");
+
+            if (shininessIndex === -1 || emissiveIndex === -1 || ambientIndex === -1 || diffuseIndex === -1 || specularIndex === -1 || emissiveIndex === -1 ) {
+                this.onXMLError("Missing values for material. Node ID: " + materialID);
+            }
+
+            let shininess = this.reader.getFloat(grandChildren[shininessIndex], "value");
+            if (!(shininess != null && !isNaN(shininess))) {
+                this.onXMLMinorError("Wrong value for shininess. Node ID: " + materialID);
+                shininess = 1;
+            }
+            if (shininess < 1) {
+                this.onXMLMinorError("Shininess value must be 1 or above, provided (" + shininess + "). Assuming 1 as default. Material ID: " + materialID);
+                shininess = 1;
+            }
+            const emissive = this.parseColor(grandChildren[emissiveIndex], "emissive component of material. Node ID: " + materialID);
+            const ambient = this.parseColor(grandChildren[ambientIndex], "ambient component of material. Node ID: " + materialID);
+            const diffuse = this.parseColor(grandChildren[diffuseIndex], "diffuse component of material. Node ID: " + materialID);
+            const specular = this.parseColor(grandChildren[specularIndex], "specular component of material. Node ID: " + materialID);
+
+            this.materials[materialID] = new CGFappearance(this.scene);
+            this.materials[materialID].setShininess(shininess);
+            this.materials[materialID].setEmission(emissive[0], emissive[1], emissive[2], emissive[3]);
+            this.materials[materialID].setAmbient(ambient[0], ambient[1], ambient[2], ambient[3]);
+            this.materials[materialID].setDiffuse(diffuse[0], diffuse[1], diffuse[2], diffuse[3]);
+            this.materials[materialID].setSpecular(specular[0], specular[1], specular[2], specular[3]);
         }
 
-        //this.log("Parsed materials");
+        this.log("Parsed materials");
         return null;
     }
 
@@ -445,7 +485,6 @@ class MySceneGraph {
 
             grandChildren = children[i].children;
 
-            nodeNames = [];
             for (let j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
@@ -504,6 +543,15 @@ class MySceneGraph {
             }          
 
             // Material
+            const materialID = this.reader.getString(grandChildren[materialIndex], "id");
+            if (materialID == null) {
+                this.onXMLMinorError("Material ID is not valid. Node ID: " + nodeID);
+            }
+            if (materialID !== "null") {
+                if (this.materials[materialI] == null) {
+                    this.onXMLMinorError("Material with ID: " + materialID + " does not exist. Error on node ID: " + nodeID);
+                }
+            }
 
             // Texture
 
@@ -512,7 +560,7 @@ class MySceneGraph {
             const descendantsNodes = grandChildren[descendantsIndex].childNodes;
             for (let j = 0; j < descendantsNodes.length; j++) {
                 if (descendantsNodes[j].nodeName === "noderef") {
-                    const descendantID = this.reader.getString(descendantsNodes[j],'id');
+                    const descendantID = this.reader.getString(descendantsNodes[j], "id");
 
                     if (descendantID == null)
                         return "Undefined ID for descendant. Node id: " + nodeID;
@@ -622,10 +670,12 @@ class MySceneGraph {
 
             this.nodes[nodeID] = {
                 matrix: transformationsMatrix,
+                material: this.materials[materialID],
                 descendants: descendants
             }
         }
 
+        this.log("Parsed Nodes.");
         return null;
     }
 
@@ -726,6 +776,10 @@ class MySceneGraph {
 
     processNode(node) {
         this.scene.multMatrix(node.matrix);
+
+        if (node.material != null) {
+            node.material.apply();
+        }
 
         for (let descendant of node.descendants) {
             if (descendant.type === "leaf") {
