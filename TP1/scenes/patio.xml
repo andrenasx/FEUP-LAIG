@@ -56,7 +56,27 @@
         </material>
     </materials>
 
-    <nodes>
+    <nodes>     
+        <node id="root">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>    
+            </transformations>
+
+            <descendants>
+                <noderef id="floor" />
+                <noderef id="floater" />
+                <noderef id="table" />
+                <noderef id="chair_left" />
+                <noderef id="chair_right" />
+                <noderef id="parasol" />
+            </descendants>
+        </node>
+
         <node id="cube">            
             <material id="null" />
             <texture id="clear">
@@ -171,6 +191,196 @@
             </descendants>
         </node>
 
+        <node id="floor">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="floor_top" />
+                <noderef id="floor_left" />
+                <noderef id="floor_right" />
+                <noderef id="floor_bottom" />
+                <noderef id="pool" />
+            </descendants>
+        </node>
+
+        <node id="floor_top">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="5" />
+                <rotation axis="x" angle="-90"/>
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="14" y2="5"/>
+            </descendants>
+        </node>
+
+        <node id="floor_left">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="z" angle="-90" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="5" y1="0" x2="10" y2="1" />
+            </descendants>
+        </node>
+
+        <node id="floor_right">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="11" y="0" z="0" />
+                <scale sx="3" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="floor_left" />
+            </descendants>
+        </node>
+
+        <node id="floor_bottom">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1" y="0" z="10" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="10" y2="1"/>
+            </descendants>
+        </node>
+
+        <node id="pool">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="pool_border_top" />
+                <noderef id="pool_border_bottom" />
+                <noderef id="pool_border_left" />
+                <noderef id="pool_border_right" />
+                <noderef id="pool_water" />
+            </descendants>
+        </node>
+
+        <node id="pool_border_top">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="5.25" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="1" y1="0" x2="11" y2="0.25"/>
+            </descendants>
+        </node>
+
+        <node id="pool_border_bottom">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="3.75" />
+            </transformations>
+
+            <descendants>
+                <noderef id="pool_border_top" />
+            </descendants>
+        </node>
+
+        <node id="pool_border_left">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1" y="0" z="0" />
+                <rotation axis="y" angle="-90" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="5.25" y1="0" x2="8.75" y2="0.25" />
+            </descendants>
+        </node>
+
+        <node id="pool_border_right">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="9.75" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="pool_border_left" />
+            </descendants>
+        </node>
+
+        <node id="pool_water">
+            <material id="demoMaterial" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0" z="8.75" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="1.25" y1="0" x2="10.75" y2="3.5" />
+            </descendants>
+        </node>
+        
         <node id="floater">
             <material id="demoMaterial" />
 
@@ -238,7 +448,7 @@
 
         </node>
 
-         <node id="top_edge">
+        <node id="top_edge">
             <material id="demoMaterial" />
 
             <texture id="demoTexture">
@@ -339,7 +549,125 @@
             </descendants>
         </node>
 
-         <node id="parasol">
+        <node id="chair">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_seat" />
+                <noderef id="chair_back" />
+                <noderef id="chair_right_arm" />
+                <noderef id="chair_left_arm" />
+            </descendants>
+        </node>
+
+        <node id="chair_seat">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>    
+                <scale sx="1" sy="0.4" sz="0.8" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="chair_back">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.4" z="-0.5" />
+                <scale sx="1" sy="1.2" sz="0.2" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="chair_right_arm">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.6" y="0.2" z="-0.1"/>
+                <scale sx="0.2" sy="0.8" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
+            </descendants>
+        </node>
+
+        <node id="chair_left_arm">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-1.2" y="0" z="0"/>
+            </transformations>
+
+            <descendants>
+                <noderef id="chair_right_arm" />
+            </descendants>
+        </node>
+
+        <node id="chair_left">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="3.5" y="0.2" z="2" />
+                <rotation axis="y" angle="50" />
+            </transformations>
+
+            <descendants>
+                <noderef id="chair" />
+            </descendants>
+        </node>
+
+        <node id="chair_right">
+            <material id="demoMaterial" />
+
+            <texture id="demoTexture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="6.5" y="0.2" z="2" />
+                <rotation axis="y" angle="-50" />
+            </transformations>
+
+            <descendants>
+                <noderef id="chair" />
+            </descendants>
+        </node>
+
+        <node id="parasol">
             <material id="demoMaterial" />
 
             <texture id="clear">
@@ -538,334 +866,6 @@
 
             <descendants>
                 <leaf type="cylinder" height="0.15" topRadius="0.1" bottomRadius="0.1" stacks="10" slices="20" />               
-            </descendants>
-        </node>
-        
-        <node id="root">
-            <material id="demoMaterial" />
-
-            <texture id="demoTexture">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>    
-            </transformations>
-
-            <descendants>
-                <noderef id="floor" />
-                <noderef id="floater" />
-                <noderef id="table" />
-                <noderef id="chair_left" />
-                <noderef id="chair_right" />
-                <noderef id="parasol" />
-            </descendants>
-        </node>
-
-        <node id="floor">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-            </transformations>
-
-            <descendants>
-                <noderef id="floor_top" />
-                <noderef id="floor_left" />
-                <noderef id="floor_right" />
-                <noderef id="floor_bottom" />
-                <noderef id="pool" />
-            </descendants>
-        </node>
-
-        <node id="floor_top">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0" y="0" z="5" />
-                <rotation axis="x" angle="-90"/>
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="0.0" y1="0.0" x2="14" y2="5"/>
-            </descendants>
-        </node>
-
-        <node id="floor_left">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <rotation axis="z" angle="-90" />
-                <rotation axis="y" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="5" y1="0" x2="10" y2="1" />
-            </descendants>
-        </node>
-
-        <node id="floor_right">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="11" y="0" z="0" />
-                <scale sx="3" sy="1" sz="1" />
-            </transformations>
-
-            <descendants>
-                <noderef id="floor_left" />
-            </descendants>
-        </node>
-
-        <node id="floor_bottom">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="1" y="0" z="10" />
-                <rotation axis="x" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="0.0" y1="0.0" x2="10" y2="1"/>
-            </descendants>
-        </node>
-
-        <node id="pool">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-            </transformations>
-
-            <descendants>
-                <noderef id="pool_border_top" />
-                <noderef id="pool_border_bottom" />
-                <noderef id="pool_border_left" />
-                <noderef id="pool_border_right" />
-                <noderef id="pool_water" />
-            </descendants>
-        </node>
-
-        <node id="pool_border_top">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0" y="0" z="5.25" />
-                <rotation axis="x" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="1" y1="0" x2="11" y2="0.25"/>
-            </descendants>
-        </node>
-
-        <node id="pool_border_bottom">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0" y="0" z="3.75" />
-            </transformations>
-
-            <descendants>
-                <noderef id="pool_border_top" />
-            </descendants>
-        </node>
-
-        <node id="pool_border_left">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="1" y="0" z="0" />
-                <rotation axis="y" angle="-90" />
-                <rotation axis="x" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="5.25" y1="0" x2="8.75" y2="0.25" />
-            </descendants>
-        </node>
-
-        <node id="pool_border_right">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="9.75" y="0" z="0" />
-            </transformations>
-
-            <descendants>
-                <noderef id="pool_border_left" />
-            </descendants>
-        </node>
-
-        <node id="pool_water">
-            <material id="demoMaterial" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0" y="0" z="8.75" />
-                <rotation axis="x" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="1.25" y1="0" x2="10.75" y2="3.5" />
-            </descendants>
-        </node>
-
-        <node id="chair">
-            <material id="demoMaterial" />
-
-            <texture id="demoTexture">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-            </transformations>
-
-            <descendants>
-                <noderef id="chair_seat" />
-                <noderef id="chair_back" />
-                <noderef id="chair_right_arm" />
-                <noderef id="chair_left_arm" />
-            </descendants>
-        </node>
-
-        <node id="chair_seat">
-            <material id="demoMaterial" />
-
-            <texture id="demoTexture">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>    
-                <scale sx="1" sy="0.4" sz="0.8" />
-            </transformations>
-
-            <descendants>
-                <noderef id="cube" />
-            </descendants>
-        </node>
-
-        <node id="chair_back">
-            <material id="demoMaterial" />
-
-            <texture id="demoTexture">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0" y="0.4" z="-0.5" />
-                <scale sx="1" sy="1.2" sz="0.2" />
-            </transformations>
-
-            <descendants>
-                <noderef id="cube" />
-            </descendants>
-        </node>
-
-        <node id="chair_right_arm">
-            <material id="demoMaterial" />
-
-            <texture id="demoTexture">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0.6" y="0.2" z="-0.1"/>
-                <scale sx="0.2" sy="0.8" sz="1" />
-            </transformations>
-
-            <descendants>
-                <noderef id="cube" />
-            </descendants>
-        </node>
-
-        <node id="chair_left_arm">
-            <material id="demoMaterial" />
-
-            <texture id="demoTexture">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="-1.2" y="0" z="0"/>
-            </transformations>
-
-            <descendants>
-                <noderef id="chair_right_arm" />
-            </descendants>
-        </node>
-
-        <node id="chair_left">
-            <material id="demoMaterial" />
-
-            <texture id="demoTexture">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="3.5" y="0.2" z="2" />
-                <rotation axis="y" angle="50" />
-            </transformations>
-
-            <descendants>
-                <noderef id="chair" />
-            </descendants>
-        </node>
-
-        <node id="chair_right">
-            <material id="demoMaterial" />
-
-            <texture id="demoTexture">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="6.5" y="0.2" z="2" />
-                <rotation axis="y" angle="-50" />
-            </transformations>
-
-            <descendants>
-                <noderef id="chair" />
             </descendants>
         </node>
     </nodes>
