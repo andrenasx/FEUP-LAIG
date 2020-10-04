@@ -118,7 +118,7 @@
         <node id="root">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -910,7 +910,24 @@
         <node id="swing">
             <material id="yellow_material" />
 
-            <texture id="clear">
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="10.5" y="0" z="2" />
+            </transformations>
+
+            <descendants>
+                <noderef id="swing_structure" />
+                <noderef id="swing_seat" />
+            </descendants>
+        </node>
+
+        <node id="swing_structure">
+            <material id="null" />
+
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -918,18 +935,120 @@
             </transformations>
 
             <descendants>
-                <noderef id="swing_seat" />
+                <noderef id="swing_structure_left" />
+                <noderef id="swing_structure_right" />
+                <noderef id="swing_structure_mid" />
+            </descendants>
+        </node>
+
+        <node id="swing_structure_left">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="swing_foot_1" />
+                <noderef id="swing_foot_2" />
+                <noderef id="swing_foot_mid" />
+            </descendants>
+        </node>
+
+        <node id="swing_foot_1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-0.05" z="0.95" />
+                <rotation axis="x" angle="-112" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="2.5" topRadius="0.1" bottomRadius="0.11" stacks="20" slices="20" /> 
+            </descendants>
+        </node>
+
+        <node id="swing_foot_2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="swing_foot_1" /> 
+            </descendants>
+        </node>
+
+        <node id="swing_foot_mid">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.6" z="-0.7" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="1.4" topRadius="0.06" bottomRadius="0.06" stacks="20" slices="20" />
+            </descendants>
+        </node>
+
+        <node id="swing_structure_right">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="2.5" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="swing_structure_left" />
+            </descendants>
+        </node>
+
+        <node id="swing_structure_mid">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.1" y="2.35" z="0" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="2.7" topRadius="0.1" bottomRadius="0.1" stacks="20" slices="20" />
             </descendants>
         </node>
 
         <node id="swing_seat">
-            <material id="yellow_material" />
+            <material id="null" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
+                <translation x="1.25" y="0.7" z="0" />
             </transformations>
 
             <descendants>
@@ -939,7 +1058,7 @@
         </node>
 
         <node id="swing_seat_tire">
-            <material id="yellow_material" />
+            <material id="null" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
@@ -950,19 +1069,18 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.08" outer="0.2" slices="200" loops="50"/>
+                <leaf type="torus" inner="0.08" outer="0.3" slices="200" loops="50"/>
             </descendants>
         </node>
 
         <node id="swing_seat_support">
-            <material id="yellow_material" />
+            <material id="null" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
@@ -972,30 +1090,31 @@
         </node>
 
         <node id="swing_seat_support_right">
-            <material id="yellow_material" />
+            <material id="null" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="-0.19" y="0" z="0" />
+                <translation x="0.285" y="0" z="0" />
+                <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="1" topRadius="0.03" bottomRadius="0.03" stacks="10" slices="20" />
+                <leaf type="cylinder" height="1.6" topRadius="0.03" bottomRadius="0.03" stacks="10" slices="20" />
             </descendants>
         </node>
 
         <node id="swing_seat_support_left">
-            <material id="yellow_material" />
+            <material id="null" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="0.4" y="0" z="0" />
+                <rotation axis="y" angle="180" />
             </transformations>
 
             <descendants>
