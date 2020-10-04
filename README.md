@@ -14,7 +14,7 @@
 
 - (items briefly describing main strong points)
 - Scene
-  - (Brief description of the created scene)
+  - A cena consiste num pátio com piscina, uma mesa com 2 cadeiras almofadadas, um guarda-sol, um baloiço e uma bóia.
   - (relative link to the scene)
 
 -----
