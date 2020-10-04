@@ -1,13 +1,9 @@
 <lsf>
     <initials>
         <reference length="2" />
-        <!-- axis length; "0" means no axis displayed -->
         <root id="root" />
-        <!-- identifier of root node of the scene graph; this node -->
-        <!-- must be defined in one of the following NODE declarations -->
     </initials>
     <views default="defaultCamera">
-        <!-- at least one of the following type of cameras must be declared -->
         <perspective id="defaultCamera" near="0.1" far="500" angle="45">
             <from x="30" y="15" z="30" />
             <to x="0" y="-2" z="0" />
@@ -20,17 +16,16 @@
     </views>
 
     <illumination>
-        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />           <!-- global ambient -->
-        <background r="0.1" g="0.7" b="1.0" a="1.0" />        <!-- background color -->
+        <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+        <background r="0.1" g="0.7" b="1.0" a="1.0" />
     </illumination>
 
 
     <lights>
-        <!-- NOTE: this block "light" must be repeated as necessary with different "id". At least one light should be present, and a maximum of eight lights is accepted. -->
-        <light id="demoLight">            <!-- light identifier -->
+        <light id="demoLight">
             <enable value="1" />
             <!-- enable/disable -->
-            <position x="10" y="12" z="9.5" w="1.0" /><!-- light position; w=1: point light; w=0: directional light -->
+            <position x="10" y="12" z="9.5" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />             <!-- diffuse component -->
             <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
@@ -113,6 +108,7 @@
             </descendants>
         </node>
 
+        <!-- Cube -->
         <node id="cube">            
             <material id="null" />
             <texture id="null">
@@ -227,6 +223,7 @@
             </descendants>
         </node>
 
+        <!-- Grass (floor) -->
         <node id="grass">
             <material id="grass_material" />
 
@@ -244,6 +241,7 @@
             </descendants>
         </node>
 
+        <!-- Pool -->
         <node id="pool">
             <material id="null" />
 
@@ -362,6 +360,7 @@
             </descendants>
         </node>
         
+        <!-- Floater -->
         <node id="floater">
             <material id="white_diffuse_material" />
 
@@ -380,6 +379,7 @@
 
         </node>
 
+        <!-- Table -->
         <node id="table">
             <material id="null" />
             <texture id="clear">
@@ -530,6 +530,7 @@
             </descendants>
         </node>
 
+        <!-- Chair -->
         <node id="chair">
             <material id="white_diffuse_material" />
 
@@ -666,6 +667,7 @@
             </descendants>
         </node>
 
+        <!-- Parasol -->
         <node id="parasol">
             <material id="null" />
 
@@ -868,6 +870,7 @@
             </descendants>
         </node>
 
+        <!-- Swing -->
         <node id="swing">
             <material id="null" />
 
