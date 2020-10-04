@@ -132,7 +132,6 @@
                 <noderef id="chair_left" />
                 <noderef id="chair_right" />
                 <noderef id="parasol" />
-                <noderef id="ball" />
             </descendants>
         </node>
 
@@ -637,6 +636,7 @@
                 <noderef id="chair_back" />
                 <noderef id="chair_right_arm" />
                 <noderef id="chair_left_arm" />
+                <noderef id="pillow" />
             </descendants>
         </node>
 
@@ -703,6 +703,23 @@
 
             <descendants>
                 <noderef id="chair_right_arm" />
+            </descendants>
+        </node>
+
+        <node id="pillow">
+            <material id="pink_material" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="0.3" z="0" />
+                <scale sx="1" sy="0.35" sz="1" />
+            </transformations>
+
+            <descendants>
+                <leaf type="sphere" radius="0.45" slices="10" stacks="50" />               
             </descendants>
         </node>
 
@@ -939,22 +956,6 @@
 
             <descendants>
                 <leaf type="cylinder" height="0.15" topRadius="0.1" bottomRadius="0.1" stacks="10" slices="20" />               
-            </descendants>
-        </node>
-
-        <node id="ball">
-            <material id="pink_material" />
-
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="9" y="0.2" z="3" />
-            </transformations>
-
-            <descendants>
-                <leaf type="sphere" radius="0.2" slices="40" stacks="20" />               
             </descendants>
         </node>
     </nodes>
