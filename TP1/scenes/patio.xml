@@ -44,6 +44,7 @@
         <texture id="water_texture" path="./scenes/images/water.jpg" />
         <texture id="border_texture" path="./scenes/images/border.jpg" />
         <texture id="chair_texture" path="./scenes/images/wicker.jpg" />
+        <texture id="parasol_texture" path="./scenes/images/parasol.jpg" />
     </textures>
 
 
@@ -623,11 +624,11 @@
 
             <transformations>
                 <translation x="0" y="0.3" z="0" />
-                <scale sx="1" sy="0.35" sz="1" />
+                <scale sx="1" sy="0.3" sz="1" />
             </transformations>
 
             <descendants>
-                <leaf type="sphere" radius="0.40" slices="10" stacks="50" />               
+                <leaf type="sphere" radius="0.40" slices="20" stacks="20" />               
             </descendants>
         </node>
 
@@ -686,7 +687,7 @@
         <node id="parasol_sides">
             <material id="white_diffuse_material" />
 
-            <texture id="clear">
+            <texture id="parasol_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -710,7 +711,7 @@
         <node id="parasol_sides_1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -726,7 +727,7 @@
         <node id="parasol_sides_2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -742,7 +743,7 @@
         <node id="parasol_sides_3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -758,7 +759,7 @@
         <node id="parasol_sides_4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -774,7 +775,7 @@
         <node id="parasol_sides_5">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -790,7 +791,7 @@
         <node id="parasol_sides_6">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -806,7 +807,7 @@
         <node id="parasol_sides_7">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -822,7 +823,7 @@
         <node id="parasol_sides_8">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -991,12 +992,12 @@
             </texture>
 
             <transformations>
-                <translation x="-0.1" y="2.35" z="0" />
+                <translation x="-0.108" y="2.35" z="0" />
                 <rotation axis="y" angle="90" />
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="2.7" topRadius="0.1" bottomRadius="0.1" stacks="20" slices="20" />
+                <leaf type="cylinder" height="2.72" topRadius="0.11" bottomRadius="0.11" stacks="20" slices="20" />
             </descendants>
         </node>
 
