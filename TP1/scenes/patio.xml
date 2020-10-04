@@ -39,22 +39,15 @@
 
 
     <textures>
-        <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
         <texture id="demoTexture" path="./scenes/images/vidral.jpg" />
+        <texture id="grass_texture" path="./scenes/images/grass.jpg" />
+        <texture id="water_texture" path="./scenes/images/water.jpg" />
+        <texture id="border_texture" path="./scenes/images/border.jpg" />
+        <texture id="chair_texture" path="./scenes/images/wicker.jpg" />
     </textures>
 
 
     <materials>
-        <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material
-         requires a distinct "id". At least one material should be present. -->
-        <material id="demoMaterial">
-            <shininess value="ff" />
-            <ambient r="1.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.6" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.6" g="0.0" b="0.0" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
         <material id="black_material">
             <shininess value="1" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
@@ -89,9 +82,9 @@
 
         <material id="water_material">
             <shininess value="1" />
-            <ambient r="0.529" g="0.808" b="0.98" a="1.0" />
-            <diffuse r="0.0" g="0.0" b="0.98" a="1.0" />
-            <specular r="0.529" g="0.808" b="0.98" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.2" g="0.2" b="0.2" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
@@ -145,7 +138,7 @@
 
         <node id="cube">            
             <material id="null" />
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -164,7 +157,7 @@
 
         <node id="cube_side_1">            
             <material id="null" />
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -179,7 +172,7 @@
 
         <node id="cube_side_2">            
             <material id="null" />
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -195,7 +188,7 @@
 
         <node id="cube_side_3">            
             <material id="null" />
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -211,7 +204,7 @@
 
         <node id="cube_side_4">            
             <material id="null" />
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -227,7 +220,7 @@
 
         <node id="cube_top">            
             <material id="null" />
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -243,7 +236,7 @@
 
         <node id="cube_bottom">            
             <material id="null" />
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -260,7 +253,7 @@
         <node id="floor">
             <material id="grass_material" />
 
-            <texture id="clear">
+            <texture id="grass_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -279,8 +272,8 @@
         <node id="floor_top">
             <material id="null" />
 
-            <texture id="clear">
-                <amplification afs="1.0" aft="1.0" />
+            <texture id="null">
+                <amplification afs="2" aft="2" />
             </texture>
 
             <transformations>
@@ -296,7 +289,7 @@
         <node id="floor_left">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -313,7 +306,7 @@
         <node id="floor_right">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -330,7 +323,7 @@
         <node id="floor_bottom">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -347,7 +340,7 @@
         <node id="pool">
             <material id="white_material" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -355,18 +348,32 @@
             </transformations>
 
             <descendants>
+                <noderef id="pool_border"/>
+                <noderef id="pool_water" />
+            </descendants>
+        </node>
+
+        <node id="pool_border">
+            <material id="white_material" />
+
+            <texture id="border_texture">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+            <descendants>
                 <noderef id="pool_border_top" />
                 <noderef id="pool_border_bottom" />
                 <noderef id="pool_border_left" />
                 <noderef id="pool_border_right" />
-                <noderef id="pool_water" />
             </descendants>
         </node>
 
         <node id="pool_border_top">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -383,7 +390,7 @@
         <node id="pool_border_bottom">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -399,7 +406,7 @@
         <node id="pool_border_left">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -417,7 +424,7 @@
         <node id="pool_border_right">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -433,7 +440,7 @@
         <node id="pool_water">
             <material id="water_material" />
 
-            <texture id="clear">
+            <texture id="water_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -618,7 +625,7 @@
         <node id="chair">
             <material id="chair_material" />
 
-            <texture id="demoTexture">
+            <texture id="chair_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -636,7 +643,7 @@
         <node id="chair_seat">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -652,7 +659,7 @@
         <node id="chair_back">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -669,7 +676,7 @@
         <node id="chair_right_arm">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -686,7 +693,7 @@
         <node id="chair_left_arm">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -702,7 +709,7 @@
         <node id="chair_left">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -719,7 +726,7 @@
         <node id="chair_right">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
