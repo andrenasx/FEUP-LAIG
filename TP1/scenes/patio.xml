@@ -719,7 +719,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="sphere" radius="0.45" slices="10" stacks="50" />               
+                <leaf type="sphere" radius="0.40" slices="10" stacks="50" />               
             </descendants>
         </node>
 
