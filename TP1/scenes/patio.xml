@@ -260,15 +260,12 @@
             </transformations>
 
             <descendants>
-                <noderef id="floor_top" />
-                <noderef id="floor_left" />
-                <noderef id="floor_right" />
-                <noderef id="floor_bottom" />
+                <noderef id="grass" />
                 <noderef id="pool" />
             </descendants>
         </node>
 
-        <node id="floor_top">
+        <node id="grass">
             <material id="null" />
 
             <texture id="null">
@@ -276,63 +273,12 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0" z="5" />
-                <rotation axis="x" angle="-90"/>
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="0.0" y1="0.0" x2="14" y2="5"/>
-            </descendants>
-        </node>
-
-        <node id="floor_left">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <rotation axis="z" angle="-90" />
-                <rotation axis="y" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="5" y1="0" x2="10" y2="1" />
-            </descendants>
-        </node>
-
-        <node id="floor_right">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="11" y="0" z="0" />
-                <scale sx="3" sy="1" sz="1" />
-            </transformations>
-
-            <descendants>
-                <noderef id="floor_left" />
-            </descendants>
-        </node>
-
-        <node id="floor_bottom">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="1" y="0" z="10" />
+                <translation x="0" y="0" z="10" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.0" y1="0.0" x2="10" y2="1"/>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="14" y2="10"/>
             </descendants>
         </node>
 
@@ -344,6 +290,7 @@
             </texture>
 
             <transformations>
+                <translation x="0" y="0.01" z="0" />
             </transformations>
 
             <descendants>
