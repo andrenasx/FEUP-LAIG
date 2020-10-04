@@ -132,6 +132,7 @@
                 <noderef id="chair_left" />
                 <noderef id="chair_right" />
                 <noderef id="parasol" />
+                <noderef id="swing" />
             </descendants>
         </node>
 
@@ -903,6 +904,102 @@
 
             <descendants>
                 <leaf type="cylinder" height="0.15" topRadius="0.1" bottomRadius="0.1" stacks="10" slices="20" />               
+            </descendants>
+        </node>
+
+        <node id="swing">
+            <material id="yellow_material" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="swing_seat" />
+            </descendants>
+        </node>
+
+        <node id="swing_seat">
+            <material id="yellow_material" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="swing_seat_tire" />
+                <noderef id="swing_seat_support" />
+            </descendants>
+        </node>
+
+        <node id="swing_seat_tire">
+            <material id="yellow_material" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="torus" inner="0.08" outer="0.2" slices="200" loops="50"/>
+            </descendants>
+        </node>
+
+        <node id="swing_seat_support">
+            <material id="yellow_material" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="swing_seat_support_right" />
+                <noderef id="swing_seat_support_left" />
+            </descendants>
+        </node>
+
+        <node id="swing_seat_support_right">
+            <material id="yellow_material" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-0.19" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="1" topRadius="0.03" bottomRadius="0.03" stacks="10" slices="20" />
+            </descendants>
+        </node>
+
+        <node id="swing_seat_support_left">
+            <material id="yellow_material" />
+
+            <texture id="clear">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.4" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="swing_seat_support_right" />
             </descendants>
         </node>
     </nodes>
