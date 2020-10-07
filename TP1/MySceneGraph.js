@@ -370,9 +370,43 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
+        let children = texturesNode.children;
+
+        this.textures = [];
 
         //For each texture in textures block, check ID and file URL
-        this.onXMLMinorError("To do: Parse textures.");
+
+        if(children.length === 0) {
+            this.onXMLMinorError("No textures defined!");
+            return null;
+        }
+
+        for (let i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "texture") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            // Get id of the current texture
+            const textureID = this.reader.getString(children[i], 'id')
+            if (this.textures[textureID] != null) {
+                return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
+            }
+
+            // Get path
+            const file = this.reader.getString(children[i], 'path');
+            if (file.includes('scenes/images')) {
+                this.textures[textureID] = new CGFtexture(this.scene, file);
+            }
+            else if (file.includes('images/')) {
+                this.textures[textureID] = new CGFtexture(this.scene, './scenes/' + file);
+            }
+            else {
+                this.textures[textureID] = new CGFtexture(this.scene, "./scenes/images/" + file);
+            }
+        }
+        
+        this.log("Parsed textures");
         return null;
     }
 
@@ -387,6 +421,11 @@ class MySceneGraph {
 
         var grandChildren = [];
         var nodeNames = [];
+
+        if(children.length === 0) {
+            this.onXMLMinorError("No materials defined!");
+            return null;
+        }
 
         // Any number of materials.
         for (var i = 0; i < children.length; i++) {
@@ -408,39 +447,40 @@ class MySceneGraph {
             //Parsing
             grandChildren = children[i].children;
 
-            if(grandChildren.length === 0) {
-                this.onXMLMinorError("No materials defined!");
-                return null;
-            }
-
             for (let j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
 
+            //Get index on XML
             const shininessIndex = nodeNames.indexOf("shininess");
             const ambientIndex = nodeNames.indexOf("ambient");
             const diffuseIndex = nodeNames.indexOf("diffuse");
             const specularIndex = nodeNames.indexOf("specular");
             const emissiveIndex = nodeNames.indexOf("specular");
 
+            //  Checks if all material components are declared.
             if (shininessIndex === -1 || emissiveIndex === -1 || ambientIndex === -1 || diffuseIndex === -1 || specularIndex === -1 || emissiveIndex === -1 ) {
-                this.onXMLError("Missing values for material. Node ID: " + materialID);
+                this.onXMLError("Missing components for material. Material ID: " + materialID);
             }
 
+            //  Checks if shininess has wrong value or is bellow 1, defining 1 as default.
             let shininess = this.reader.getFloat(grandChildren[shininessIndex], "value");
             if (!(shininess != null && !isNaN(shininess))) {
-                this.onXMLMinorError("Wrong value for shininess. Node ID: " + materialID);
+                this.onXMLMinorError("Wrong value for shininess. Material ID: " + materialID);
                 shininess = 1;
             }
             if (shininess < 1) {
                 this.onXMLMinorError("Shininess value must be 1 or above, provided (" + shininess + "). Assuming 1 as default. Material ID: " + materialID);
                 shininess = 1;
             }
-            const emissive = this.parseColor(grandChildren[emissiveIndex], "emissive component of material. Node ID: " + materialID);
-            const ambient = this.parseColor(grandChildren[ambientIndex], "ambient component of material. Node ID: " + materialID);
-            const diffuse = this.parseColor(grandChildren[diffuseIndex], "diffuse component of material. Node ID: " + materialID);
-            const specular = this.parseColor(grandChildren[specularIndex], "specular component of material. Node ID: " + materialID);
 
+            // Parses the rest of the material components.
+            const emissive = this.parseColor(grandChildren[emissiveIndex], "emissive component of material. Material ID: " + materialID);
+            const ambient = this.parseColor(grandChildren[ambientIndex], "ambient component of material. Material ID: " + materialID);
+            const diffuse = this.parseColor(grandChildren[diffuseIndex], "diffuse component of material. Material ID: " + materialID);
+            const specular = this.parseColor(grandChildren[specularIndex], "specular component of material. Material ID: " + materialID);
+
+            //Creates a new material and sets parsed components.
             this.materials[materialID] = new CGFappearance(this.scene);
             this.materials[materialID].setShininess(shininess);
             this.materials[materialID].setEmission(emissive[0], emissive[1], emissive[2], emissive[3]);
@@ -489,21 +529,28 @@ class MySceneGraph {
                 nodeNames.push(grandChildren[j].nodeName);
             }
 
+            //Get index on XML
             var transformationsIndex = nodeNames.indexOf("transformations");
             var materialIndex = nodeNames.indexOf("material");
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
             this.onXMLMinorError("To do: Parse nodes.");
+
             // Transformations
+
+            //Base matrix
             let transformationsMatrix = mat4.create();
             const transformationsNode = grandChildren[transformationsIndex].childNodes;
             for (let j = 0; j < transformationsNode.length; j++){
+                //Translation
                 if (transformationsNode[j].nodeName === "translation"){
+                    //Gets componentes
                     const x = this.reader.getFloat(transformationsNode[j], "x");
                     const y = this.reader.getFloat(transformationsNode[j], "y");
                     const z = this.reader.getFloat(transformationsNode[j], "z");
 
+                    //Checks for errors
                     if (x == null || y == null || z == null) {
                         return "Missing values for translation. Node id: " + nodeID;
                     }
@@ -511,12 +558,16 @@ class MySceneGraph {
                         return "Wrong values for translation. Node id: " + nodeID;
                     }
 
+                    //Multiplies new translation matrix
                     mat4.translate(transformationsMatrix, transformationsMatrix, [x, y, z]);
                 }
+                //Rotation
                 else if (transformationsNode[j].nodeName === "rotation") {
+                    //Gets componentes
                     const axis = this.reader.getString(transformationsNode[j], 'axis');
                     const angle = this.reader.getFloat(transformationsNode[j], 'angle');
 
+                    //Checks for errors
                     if (axis == null || (axis !== "x" && axis !== "y" && axis !== "z")) {
                         return "Wrong value for axis on rotation. Node id: " + nodeID;
                     }
@@ -524,13 +575,17 @@ class MySceneGraph {
                         return "Wrong value for angle on rotation. Node id: " + nodeID;
                     }
 
+                    //Multiplies new rotation matrix
                     mat4.rotate(transformationsMatrix, transformationsMatrix, angle*DEGREE_TO_RAD, this.axisCoords[axis]);
                 }
+                //Scale
                 else if (transformationsNode[j].nodeName === "scale") {
+                    //Gets componentes
                     const sx = this.reader.getFloat(transformationsNode[j], "sx")
                     const sy = this.reader.getFloat(transformationsNode[j], "sy")
                     const sz = this.reader.getFloat(transformationsNode[j], "sz")
 
+                    //Checks for errors
                     if (sx == null || sy == null || sz == null) {
                         return "Missing values for scale. Node id: " + nodeID
                     }
@@ -538,6 +593,7 @@ class MySceneGraph {
                         return "Wrong values for scale. Node id: " + nodeID
                     }
 
+                    //Multiplies new scale matrix
                     mat4.scale(transformationsMatrix, transformationsMatrix, [sx, sy, sz]);
                 }
             }          
@@ -779,7 +835,7 @@ class MySceneGraph {
 
         let currentMaterial = material;
 
-        if (node.material !== "null") {
+        if (node.material != null) {
             currentMaterial = node.material;
         }
 
@@ -793,7 +849,7 @@ class MySceneGraph {
             }
             else {
                 this.scene.pushMatrix();
-                this.processNode(this.nodes[descendant.id]);
+                this.processNode(this.nodes[descendant.id], currentMaterial);
                 this.scene.popMatrix();
             }
         }
