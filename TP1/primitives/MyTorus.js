@@ -16,30 +16,40 @@ class MyTorus extends CGFobject {
 	initBuffers() {
         this.vertices = [];
         this.indices = [];
-        this.normals = [];
+		this.normals = [];
+		this.texCoords = [];
 
-		for(var i = 0; i <= this.loops; i++){
-			var alpha = i * 2 * Math.PI / this.loops;
-			for(var j = 0; j <= this.slices; j++){
-				var beta = j * 2 * Math.PI / this.slices;
-				
-				var x = (this.outer + this.inner * Math.cos(beta)) * Math.cos(alpha);
-				var y = (this.outer + this.inner * Math.cos(beta)) * Math.sin(alpha);
-				var z = this.inner * Math.sin(beta);
+		var alpha = 2 * Math.PI / this.loops;
+		var beta = 2 * Math.PI / this.slices;
+
+		for(var i = 0; i <= this.slices; i++){
+			for(var j = 0; j <= this.loops; j++){
+				var x = (this.outer + this.inner * Math.cos(alpha*j)) * Math.cos(beta*i);
+				var y = (this.outer + this.inner * Math.cos(alpha*j)) * Math.sin(beta*i);
+				var z = this.inner * Math.sin(alpha*j);
 				
 				this.vertices.push(x,y,z);
-				this.normals.push(x,y,z);
+				this.texCoords.push(
+					i*1/this.slices, 
+					j*1/this.loops	
+				);
+
+				this.normals.push(
+					Math.cos(alpha*j) * Math.cos(beta*i), 
+                    Math.cos(alpha*j) * Math.sin(beta*i),
+                    0
+				);
 
 			}
 
 		}
 
-		for(var i = 0; i < this.loops; i++){
-			for(var j = 0; j < this.slices; j++){
-				var ind1 = (i * (this.slices+1))+j;
-				var ind2 = ind1 + this.slices+1;
-				this.indices.push(ind1, ind2, ind1+1);
-				this.indices.push(ind2,ind2+1,ind1+1);
+		for (let i = 0; i < this.slices; ++i) {
+			for(let j = 0; j < this.loops; ++j) {
+				this.indices.push(
+					(i+1)*(this.loops+1) + j, i*(this.loops+1) + j+1, i*(this.loops+1) + j,
+					i*(this.loops+1) + j+1, (i+1)*(this.loops+1) + j, (i+1)*(this.loops+1) + j+1
+				);
 			}
 		}
 
