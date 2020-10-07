@@ -535,8 +535,6 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
-            this.onXMLMinorError("To do: Parse nodes.");
-
             // Transformations
 
             //Base matrix
@@ -610,6 +608,41 @@ class MySceneGraph {
             }
 
             // Texture
+            const textureID = this.reader.getString(grandChildren[textureIndex], "id");
+            if (textureID == null) {
+                this.onXMLMinorError("Texture ID is not valid. Node ID: " + nodeID);
+            }
+            if (textureID !== "null" && textureID !== "clear") {
+                if (this.textures[textureID] == null) {
+                    this.onXMLMinorError("Texture with ID: " + textureID + " does not exist. Error on node ID: " + nodeID);
+                }
+            }
+
+            const amplificationNode = grandChildren[textureIndex].children;
+            let amplification = {
+                afs: 1,
+                aft: 1
+            }
+            for (let j = 0; j < amplificationNode.length; j++) {
+                if (amplificationNode[j].nodeName === "amplification") {
+                    const afs = this.reader.getFloat(amplificationNode[j], 'afs');
+                    const aft = this.reader.getFloat(amplificationNode[j], 'aft');
+                    if (aft == null || afs == null || isNaN(aft) || isNaN(afs)) {
+                        this.onXMLMinorError("Amplification values not valid, assuming 1.0. Node ID: " + nodeID);
+                    }
+                    else {
+                        amplification = {
+                            afs: afs,
+                            aft: aft
+                        }
+                    }
+                }
+            }
+
+            const texture = {
+                textureID: textureID,
+                amplification: amplification
+            }
 
             // Descendants
             const descendants = [];
@@ -727,11 +760,12 @@ class MySceneGraph {
             this.nodes[nodeID] = {
                 matrix: transformationsMatrix,
                 material: this.materials[materialID],
+                texture: texture,
                 descendants: descendants
             }
         }
 
-        this.log("Parsed Nodes.");
+        this.log("Parsed Nodes");
         return null;
     }
 
@@ -830,17 +864,25 @@ class MySceneGraph {
         return color;
     }
 
-    processNode(node, material) {
+    processNode(node, material, texture) {
         this.scene.multMatrix(node.matrix);
 
         let currentMaterial = material;
+        let currentTexture = texture;
 
-        if (node.material != null) {
+        if (node.material !== currentMaterial) {
             currentMaterial = node.material;
         }
 
+        if (node.texture !== currentTexture) {
+            currentTexture = node.texture;
+        }
+
         if (currentMaterial != null) {
-            currentMaterial.apply()
+            currentMaterial.apply();
+        }
+        if (currentTexture.textureID !== "clear" && currentTexture.textureID !== "null")  {
+            this.textures[currentTexture.textureID].bind();
         }
 
         for (let descendant of node.descendants) {
@@ -849,7 +891,7 @@ class MySceneGraph {
             }
             else {
                 this.scene.pushMatrix();
-                this.processNode(this.nodes[descendant.id], currentMaterial);
+                this.processNode(this.nodes[descendant.id], currentMaterial, currentTexture);
                 this.scene.popMatrix();
             }
         }
@@ -860,7 +902,7 @@ class MySceneGraph {
      */
     displayScene() {
         this.scene.pushMatrix();
-        this.processNode(this.nodes[this.idRoot], this.nodes[this.idRoot].material);
+        this.processNode(this.nodes[this.idRoot], this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture);
         this.scene.popMatrix();
     }
 }
