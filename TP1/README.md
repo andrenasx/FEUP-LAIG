@@ -12,9 +12,11 @@
 
 - (items describing main strong points)
 - Scene
-  - (Brief description of the created scene)
+  - A cena consiste num pátio com piscina, uma mesa com 2 cadeiras almofadadas, um guarda-sol, um baloiço e uma bóia.
   - (relative link to the scene)
 ----
 ## Issues/Problems
 
-- (items describing unimplemented features, bugs, problems, etc.)
+- Falta adicionar coordenadas de textura ao cilindro e ao torus;
+- O cilindro não tem as tampas;
+- Falta o parser para texturas e views.
