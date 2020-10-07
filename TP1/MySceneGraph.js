@@ -870,17 +870,18 @@ class MySceneGraph {
         let currentMaterial = material;
         let currentTexture = texture;
 
-        if (node.material !== currentMaterial) {
+        if (node.material != null) {
             currentMaterial = node.material;
         }
 
-        if (node.texture !== currentTexture) {
+        if (node.texture.textureID !== "null") {
             currentTexture = node.texture;
         }
 
         if (currentMaterial != null) {
             currentMaterial.apply();
         }
+
         if (currentTexture.textureID !== "clear" && currentTexture.textureID !== "null")  {
             this.textures[currentTexture.textureID].bind();
         }
