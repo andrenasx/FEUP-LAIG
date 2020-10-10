@@ -47,4 +47,12 @@ class MyInterface extends CGFinterface {
     isKeyPressed(keyCode) {
         return this.activeKeys[keyCode] || false;
     }
+
+    createInterface() {
+        this.createAxisCheckbox();
+    }
+
+    createAxisCheckbox() {
+        this.gui.add(this.scene, 'displayAxis').name('Display Axis');
+    }
 }
