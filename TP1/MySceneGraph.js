@@ -639,14 +639,15 @@ class MySceneGraph {
                 }
             }
 
-            const texture = {
-                textureID: textureID,
-                amplification: amplification
+            // Descendants
+            const descendantsNodes = grandChildren[descendantsIndex].children;
+            if (descendantsNodes.length === 0) {
+                return "No descendants defined! Node id: " + nodeID;
             }
 
-            // Descendants
-            const descendants = [];
-            const descendantsNodes = grandChildren[descendantsIndex].childNodes;
+            const childNodesID = [];
+            const leafs = [];
+            
             for (let j = 0; j < descendantsNodes.length; j++) {
                 if (descendantsNodes[j].nodeName === "noderef") {
                     const descendantID = this.reader.getString(descendantsNodes[j], "id");
@@ -656,10 +657,7 @@ class MySceneGraph {
                     else if (descendantID === nodeID)
                         return "Duplicated node id: " + nodeID;
 
-                    descendants.push({
-                        type: "noderef",
-                        id: descendantID
-                    })
+                    childNodesID.push(descendantID);
                 }
                 else if (descendantsNodes[j].nodeName === "leaf") {
                     const type = this.reader.getString(descendantsNodes[j], "type", ['triangle', 'rectangle', 'cylinder', 'sphere', 'torus'])
@@ -676,10 +674,7 @@ class MySceneGraph {
                             return "Invalid values for rectangle leaf. Node id: " + nodeID;
                         }
 
-                        descendants.push({
-                            type: "leaf",
-                            primitive: new MyRectangle(this.scene, x1, y1, x2, y2)
-                        })
+                        leafs.push(new MyRectangle(this.scene, x1, y1, x2, y2));
                     }
                     else if (type === "triangle") {
                         const x1 = this.reader.getFloat(descendantsNodes[j], 'x1')
@@ -696,10 +691,7 @@ class MySceneGraph {
                             return "Invalid values for triangle leaf. Node id: " + nodeID;
                         }
 
-                        descendants.push({
-                            type: "leaf",
-                            primitive: new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3)
-                        })
+                        leafs.push(new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3));
                     }
                     else if (type === "cylinder") {
                         const height = this.reader.getFloat(descendantsNodes[j],'height')
@@ -715,10 +707,7 @@ class MySceneGraph {
                             return "Invalid values for cylinder leaf. Node id: " + nodeID;
                         }
 
-                        descendants.push({
-                            type: "leaf",
-                            primitive: new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks, slices)
-                        })
+                        leafs.push(new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks, slices));
                     }
                     else if (type === "sphere") {
                         const radius = this.reader.getFloat(descendantsNodes[j], 'radius')
@@ -730,10 +719,7 @@ class MySceneGraph {
                         else if (isNaN(radius) || isNaN(slices) || isNaN(stacks))
                             return "Invalid values for sphere leaf. Node id: " + nodeID;
 
-                        descendants.push({
-                            type: "leaf",
-                            primitive: new MySphere(this.scene, radius, slices, stacks)
-                        })
+                        leafs.push(new MySphere(this.scene, radius, slices, stacks));
                     }
                     else if (type === "torus") {
                         const inner = this.reader.getFloat(descendantsNodes[j],'inner')
@@ -746,22 +732,17 @@ class MySceneGraph {
                         else if (isNaN(inner) || isNaN(outer) || isNaN(loops) || isNaN(slices))
                             return "Invalid values for torus leaf. Node id: " + nodeID;
 
-                        descendants.push({
-                            type: "leaf",
-                            primitive: new MyTorus(this.scene, inner, outer, slices, loops)
-                        })
+                        leafs.push(new MyTorus(this.scene, inner, outer, slices, loops));
                     }
                 }
             }
-            if (descendants.length === 0) {
-                return "No descendants! Node id: " + nodeID;
-            }
 
-            this.nodes[nodeID] = {
-                matrix: transformationsMatrix,
-                material: this.materials[materialID],
-                texture: texture,
-                descendants: descendants
+            this.nodes[nodeID] = new MySceneGraphNode(nodeID, childNodesID, leafs, transformationsMatrix, this.materials[materialID], this.textures[textureID]);
+        }
+
+        for (const [nodeID, node] of Object.entries(this.nodes)) {
+            for (const childID of node.childNodesID) {
+                node.addChildNode(this.nodes[childID]);
             }
         }
 
@@ -865,16 +846,16 @@ class MySceneGraph {
     }
 
     processNode(node, material, texture) {
-        this.scene.multMatrix(node.matrix);
+        this.scene.multMatrix(node.transfMatrix);
 
         let currentMaterial = material;
         let currentTexture = texture;
 
-        if (node.material != null) {
+        if (node.materialID !== "null") {
             currentMaterial = node.material;
         }
 
-        if (node.texture.textureID !== "null") {
+        if (node.textureID !== "null") {
             currentTexture = node.texture;
         }
 
@@ -882,19 +863,18 @@ class MySceneGraph {
             currentMaterial.apply();
         }
 
-        if (currentTexture.textureID !== "clear" && currentTexture.textureID !== "null")  {
-            this.textures[currentTexture.textureID].bind();
+        if (currentTexture != null)  {
+            currentTexture.bind();
         }
 
-        for (let descendant of node.descendants) {
-            if (descendant.type === "leaf") {
-                descendant.primitive.display();
-            }
-            else {
-                this.scene.pushMatrix();
-                this.processNode(this.nodes[descendant.id], currentMaterial, currentTexture);
-                this.scene.popMatrix();
-            }
+        for (let leaf of node.leafs) {
+            leaf.display();
+        }
+
+        for (let child of node.childNodes) {
+            this.scene.pushMatrix();
+            this.processNode(child, currentMaterial, currentTexture);
+            this.scene.popMatrix();
         }
     }
 
