@@ -204,7 +204,7 @@ class MySceneGraph {
      * @param {initials block element} initialsNode
      */
     parseInitials(initialsNode) {
-        var children = initialsNode.children;
+        const children = initialsNode.children;
         var nodeNames = [];
 
         for (var i = 0; i < children.length; i++)
@@ -245,7 +245,110 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
-        this.onXMLMinorError("To do: Parse views and create cameras.");
+        this.viewsDefaultID = this.reader.getString(viewsNode, 'default');
+        if (this.viewsDefaultID === null) {
+            return "No default view ID defined!";
+        }
+
+        const children = viewsNode.children;
+        if(children.length === 0) {
+            this.onXMLMinorError("No views defined!");
+        }
+
+        this.views = [];
+
+        for (let i = 0; i < children.length; i++) {
+            if (children[i].nodeName !== "perspective" && children[i].nodeName !== "ortho") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">")
+                continue
+            }
+
+            // Get id of the current view.
+            let viewID = this.reader.getString(children[i], 'id');
+            if (viewID == null) {
+                return "no ID defined for <" + children[i] + ">";
+            }
+
+            // Checks for repeated IDs.
+            if (this.views[viewID] != null) {
+                return "ID must be unique for each view (conflict ID = " + viewID + " )";
+            }
+
+            // Checks if view is perspective or ortho and gets components.
+            if (children[i].nodeName === "perspective") {
+                const near =  this.reader.getFloat(children[i], 'near');
+                const far = this.reader.getFloat(children[i], 'far');
+                const angle = this.reader.getFloat(children[i], 'angle');
+
+                if (near == null || isNaN(near) || far == null || isNaN(far) || angle == null || isNaN(angle)) {
+                    return "Invalid component value or value not defined. View ID: " + viewID;
+                }
+
+                let from = null;
+                let to = null;
+
+                const perspectiveChildren = children[i].children;
+                for (let j = 0; j < perspectiveChildren.length; j++) {
+                    if (perspectiveChildren[j].nodeName !== "from" && perspectiveChildren[j].nodeName !== "to") {
+                        this.onXMLMinorError("unknown tag <" + perspectiveChildren[j].nodeName + ">")
+                        continue;
+                    }
+
+                    if (perspectiveChildren[j].nodeName === "from") {
+                        from = this.parseCoordinates3D(perspectiveChildren[j], "view " + viewID);
+                    }
+                    else {
+                        to = this.parseCoordinates3D(perspectiveChildren[j], "view " + viewID);
+                    }
+                }
+
+                this.views[viewID] = new CGFcamera(angle * DEGREE_TO_RAD, near, far, vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]));
+            }
+
+            else if (children[i].nodeName === "ortho") {
+                const near = this.reader.getFloat(children[i], 'near');
+                const far = this.reader.getFloat(children[i], 'far');
+                const left = this.reader.getFloat(children[i], 'left');
+                const right = this.reader.getFloat(children[i], 'right');
+                const top = this.reader.getFloat(children[i], 'top');
+                const bottom = this.reader.getFloat(children[i], 'bottom');
+
+                if (near == null || isNaN(near) || far == null || isNaN(far) || left == null || isNaN(left) || right == null || isNaN(right) || top == null || isNaN(top) || bottom == null || isNaN(bottom)) {
+                    return "Invalid component value or value not defined. View ID: " + viewID;
+                }
+
+                let from = null;
+                let to = null;
+                let up = {
+                    x: 0.0,
+                    y: 1.0,
+                    z: 0.0
+                } // optional, default 0,1,0
+
+                const orthoChildren = children[i].children;
+                for (let j = 0; j < orthoChildren.length; j++) {
+                    if (orthoChildren[j].nodeName !== "from" && orthoChildren[j].nodeName !== "to" && orthoChildren[j].nodeName !== "up") {
+                        this.onXMLMinorError("unknown tag <" + orthoChildren[j].nodeName + ">");
+                        continue;
+                    }
+
+                    if (orthoChildren[j].nodeName === "from") {
+                        from = this.parseCoordinates3D(orthoChildren[j], "view with ID: " + viewID);
+                    }
+                    else if (orthoChildren[j].nodeName === "to") {
+                        to = this.parseCoordinates3D(orthoChildren[j], "view with ID: " + viewID);
+                    }
+                    else {
+                        up = this.parseCoordinates3D(orthoChildren[j], "view with ID: " + viewID);
+                    }
+                }
+
+                this.views[viewID] = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]), vec3.fromValues(up[0], up[1], up[2]));
+            }
+        }
+
+        this.log("TODO: Error correction before inserting in this.views.");
+        this.log("Parsed Views.");
         return null;
     }
 
@@ -254,8 +357,7 @@ class MySceneGraph {
      * @param {illumination block element} illuminationsNode
      */
     parseIllumination(illuminationsNode) {
-
-        var children = illuminationsNode.children;
+        const children = illuminationsNode.children;
 
         this.ambient = [];
         this.background = [];
@@ -290,7 +392,7 @@ class MySceneGraph {
      * @param {lights block element} lightsNode
      */
     parseLights(lightsNode) {
-        var children = lightsNode.children;
+        const children = lightsNode.children;
 
         this.lights = [];
         var numLights = 0;
@@ -361,7 +463,7 @@ class MySceneGraph {
         else if (numLights > 8)
             this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights");
 
-        this.log("Parsed lights");
+        this.log("Parsed Lights.");
         return null;
     }
 
@@ -370,7 +472,7 @@ class MySceneGraph {
      * @param {textures block element} texturesNode
      */
     parseTextures(texturesNode) {
-        let children = texturesNode.children;
+        const children = texturesNode.children;
 
         this.textures = [];
 
@@ -406,7 +508,7 @@ class MySceneGraph {
             }
         }
         
-        this.log("Parsed textures");
+        this.log("Parsed Textures.");
         return null;
     }
 
@@ -415,7 +517,7 @@ class MySceneGraph {
      * @param {materials block element} materialsNode
      */
     parseMaterials(materialsNode) {
-        var children = materialsNode.children;
+        const children = materialsNode.children;
 
         this.materials = [];
 
@@ -442,7 +544,7 @@ class MySceneGraph {
 
             // Checks for repeated IDs.
             if (this.materials[materialID] != null)
-                return "ID must be unique for each light (conflict: ID = " + materialID + ")";
+                return "ID must be unique for each material (conflict: ID = " + materialID + ")";
 
             //Parsing
             grandChildren = children[i].children;
@@ -489,7 +591,7 @@ class MySceneGraph {
             this.materials[materialID].setSpecular(specular[0], specular[1], specular[2], specular[3]);
         }
 
-        this.log("Parsed materials");
+        this.log("Parsed Materials.");
         return null;
     }
 
@@ -498,12 +600,11 @@ class MySceneGraph {
    * @param {nodes block element} nodesNode
    */
   parseNodes(nodesNode) {
-        var children = nodesNode.children;
+        const children = nodesNode.children;
 
         this.nodes = [];
 
         var grandChildren = [];
-        var grandgrandChildren = [];
         var nodeNames = [];
 
         // Any number of nodes.
@@ -539,25 +640,17 @@ class MySceneGraph {
 
             //Base matrix
             let transformationsMatrix = mat4.create();
-            const transformationsNode = grandChildren[transformationsIndex].childNodes;
+            const transformationsNode = grandChildren[transformationsIndex].children;
             for (let j = 0; j < transformationsNode.length; j++){
                 //Translation
                 if (transformationsNode[j].nodeName === "translation"){
-                    //Gets componentes
-                    const x = this.reader.getFloat(transformationsNode[j], "x");
-                    const y = this.reader.getFloat(transformationsNode[j], "y");
-                    const z = this.reader.getFloat(transformationsNode[j], "z");
+                    let xyz = null;
 
-                    //Checks for errors
-                    if (x == null || y == null || z == null) {
-                        return "Missing values for translation. Node id: " + nodeID;
-                    }
-                    if (isNaN(x) || isNaN(y) || isNaN(z)) {
-                        return "Wrong values for translation. Node id: " + nodeID;
-                    }
+                    //Gets componentes
+                    xyz = this.parseCoordinates3D(transformationsNode[j], "node with ID: " + nodeID);
 
                     //Multiplies new translation matrix
-                    mat4.translate(transformationsMatrix, transformationsMatrix, [x, y, z]);
+                    mat4.translate(transformationsMatrix, transformationsMatrix, xyz);
                 }
                 //Rotation
                 else if (transformationsNode[j].nodeName === "rotation") {
@@ -746,7 +839,7 @@ class MySceneGraph {
             }
         }
 
-        this.log("Parsed Nodes");
+        this.log("Parsed Nodes.");
         return null;
     }
 
