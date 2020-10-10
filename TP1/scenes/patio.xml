@@ -40,11 +40,17 @@
         <texture id="border_texture" path="./scenes/images/border.jpg" />
         <texture id="chair_texture" path="./scenes/images/wicker.jpg" />
         <texture id="parasol_texture" path="./scenes/images/parasol.jpg" />
+        <texture id="swing_seat_texture" path="./scenes/images/tire.jpg" />
+        <texture id="pillow_texture" path="./scenes/images/pillow.jpg" />
+        <texture id="tabletop_texture" path="./scenes/images/tabletop.jpg" />
+        <texture id="parasol_base_texture" path="./scenes/images/parasol_base.jpg" />
+        <texture id="swing_rope_texture" path="./scenes/images/rope.jpg" />
+        <texture id="swing_texture" path="./scenes/images/swing.jpg" />
     </textures>
 
 
     <materials>
-        <material id="black_material">
+        <material id="black_specular_material">
             <shininess value="1" />
             <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
             <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
@@ -76,13 +82,6 @@
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
-        <material id="yellow_material">
-            <shininess value="1" />
-            <ambient r="1.0" g="0.49" b="0.1" a="1.0" />
-            <diffuse r="1.0" g="0.49" b="0.1" a="1.0" />
-            <specular r="1.0" g="0.49" b="0.1" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
     </materials>
 
     <nodes>     
@@ -396,7 +395,7 @@
         </node>
 
         <node id="table_top">
-            <material id="black_material" />
+            <material id="white_diffuse_material" />
 
             <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
@@ -414,7 +413,7 @@
         <node id="top_center">
             <material id="null" />
 
-            <texture id="demoTexture">
+            <texture id="tabletop_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -424,15 +423,15 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="0.2" topRadius="0.8" bottomRadius="0.8" stacks="10" slices="50"/>
+                <leaf type="cylinder" height="0.2" topRadius="0.8" bottomRadius="0.8" stacks="10" slices="70"/>
             </descendants>
 
         </node>
 
         <node id="top_edge">
-            <material id="null" />
+            <material id="black_specular_material" />
 
-            <texture id="demoTexture">
+            <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -619,7 +618,7 @@
         <node id="pillow">
             <material id="white_diffuse_material" />
 
-            <texture id="clear">
+            <texture id="pillow_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -855,9 +854,9 @@
         </node>
 
         <node id="parasol_base">
-            <material id="yellow_material" />
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="parasol_base_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -874,7 +873,7 @@
         <node id="swing">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="swing_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -889,7 +888,7 @@
         </node>
 
         <node id="swing_structure">
-            <material id="white_diffuse_material" />
+            <material id="null" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
@@ -1024,7 +1023,7 @@
         <node id="swing_seat_tire">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="swing_seat_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1040,7 +1039,7 @@
         <node id="swing_seat_support">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="swing_rope_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
