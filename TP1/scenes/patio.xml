@@ -42,10 +42,11 @@
         <texture id="parasol_texture" path="./scenes/images/parasol.jpg" />
         <texture id="swing_seat_texture" path="./scenes/images/tire.jpg" />
         <texture id="pillow_texture" path="./scenes/images/pillow.jpg" />
-        <texture id="tabletop_texture" path="./scenes/images/tabletop.jpg" />
+        <texture id="table_wood_texture" path="./scenes/images/tablewood.jpg" />
         <texture id="parasol_base_texture" path="./scenes/images/parasol_base.jpg" />
         <texture id="swing_rope_texture" path="./scenes/images/rope.jpg" />
-        <texture id="swing_texture" path="./scenes/images/swing.jpg" />
+        <texture id="wood_texture" path="./scenes/images/wood.jpg" />
+        <texture id="floater_texture" path="./scenes/images/floater.jpg" />
     </textures>
 
 
@@ -361,9 +362,9 @@
         
         <!-- Floater -->
         <node id="floater">
-            <material id="white_diffuse_material" />
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="floater_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -413,7 +414,7 @@
         <node id="top_center">
             <material id="null" />
 
-            <texture id="tabletop_texture">
+            <texture id="table_wood_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -423,15 +424,15 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="0.2" topRadius="0.8" bottomRadius="0.8" stacks="10" slices="70"/>
+                <leaf type="cylinder" height="0.1" topRadius="0.8" bottomRadius="0.8" stacks="10" slices="70"/>
             </descendants>
 
         </node>
 
         <node id="top_edge">
-            <material id="black_specular_material" />
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="wood_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -441,15 +442,15 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.1" outer="0.8" slices="100" loops="40"/>
+                <leaf type="torus" inner="0.1" outer="0.8" slices="30" loops="40"/>
             </descendants>
 
         </node>
 
         <node id="table_legs">
-            <material id="white_diffuse_material" />
+            <material id="null" />
 
-            <texture id="clear">
+            <texture id="table_wood_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -873,7 +874,7 @@
         <node id="swing">
             <material id="null" />
 
-            <texture id="swing_texture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -890,7 +891,7 @@
         <node id="swing_structure">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="wood_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
