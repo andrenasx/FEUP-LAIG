@@ -830,7 +830,7 @@ class MySceneGraph {
                 }
             }
 
-            this.nodes[nodeID] = new MySceneGraphNode(nodeID, childNodesID, leafs, transformationsMatrix, this.materials[materialID], this.textures[textureID]);
+            this.nodes[nodeID] = new MySceneGraphNode(nodeID, childNodesID, leafs, transformationsMatrix, this.materials[materialID], this.textures[textureID], textureID);
         }
 
         for (const [nodeID, node] of Object.entries(this.nodes)) {
@@ -944,7 +944,7 @@ class MySceneGraph {
         let currentMaterial = material;
         let currentTexture = texture;
 
-        if (node.materialID !== "null") {
+        if (node.material != null) {
             currentMaterial = node.material;
         }
 
@@ -955,7 +955,7 @@ class MySceneGraph {
         if (currentMaterial != null) {
             currentMaterial.apply();
         }
-
+            
         if (currentTexture != null)  {
             currentTexture.bind();
         }
