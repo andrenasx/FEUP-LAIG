@@ -46,7 +46,7 @@
         <texture id="parasol_base_texture" path="./scenes/images/parasol_base.jpg" />
         <texture id="swing_rope_texture" path="./scenes/images/rope.jpg" />
         <texture id="wood_texture" path="./scenes/images/wood.jpg" />
-        <texture id="floater_texture" path="./scenes/images/floater.jpg" />
+        <texture id="table_top_texture" path="./scenes/images/tabletop.jpg" />
     </textures>
 
 
@@ -80,6 +80,14 @@
             <ambient r="0.137" g="0.55" b="0.137" a="1.0" />
             <diffuse r="0.137" g="0.55" b="0.137" a="1.0" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="dirty_white_material">
+            <shininess value="1" />
+            <ambient r="0.95" g="0.92" b="0.86" a="1.0" />
+            <diffuse r="0.95" g="0.92" b="0.86" a="1.0" />
+            <specular r="0.95" g="0.92" b="0.86" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
@@ -362,9 +370,9 @@
         
         <!-- Floater -->
         <node id="floater">
-            <material id="null" />
+            <material id="white_diffuse_material" />
 
-            <texture id="floater_texture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -414,7 +422,7 @@
         <node id="top_center">
             <material id="null" />
 
-            <texture id="table_wood_texture">
+            <texture id="chair_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -430,27 +438,27 @@
         </node>
 
         <node id="top_edge">
-            <material id="null" />
+            <material id="dirty_white_material" />
 
-            <texture id="wood_texture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
             <transformations>
-                <translation x="0" y="0.7" z="0" />
+                <translation x="0" y="0.75" z="0" />
                 <rotation axis="x" angle="90"/>
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.1" outer="0.8" slices="30" loops="40"/>
+                <leaf type="torus" inner="0.08" outer="0.75" slices="60" loops="50"/>
             </descendants>
 
         </node>
 
         <node id="table_legs">
-            <material id="null" />
+            <material id="dirty_white_material" />
 
-            <texture id="table_wood_texture">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -478,7 +486,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="0.6" topRadius="0.1" bottomRadius="0.08" stacks="60" slices="50"/>
+                <leaf type="cylinder" height="0.7" topRadius="0.1" bottomRadius="0.08" stacks="60" slices="50"/>
             </descendants>
         </node>
 
