@@ -21,19 +21,20 @@ class MyCylinderSide extends CGFobject {
 		this.normals = [];
 		this.texCoords = [];
     
-		var angle = 0;
-		var beta = 2*Math.PI/this.slices;
+		var angle = 2.0 *Math.PI / this.slices;
 
 		for(var i = 0; i <= this.stacks; i++){
-			var radius = (this.topRadius - this.bottomRadius)*(i/this.stacks) + this.bottomRadius;
+			var beta = 0.0;
+			var radius = (this.topRadius - this.bottomRadius) * (i / this.stacks) + this.bottomRadius;
 			var h = this.height * i / this.stacks;
 			for(var j = 0; j <= this.slices; j++){
-				var x_ang = Math.cos(angle) * radius;
-				var z_ang = Math.sin(angle) * radius;
+				var x_ang = Math.cos(beta) * radius;
+				var z_ang = Math.sin(beta) * radius;
 				this.vertices.push(x_ang, z_ang, h);
 				this.normals.push(x_ang, z_ang, 0);
+				beta += angle;
 				this.texCoords.push(j*1/this.slices, 1- (i*1/this.stacks));
-				angle += beta;
+				
 			}
 
 		}

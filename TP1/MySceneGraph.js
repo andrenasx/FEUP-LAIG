@@ -786,10 +786,10 @@ class MySceneGraph {
                                 return "Invalid values for rectangle leaf. Node id: " + nodeID;
                             }
 
-                            const object = new MyRectangle(this.scene, x1_r, y1_r, x2_r, y2_r);
-                            object.applyTextures(amplification.afs, amplification.aft);
+                            const rect = new MyRectangle(this.scene, x1_r, y1_r, x2_r, y2_r);
+                            rect.applyTextures(amplification.afs, amplification.aft);
 
-                            leafs.push(object);
+                            leafs.push(rect);
                             break;
 
                         case ("triangle"):
@@ -800,14 +800,17 @@ class MySceneGraph {
                             const x3 = this.reader.getFloat(descendantsNodes[j], 'x3');
                             const y3 = this.reader.getFloat(descendantsNodes[j], 'y3');
 
-                        if (x1 == null || x2 == null || y1 == null || y2 == null || x3 == null || y3 == null ) {
-                            return "Missing values for triangle leaf. Node id: " + nodeID;
-                        }
-                        if (isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2) || isNaN(x3) || isNaN(y3)) {
-                            return "Invalid values for triangle leaf. Node id: " + nodeID;
-                        }
+                            if (x1 == null || x2 == null || y1 == null || y2 == null || x3 == null || y3 == null ) {
+                                return "Missing values for triangle leaf. Node id: " + nodeID;
+                            }
+                            if (isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2) || isNaN(x3) || isNaN(y3)) {
+                                return "Invalid values for triangle leaf. Node id: " + nodeID;
+                            }
 
-                            leafs.push(new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3));
+                            const triangle = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
+                            triangle.applyTextures(amplification.afs, amplification.aft);
+
+                            leafs.push(triangle);
                             break;
 
                         case ("cylinder"):

@@ -20,6 +20,7 @@ class MyTriangle extends CGFobject {
 		this.y3 = y3;
 		this.initBuffers();
 	}
+	
 	initBuffers() {
 		this.vertices = [
 			this.x1, this.y1, 0,	//0
@@ -39,21 +40,33 @@ class MyTriangle extends CGFobject {
 		];
 
 		this.texCoords = [];
-		var a = Math.sqrt(Math.pow((this.x2-this.x1),2)+Math.pow((this.y2-this.y1),2));
-		var b = Math.sqrt(Math.pow((this.x3-this.x2),2)+Math.pow((this.y3-this.y2),2));
-		var c = Math.sqrt(Math.pow((this.x1-this.x3),2)+Math.pow((this.y1-this.y3),2));
+		
+		this.a = Math.sqrt(Math.pow((this.x2-this.x1),2)+Math.pow((this.y2-this.y1),2));
+		this.b = Math.sqrt(Math.pow((this.x3-this.x2),2)+Math.pow((this.y3-this.y2),2));
+		this.c = Math.sqrt(Math.pow((this.x1-this.x3),2)+Math.pow((this.y1-this.y3),2));
 
-		var cos_alpha = (Math.pow(a,2)-Math.pow(b,2)+Math.pow(c,2))/(2*a*c);
-		var sin_alpha = Math.sqrt(1-Math.pow(cos_alpha,2));
+		this.cos_alpha = (Math.pow(this.a,2)-Math.pow(this.b,2)+Math.pow(this.c,2))/(2*this.a*this.c);
+		this.sin_alpha = Math.sqrt(1-Math.pow(this.cos_alpha,2));
 		
 		this.texCoords.push(0,0);
-		this.texCoords.push(a,0);
-		this.texCoords.push(c*cos_alpha,c*sin_alpha);
+		this.texCoords.push(this.a,0);
+		this.texCoords.push(this.c*this.cos_alpha,this.c*this.sin_alpha);
 
 		//The defined indices (and corresponding vertices)
 		//will be read in groups of three to draw triangles
 		this.primitiveType = this.scene.gl.TRIANGLES;
 
 		this.initGLBuffers();
+	}
+
+	applyTextures(afs, aft) {
+		
+		this.texCoords = [
+			0, 0,
+			this.a / afs, 0,
+			(this.c * this.cos_alpha) / afs, (this.c * this.sin_alpha) / aft
+		];
+
+		this.updateTexCoordsGLBuffers();
 	}
 }
