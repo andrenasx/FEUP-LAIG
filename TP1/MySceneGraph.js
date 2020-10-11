@@ -245,11 +245,13 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
+        // Get id of the default view
         this.viewsDefaultID = this.reader.getString(viewsNode, 'default');
         if (this.viewsDefaultID === null) {
             return "No default view ID defined!";
         }
 
+        // Checks if there are child nodes declared
         const children = viewsNode.children;
         if(children.length === 0) {
             this.onXMLError("No views defined!");
@@ -483,6 +485,7 @@ class MySceneGraph {
 
         //For each texture in textures block, check ID and file URL
 
+        // Checks if there are child nodes declared
         if(children.length === 0) {
             this.onXMLMinorError("No textures defined!");
             return null;
@@ -500,7 +503,7 @@ class MySceneGraph {
                 return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
             }
 
-            // Get path
+            // Get path and create texture
             const file = this.reader.getString(children[i], 'path');
             if (file.includes('scenes/images')) {
                 this.textures[textureID] = new CGFtexture(this.scene, file);
@@ -527,8 +530,8 @@ class MySceneGraph {
         this.materials = [];
 
         var grandChildren = [];
-        var nodeNames = [];
 
+        // Checks if there are child nodes declared
         if(children.length === 0) {
             this.onXMLMinorError("No materials defined!");
             return null;
@@ -554,6 +557,7 @@ class MySceneGraph {
             //Parsing
             grandChildren = children[i].children;
 
+            let nodeNames = [];
             for (let j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
@@ -650,50 +654,54 @@ class MySceneGraph {
             else {
                 const transformationsNode = grandChildren[transformationsIndex].children;
                 for (let j = 0; j < transformationsNode.length; j++){
-                    //Translation
-                    if (transformationsNode[j].nodeName === "translation"){
-                        let xyz = null;
+                    // Check transformation
+                    switch (transformationsNode[j].nodeName) {
+                        case ("translation") :
+                            let xyz = null;
 
-                        //Gets components
-                        xyz = this.parseCoordinates3D(transformationsNode[j], "node with ID: " + nodeID);
+                            //Gets values
+                            xyz = this.parseCoordinates3D(transformationsNode[j], "node with ID: " + nodeID);
 
-                        //Multiplies new translation matrix
-                        mat4.translate(transformationsMatrix, transformationsMatrix, xyz);
-                    }
-                    //Rotation
-                    else if (transformationsNode[j].nodeName === "rotation") {
-                        //Gets components
-                        const axis = this.reader.getString(transformationsNode[j], 'axis');
-                        const angle = this.reader.getFloat(transformationsNode[j], 'angle');
+                            //Multiplies new translation matrix
+                            mat4.translate(transformationsMatrix, transformationsMatrix, xyz);
+                            break;
 
-                        //Checks for errors
-                        if (axis == null || (axis !== "x" && axis !== "y" && axis !== "z")) {
-                            return "Wrong value for axis on rotation. Node id: " + nodeID;
-                        }
-                        if (angle == null || isNaN(angle)) {
-                            return "Wrong value for angle on rotation. Node id: " + nodeID;
-                        }
+                        case ("rotation"):
+                            //Gets values
+                            const axis = this.reader.getString(transformationsNode[j], 'axis');
+                            const angle = this.reader.getFloat(transformationsNode[j], 'angle');
 
-                        //Multiplies new rotation matrix
-                        mat4.rotate(transformationsMatrix, transformationsMatrix, angle*DEGREE_TO_RAD, this.axisCoords[axis]);
-                    }
-                    //Scale
-                    else if (transformationsNode[j].nodeName === "scale") {
-                        //Gets componentes
-                        const sx = this.reader.getFloat(transformationsNode[j], "sx")
-                        const sy = this.reader.getFloat(transformationsNode[j], "sy")
-                        const sz = this.reader.getFloat(transformationsNode[j], "sz")
+                            //Checks for errors
+                            if (axis == null || (axis !== "x" && axis !== "y" && axis !== "z")) {
+                                return "Wrong value for axis on rotation. Node id: " + nodeID;
+                            }
+                            if (angle == null || isNaN(angle)) {
+                                return "Wrong value for angle on rotation. Node id: " + nodeID;
+                            }
 
-                        //Checks for errors
-                        if (sx == null || sy == null || sz == null) {
-                            return "Missing values for scale. Node id: " + nodeID
-                        }
-                        if (isNaN(sx) || isNaN(sy) || isNaN(sz)) {
-                            return "Wrong values for scale. Node id: " + nodeID
-                        }
+                            //Multiplies new rotation matrix
+                            mat4.rotate(transformationsMatrix, transformationsMatrix, angle*DEGREE_TO_RAD, this.axisCoords[axis]);
+                            break;
 
-                        //Multiplies new scale matrix
-                        mat4.scale(transformationsMatrix, transformationsMatrix, [sx, sy, sz]);
+                        case ("scale"):
+                            //Gets values
+                            const sx = this.reader.getFloat(transformationsNode[j], "sx");
+                            const sy = this.reader.getFloat(transformationsNode[j], "sy");
+                            const sz = this.reader.getFloat(transformationsNode[j], "sz");
+
+                            //Checks for errors
+                            if (sx == null || sy == null || sz == null) {
+                                return "Missing values for scale. Node id: " + nodeID
+                            }
+                            if (isNaN(sx) || isNaN(sy) || isNaN(sz)) {
+                                return "Wrong values for scale. Node id: " + nodeID
+                            }
+
+                            //Multiplies new scale matrix
+                            mat4.scale(transformationsMatrix, transformationsMatrix, [sx, sy, sz]);
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
@@ -762,32 +770,35 @@ class MySceneGraph {
                     childNodesID.push(descendantID);
                 }
                 else if (descendantsNodes[j].nodeName === "leaf") {
-                    const type = this.reader.getString(descendantsNodes[j], "type", ['triangle', 'rectangle', 'cylinder', 'sphere', 'torus'])
-                    if (type === "rectangle") {
-                        const x1 = this.reader.getFloat(descendantsNodes[j], 'x1')
-                        const y1 = this.reader.getFloat(descendantsNodes[j], 'y1')
-                        const x2 = this.reader.getFloat(descendantsNodes[j], 'x2')
-                        const y2 = this.reader.getFloat(descendantsNodes[j], 'y2')
+                    const type = this.reader.getString(descendantsNodes[j], "type", ['triangle', 'rectangle', 'cylinder', 'sphere', 'torus']);
+                    // Check leaf type, get values and create primitive object
+                    switch (type) {
+                        case ("rectangle"):
+                            const x1_r = this.reader.getFloat(descendantsNodes[j], 'x1');
+                            const y1_r = this.reader.getFloat(descendantsNodes[j], 'y1');
+                            const x2_r = this.reader.getFloat(descendantsNodes[j], 'x2');
+                            const y2_r = this.reader.getFloat(descendantsNodes[j], 'y2');
 
-                        if (x1 == null || x2 == null || y1 == null || y2 == null) {
-                            return "Missing values for rectangle leaf. Node id: " + nodeID;
-                        }
-                        if (isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2)) {
-                            return "Invalid values for rectangle leaf. Node id: " + nodeID;
-                        }
+                            if (x1_r == null || x2_r == null || y1_r == null || y2_r == null) {
+                                return "Missing values for rectangle leaf. Node id: " + nodeID;
+                            }
+                            if (isNaN(x1_r) || isNaN(x2_r) || isNaN(y1_r) || isNaN(y2_r)) {
+                                return "Invalid values for rectangle leaf. Node id: " + nodeID;
+                            }
 
-                        const object = new MyRectangle(this.scene, x1, y1, x2, y2);
-                        object.applyTextures(amplification.afs, amplification.aft);
+                            const object = new MyRectangle(this.scene, x1_r, y1_r, x2_r, y2_r);
+                            object.applyTextures(amplification.afs, amplification.aft);
 
-                        leafs.push(object);
-                    }
-                    else if (type === "triangle") {
-                        const x1 = this.reader.getFloat(descendantsNodes[j], 'x1')
-                        const y1 = this.reader.getFloat(descendantsNodes[j], 'y1')
-                        const x2 = this.reader.getFloat(descendantsNodes[j], 'x2')
-                        const y2 = this.reader.getFloat(descendantsNodes[j], 'y2')
-                        const x3 = this.reader.getFloat(descendantsNodes[j], 'x3')
-                        const y3 = this.reader.getFloat(descendantsNodes[j], 'y3')
+                            leafs.push(object);
+                            break;
+
+                        case ("triangle"):
+                            const x1 = this.reader.getFloat(descendantsNodes[j], 'x1');
+                            const y1 = this.reader.getFloat(descendantsNodes[j], 'y1');
+                            const x2 = this.reader.getFloat(descendantsNodes[j], 'x2');
+                            const y2 = this.reader.getFloat(descendantsNodes[j], 'y2');
+                            const x3 = this.reader.getFloat(descendantsNodes[j], 'x3');
+                            const y3 = this.reader.getFloat(descendantsNodes[j], 'y3');
 
                         if (x1 == null || x2 == null || y1 == null || y2 == null || x3 == null || y3 == null ) {
                             return "Missing values for triangle leaf. Node id: " + nodeID;
@@ -796,48 +807,54 @@ class MySceneGraph {
                             return "Invalid values for triangle leaf. Node id: " + nodeID;
                         }
 
-                        leafs.push(new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3));
-                    }
-                    else if (type === "cylinder") {
-                        const height = this.reader.getFloat(descendantsNodes[j],'height')
-                        const topRadius = this.reader.getFloat(descendantsNodes[j],'topRadius')
-                        const bottomRadius = this.reader.getFloat(descendantsNodes[j],'bottomRadius')
-                        const stacks = this.reader.getInteger(descendantsNodes[j],'stacks')
-                        const slices = this.reader.getInteger(descendantsNodes[j],'slices')
+                            leafs.push(new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3));
+                            break;
 
-                        if (height==null || topRadius==null || bottomRadius==null || stacks==null || slices==null) {
-                            return "Missing values for cylinder leaf. Node id: " + nodeID;
-                        }
-                        else if (isNaN(height) || isNaN(topRadius) || isNaN(bottomRadius) || isNaN(stacks) || isNaN(slices)) {
-                            return "Invalid values for cylinder leaf. Node id: " + nodeID;
-                        }
+                        case ("cylinder"):
+                            const height = this.reader.getFloat(descendantsNodes[j],'height');
+                            const topRadius = this.reader.getFloat(descendantsNodes[j],'topRadius');
+                            const bottomRadius = this.reader.getFloat(descendantsNodes[j],'bottomRadius');
+                            const stacks_c = this.reader.getInteger(descendantsNodes[j],'stacks');
+                            const slices_c = this.reader.getInteger(descendantsNodes[j],'slices');
 
-                        leafs.push(new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks, slices));
-                    }
-                    else if (type === "sphere") {
-                        const radius = this.reader.getFloat(descendantsNodes[j], 'radius')
-                        const stacks = this.reader.getInteger(descendantsNodes[j], 'slices')
-                        const slices = this.reader.getInteger(descendantsNodes[j], 'stacks')
+                            if (height==null || topRadius==null || bottomRadius==null || stacks_c==null || slices_c==null) {
+                                return "Missing values for cylinder leaf. Node id: " + nodeID;
+                            }
+                            else if (isNaN(height) || isNaN(topRadius) || isNaN(bottomRadius) || isNaN(stacks_c) || isNaN(slices_c)) {
+                                return "Invalid values for cylinder leaf. Node id: " + nodeID;
+                            }
 
-                        if (radius == null || slices == null || stacks == null)
-                            return "Missing values for sphere leaf. Node id: " + nodeID;
-                        else if (isNaN(radius) || isNaN(slices) || isNaN(stacks))
-                            return "Invalid values for sphere leaf. Node id: " + nodeID;
+                            leafs.push(new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks_c, slices_c));
+                            break;
 
-                        leafs.push(new MySphere(this.scene, radius, slices, stacks));
-                    }
-                    else if (type === "torus") {
-                        const inner = this.reader.getFloat(descendantsNodes[j],'inner')
-                        const outer = this.reader.getFloat(descendantsNodes[j],'outer')
-                        const loops = this.reader.getInteger(descendantsNodes[j],'loops')
-                        const slices = this.reader.getInteger(descendantsNodes[j],'slices')
+                        case ("sphere"):
+                            const radius = this.reader.getFloat(descendantsNodes[j], 'radius');
+                            const slices_s = this.reader.getInteger(descendantsNodes[j], 'slices');
+                            const stacks_s = this.reader.getInteger(descendantsNodes[j], 'stacks');
 
-                        if (inner == null || outer == null || loops == null || slices == null)
-                            return "Missing values for torus leaf. Node id: " + nodeID;
-                        else if (isNaN(inner) || isNaN(outer) || isNaN(loops) || isNaN(slices))
-                            return "Invalid values for torus leaf. Node id: " + nodeID;
+                            if (radius == null || slices_s == null || stacks_s == null)
+                                return "Missing values for sphere leaf. Node id: " + nodeID;
+                            else if (isNaN(radius) || isNaN(slices_s) || isNaN(stacks_s))
+                                return "Invalid values for sphere leaf. Node id: " + nodeID;
 
-                        leafs.push(new MyTorus(this.scene, inner, outer, slices, loops));
+                            leafs.push(new MySphere(this.scene, radius, slices_s, stacks_s));
+                            break;
+
+                        case ("torus"):
+                            const inner = this.reader.getFloat(descendantsNodes[j],'inner');
+                            const outer = this.reader.getFloat(descendantsNodes[j],'outer');
+                            const loops = this.reader.getInteger(descendantsNodes[j],'loops');
+                            const slices = this.reader.getInteger(descendantsNodes[j],'slices');
+
+                            if (inner == null || outer == null || loops == null || slices == null)
+                                return "Missing values for torus leaf. Node id: " + nodeID;
+                            else if (isNaN(inner) || isNaN(outer) || isNaN(loops) || isNaN(slices))
+                                return "Invalid values for torus leaf. Node id: " + nodeID;
+
+                            leafs.push(new MyTorus(this.scene, inner, outer, slices, loops));
+                            break;
+                        default:
+                            break;
                     }
                 }
             }
