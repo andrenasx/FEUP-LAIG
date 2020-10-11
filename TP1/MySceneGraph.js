@@ -252,7 +252,7 @@ class MySceneGraph {
 
         const children = viewsNode.children;
         if(children.length === 0) {
-            this.onXMLMinorError("No views defined!");
+            this.onXMLError("No views defined!");
         }
 
         this.views = [];
@@ -280,8 +280,11 @@ class MySceneGraph {
                 const far = this.reader.getFloat(children[i], 'far');
                 const angle = this.reader.getFloat(children[i], 'angle');
 
-                if (near == null || isNaN(near) || far == null || isNaN(far) || angle == null || isNaN(angle)) {
-                    return "Invalid component value or value not defined. View ID: " + viewID;
+                if (near == null || far == null || angle == null) {
+                    return "Missing values for view. View ID: " + viewID;
+                }
+                if (isNaN(near) || isNaN(far) || isNaN(angle)) {
+                    return "Invalid values for view. View ID: " + viewID;
                 }
 
                 let from = null;
@@ -313,8 +316,11 @@ class MySceneGraph {
                 const top = this.reader.getFloat(children[i], 'top');
                 const bottom = this.reader.getFloat(children[i], 'bottom');
 
-                if (near == null || isNaN(near) || far == null || isNaN(far) || left == null || isNaN(left) || right == null || isNaN(right) || top == null || isNaN(top) || bottom == null || isNaN(bottom)) {
-                    return "Invalid component value or value not defined. View ID: " + viewID;
+                if (near == null || far == null || left == null || right == null || top == null || bottom == null) {
+                    return "Missing values for view. View ID: " + viewID;
+                }
+                if (isNaN(near) || isNaN(far) || isNaN(left) || isNaN(right) || isNaN(top) || isNaN(bottom)) {
+                    return "Invalid values for view. View ID: " + viewID;
                 }
 
                 let from = null;
@@ -347,7 +353,6 @@ class MySceneGraph {
             }
         }
 
-        this.log("TODO: Error correction before inserting in this.views.");
         this.log("Parsed Views.");
         return null;
     }
@@ -605,7 +610,6 @@ class MySceneGraph {
         this.nodes = [];
 
         var grandChildren = [];
-        var nodeNames = [];
 
         // Any number of nodes.
         for (var i = 0; i < children.length; i++) {
@@ -626,6 +630,7 @@ class MySceneGraph {
 
             grandChildren = children[i].children;
 
+            let nodeNames = [];
             for (let j = 0; j < grandChildren.length; j++) {
                 nodeNames.push(grandChildren[j].nodeName);
             }
@@ -637,57 +642,61 @@ class MySceneGraph {
             var descendantsIndex = nodeNames.indexOf("descendants");
 
             // Transformations
+            let transformationsMatrix = mat4.create(); //Base matrix
 
-            //Base matrix
-            let transformationsMatrix = mat4.create();
-            const transformationsNode = grandChildren[transformationsIndex].children;
-            for (let j = 0; j < transformationsNode.length; j++){
-                //Translation
-                if (transformationsNode[j].nodeName === "translation"){
-                    let xyz = null;
+            if (transformationsIndex == -1) {
+                this.onXMLMinorError("No <transformations> node declared. Assuming no transformations for this node. Node ID: " + nodeID);
+            }
+            else {
+                const transformationsNode = grandChildren[transformationsIndex].children;
+                for (let j = 0; j < transformationsNode.length; j++){
+                    //Translation
+                    if (transformationsNode[j].nodeName === "translation"){
+                        let xyz = null;
 
-                    //Gets componentes
-                    xyz = this.parseCoordinates3D(transformationsNode[j], "node with ID: " + nodeID);
+                        //Gets components
+                        xyz = this.parseCoordinates3D(transformationsNode[j], "node with ID: " + nodeID);
 
-                    //Multiplies new translation matrix
-                    mat4.translate(transformationsMatrix, transformationsMatrix, xyz);
+                        //Multiplies new translation matrix
+                        mat4.translate(transformationsMatrix, transformationsMatrix, xyz);
+                    }
+                    //Rotation
+                    else if (transformationsNode[j].nodeName === "rotation") {
+                        //Gets components
+                        const axis = this.reader.getString(transformationsNode[j], 'axis');
+                        const angle = this.reader.getFloat(transformationsNode[j], 'angle');
+
+                        //Checks for errors
+                        if (axis == null || (axis !== "x" && axis !== "y" && axis !== "z")) {
+                            return "Wrong value for axis on rotation. Node id: " + nodeID;
+                        }
+                        if (angle == null || isNaN(angle)) {
+                            return "Wrong value for angle on rotation. Node id: " + nodeID;
+                        }
+
+                        //Multiplies new rotation matrix
+                        mat4.rotate(transformationsMatrix, transformationsMatrix, angle*DEGREE_TO_RAD, this.axisCoords[axis]);
+                    }
+                    //Scale
+                    else if (transformationsNode[j].nodeName === "scale") {
+                        //Gets componentes
+                        const sx = this.reader.getFloat(transformationsNode[j], "sx")
+                        const sy = this.reader.getFloat(transformationsNode[j], "sy")
+                        const sz = this.reader.getFloat(transformationsNode[j], "sz")
+
+                        //Checks for errors
+                        if (sx == null || sy == null || sz == null) {
+                            return "Missing values for scale. Node id: " + nodeID
+                        }
+                        if (isNaN(sx) || isNaN(sy) || isNaN(sz)) {
+                            return "Wrong values for scale. Node id: " + nodeID
+                        }
+
+                        //Multiplies new scale matrix
+                        mat4.scale(transformationsMatrix, transformationsMatrix, [sx, sy, sz]);
+                    }
                 }
-                //Rotation
-                else if (transformationsNode[j].nodeName === "rotation") {
-                    //Gets componentes
-                    const axis = this.reader.getString(transformationsNode[j], 'axis');
-                    const angle = this.reader.getFloat(transformationsNode[j], 'angle');
-
-                    //Checks for errors
-                    if (axis == null || (axis !== "x" && axis !== "y" && axis !== "z")) {
-                        return "Wrong value for axis on rotation. Node id: " + nodeID;
-                    }
-                    if (angle == null || isNaN(angle)) {
-                        return "Wrong value for angle on rotation. Node id: " + nodeID;
-                    }
-
-                    //Multiplies new rotation matrix
-                    mat4.rotate(transformationsMatrix, transformationsMatrix, angle*DEGREE_TO_RAD, this.axisCoords[axis]);
-                }
-                //Scale
-                else if (transformationsNode[j].nodeName === "scale") {
-                    //Gets componentes
-                    const sx = this.reader.getFloat(transformationsNode[j], "sx")
-                    const sy = this.reader.getFloat(transformationsNode[j], "sy")
-                    const sz = this.reader.getFloat(transformationsNode[j], "sz")
-
-                    //Checks for errors
-                    if (sx == null || sy == null || sz == null) {
-                        return "Missing values for scale. Node id: " + nodeID
-                    }
-                    if (isNaN(sx) || isNaN(sy) || isNaN(sz)) {
-                        return "Wrong values for scale. Node id: " + nodeID
-                    }
-
-                    //Multiplies new scale matrix
-                    mat4.scale(transformationsMatrix, transformationsMatrix, [sx, sy, sz]);
-                }
-            }          
+            }
 
             // Material
             const materialID = this.reader.getString(grandChildren[materialIndex], "id");
