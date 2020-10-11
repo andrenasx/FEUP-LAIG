@@ -796,7 +796,10 @@ class MySceneGraph {
                             return "Invalid values for triangle leaf. Node id: " + nodeID;
                         }
 
-                        leafs.push(new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3));
+                        const object = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
+                        object.applyTextures(amplification.afs, amplification.aft);
+
+                        leafs.push(object);
                     }
                     else if (type === "cylinder") {
                         const height = this.reader.getFloat(descendantsNodes[j],'height')
