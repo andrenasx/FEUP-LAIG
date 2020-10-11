@@ -767,7 +767,10 @@ class MySceneGraph {
                             return "Invalid values for rectangle leaf. Node id: " + nodeID;
                         }
 
-                        leafs.push(new MyRectangle(this.scene, x1, y1, x2, y2));
+                        const object = new MyRectangle(this.scene, x1, y1, x2, y2);
+                        object.applyTextures(amplification.afs, amplification.aft);
+
+                        leafs.push(object);
                     }
                     else if (type === "triangle") {
                         const x1 = this.reader.getFloat(descendantsNodes[j], 'x1')
