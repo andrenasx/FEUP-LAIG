@@ -38,15 +38,12 @@
         <texture id="grass_texture" path="./scenes/images/grass.jpg" />
         <texture id="water_texture" path="./scenes/images/water.jpg" />
         <texture id="border_texture" path="./scenes/images/border.jpg" />
-        <texture id="chair_texture" path="./scenes/images/wicker.jpg" />
+        <texture id="wicker_texture" path="./scenes/images/wicker.jpg" />
         <texture id="parasol_texture" path="./scenes/images/parasol.jpg" />
         <texture id="swing_seat_texture" path="./scenes/images/tire.jpg" />
         <texture id="pillow_texture" path="./scenes/images/pillow.jpg" />
-        <texture id="table_wood_texture" path="./scenes/images/tablewood.jpg" />
         <texture id="parasol_base_texture" path="./scenes/images/parasol_base.jpg" />
-        <texture id="swing_rope_texture" path="./scenes/images/rope.jpg" />
         <texture id="wood_texture" path="./scenes/images/wood.jpg" />
-        <texture id="table_top_texture" path="./scenes/images/tabletop.jpg" />
     </textures>
 
 
@@ -422,7 +419,7 @@
         <node id="top_center">
             <material id="null" />
 
-            <texture id="chair_texture">
+            <texture id="wicker_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -542,7 +539,7 @@
         <node id="chair">
             <material id="white_diffuse_material" />
 
-            <texture id="chair_texture">
+            <texture id="wicker_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1048,7 +1045,7 @@
         <node id="swing_seat_support">
             <material id="null" />
 
-            <texture id="swing_rope_texture">
+            <texture id="clear">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
