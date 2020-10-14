@@ -50,9 +50,19 @@ class MyInterface extends CGFinterface {
 
     createInterface() {
         this.createAxisCheckbox();
+        this.createCamerasDropdown();
     }
 
     createAxisCheckbox() {
         this.gui.add(this.scene, 'displayAxis').name('Display Axis');
+    }
+
+    createCamerasDropdown() {
+        const group = this.gui.addFolder("Views");
+        group.open();
+
+        this.scene.selectedCamera = this.scene.graph.viewsDefaultID;
+
+        group.add(this.scene, 'selectedCamera', Object.keys(this.scene.graph.views)).name('Cameras').onChange(this.scene.updateCamera.bind(this.scene));
     }
 }

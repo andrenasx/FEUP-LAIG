@@ -32,6 +32,7 @@ class XMLscene extends CGFscene {
 
         this.axis = new CGFaxis(this);
         this.displayAxis = true;
+        this.selectedCamera = null;
 
         this.setUpdatePeriod(100);
 
@@ -48,6 +49,11 @@ class XMLscene extends CGFscene {
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
+    updateCamera() {
+        this.camera = this.graph.views[this.selectedCamera];
+        this.interface.setActiveCamera(this.camera);
+    }
+
     /**
      * Initializes the scene lights with the values read from the XML file.
      */
@@ -91,9 +97,10 @@ class XMLscene extends CGFscene {
 
         this.setGlobalAmbientLight(...this.graph.ambient);
 
-        this.initLights();
-
         this.interface.createInterface();
+
+        this.initLights();
+        this.updateCamera();
 
         this.sceneInited = true;
     }
