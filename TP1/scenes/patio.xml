@@ -52,14 +52,6 @@
 
 
     <materials>
-        <material id="black_specular_material">
-            <shininess value="1" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
         <material id="white_diffuse_material">
             <shininess value="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -91,7 +83,6 @@
             <specular r="0.95" g="0.92" b="0.86" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
-
     </materials>
 
     <nodes>     
