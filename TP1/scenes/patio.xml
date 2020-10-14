@@ -34,13 +34,13 @@
 
 
     <textures>
-        <texture id="demoTexture" path="./scenes/images/vidral.jpg" />
         <texture id="grass_texture" path="./scenes/images/grass.jpg" />
         <texture id="water_texture" path="./scenes/images/water.jpg" />
         <texture id="border_texture" path="./scenes/images/border.jpg" />
+        <texture id="floater_texture" path="./scenes/images/floater.jpg" />
         <texture id="wicker_texture" path="./scenes/images/wicker.jpg" />
         <texture id="parasol_texture" path="./scenes/images/parasol.jpg" />
-        <texture id="swing_seat_texture" path="./scenes/images/tire.jpg" />
+        <texture id="tire_texture" path="./scenes/images/tire.jpg" />
         <texture id="pillow_texture" path="./scenes/images/pillow.jpg" />
         <texture id="parasol_base_texture" path="./scenes/images/parasol_base.jpg" />
         <texture id="wood_texture" path="./scenes/images/wood.jpg" />
@@ -369,7 +369,7 @@
         <node id="floater">
             <material id="white_diffuse_material" />
 
-            <texture id="null">
+            <texture id="floater_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1029,7 +1029,7 @@
         <node id="swing_seat_tire">
             <material id="null" />
 
-            <texture id="swing_seat_texture">
+            <texture id="tire_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
