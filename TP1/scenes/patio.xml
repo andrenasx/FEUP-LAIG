@@ -352,7 +352,7 @@
             <material id="white_specular_material" />
 
             <texture id="water_texture">
-                <amplification afs="2.0" aft="1.0" />
+                <amplification afs="14.0" aft="10.0" />
             </texture>
 
             <transformations>
