@@ -862,7 +862,7 @@ class MySceneGraph {
                 }
             }
 
-            this.nodes[nodeID] = new MySceneGraphNode(nodeID, childNodesID, leafs, transformationsMatrix, this.materials[materialID], this.textures[textureID], textureID);
+            this.nodes[nodeID] = new MySceneGraphNode(this.scene, nodeID, childNodesID, leafs, transformationsMatrix, this.materials[materialID], this.textures[textureID], textureID);
         }
 
         for (const [nodeID, node] of Object.entries(this.nodes)) {
@@ -970,45 +970,10 @@ class MySceneGraph {
         return color;
     }
 
-    processNode(node, material, texture) {
-        this.scene.multMatrix(node.transfMatrix);
-
-        let currentMaterial = material;
-        let currentTexture = texture;
-
-        if (node.material != null) {
-            currentMaterial = node.material;
-        }
-
-        if (node.textureID !== "null") {
-            currentTexture = node.texture;
-        }
-
-        if (currentMaterial != null) {
-            currentMaterial.apply();
-        }
-            
-        if (currentTexture != null)  {
-            currentTexture.bind();
-        }
-
-        for (let leaf of node.leafs) {
-            leaf.display();
-        }
-
-        for (let child of node.childNodes) {
-            this.scene.pushMatrix();
-            this.processNode(child, currentMaterial, currentTexture);
-            this.scene.popMatrix();
-        }
-    }
-
     /**
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        this.scene.pushMatrix();
-        this.processNode(this.nodes[this.idRoot], this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture);
-        this.scene.popMatrix();
+        this.nodes[this.idRoot].display(this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture);
     }
 }
