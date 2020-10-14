@@ -29,7 +29,7 @@
         <light id="demoLight">
             <enable value="1" />
             <!-- enable/disable -->
-            <position x="7" y="7" z="5" w="1.0" />
+            <position x="7" y="10" z="5" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />             <!-- diffuse component -->
             <specular r="0.5" g="0.5" b="0.5" a="1.0" />            <!-- specular component -->
@@ -46,8 +46,9 @@
         <texture id="parasol_texture" path="./scenes/images/parasol.jpg" />
         <texture id="tire_texture" path="./scenes/images/tire.jpg" />
         <texture id="pillow_texture" path="./scenes/images/pillow.jpg" />
-        <texture id="parasol_base_texture" path="./scenes/images/parasol_base.jpg" />
         <texture id="wood_texture" path="./scenes/images/wood.jpg" />
+        <texture id="metal_texture" path="./scenes/images/metal.jpg" />
+        <texture id="grainwood_texture" path="./scenes/images/grainwood.jpg" />
     </textures>
 
 
@@ -56,14 +57,14 @@
             <shininess value="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
         <material id="white_specular_material">
             <shininess value="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
-            <diffuse r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
             <specular r="0.5" g="0.5" b="0.5" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
@@ -432,8 +433,8 @@
         <node id="top_edge">
             <material id="dirty_white_material" />
 
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
+            <texture id="grainwood_texture">
+                <amplification afs="2.0" aft="1.0" />
             </texture>
 
             <transformations>
@@ -450,7 +451,7 @@
         <node id="table_legs">
             <material id="dirty_white_material" />
 
-            <texture id="null">
+            <texture id="grainwood_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -468,7 +469,7 @@
         <node id="table_legs_1">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -485,7 +486,7 @@
         <node id="table_legs_2">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -501,7 +502,7 @@
         <node id="table_legs_3">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -517,7 +518,7 @@
         <node id="table_legs_4">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -841,7 +842,7 @@
         <node id="parasol_support">
             <material id="white_specular_material" />
 
-            <texture id="clear">
+            <texture id="metal_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -857,7 +858,7 @@
         <node id="parasol_base">
             <material id="null" />
 
-            <texture id="parasol_base_texture">
+            <texture id="metal_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1007,7 +1008,7 @@
         <node id="swing_seat">
             <material id="white_diffuse_material" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1040,7 +1041,7 @@
         <node id="swing_seat_support">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="metal_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1056,7 +1057,7 @@
         <node id="swing_seat_support_right">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1066,14 +1067,14 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="1.6" topRadius="0.03" bottomRadius="0.03" stacks="10" slices="20" />
+                <leaf type="cylinder" height="1.6" topRadius="0.01" bottomRadius="0.01" stacks="10" slices="10" />
             </descendants>
         </node>
 
         <node id="swing_seat_support_left">
             <material id="null" />
 
-            <texture id="clear">
+            <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
