@@ -33,7 +33,7 @@
 
 
     <lights>
-        <light id="topCenterLight">
+        <light id="topCenter">
             <enable value="1" />    <!-- enable/disable -->
             <position x="7" y="7" z="5" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />   <!-- ambient component -->
@@ -41,7 +41,7 @@
             <specular r="0.5" g="0.5" b="0.5" a="1.0" />    <!-- specular component -->
         </light>
 
-        <light id="leftLight">
+        <light id="left">
             <enable value="1" />
             <position x="0" y="3" z="8" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
@@ -49,7 +49,7 @@
             <specular r="0.6" g="0.6" b="0.6" a="1.0" />
         </light>
 
-        <light id="backLight">
+        <light id="back">
             <enable value="1" />
             <position x="7" y="5" z="-3" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
