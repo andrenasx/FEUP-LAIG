@@ -567,7 +567,7 @@ class MySceneGraph {
             const ambientIndex = nodeNames.indexOf("ambient");
             const diffuseIndex = nodeNames.indexOf("diffuse");
             const specularIndex = nodeNames.indexOf("specular");
-            const emissiveIndex = nodeNames.indexOf("specular");
+            const emissiveIndex = nodeNames.indexOf("emissive");
 
             //  Checks if all material components are declared.
             if (shininessIndex === -1 || emissiveIndex === -1 || ambientIndex === -1 || diffuseIndex === -1 || specularIndex === -1 || emissiveIndex === -1 ) {
@@ -586,10 +586,10 @@ class MySceneGraph {
             }
 
             // Parses the rest of the material components.
-            const emissive = this.parseColor(grandChildren[emissiveIndex], "emissive component of material. Material ID: " + materialID);
             const ambient = this.parseColor(grandChildren[ambientIndex], "ambient component of material. Material ID: " + materialID);
             const diffuse = this.parseColor(grandChildren[diffuseIndex], "diffuse component of material. Material ID: " + materialID);
             const specular = this.parseColor(grandChildren[specularIndex], "specular component of material. Material ID: " + materialID);
+            const emissive = this.parseColor(grandChildren[emissiveIndex], "emissive component of material. Material ID: " + materialID);
 
             //Creates a new material and sets parsed components.
             this.materials[materialID] = new CGFappearance(this.scene);
@@ -863,6 +863,7 @@ class MySceneGraph {
             }
 
             this.nodes[nodeID] = new MySceneGraphNode(this.scene, nodeID, childNodesID, leafs, transformationsMatrix, this.materials[materialID], this.textures[textureID], textureID);
+            console.log(this.nodes[nodeID]);
         }
 
         for (const [nodeID, node] of Object.entries(this.nodes)) {
