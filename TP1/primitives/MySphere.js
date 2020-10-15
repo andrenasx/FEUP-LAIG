@@ -69,13 +69,10 @@ class MySphere extends CGFobject {
         // in a sphere of radius equal to one, the vector length is one.
         // therefore, the value of the normal is equal to the position vectro
         this.normals.push(x, y, z);
+        
         theta += thetaInc;
         textmaplong += textmaplongpart;
 
-        //--- Texture Coordinates
-        // To be done... 
-        // May need some additional code also in the beginning of the function.
-        
       }
       phi += phiInc;
       textmaplat += textmaplatpart;
