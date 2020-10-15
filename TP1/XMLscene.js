@@ -50,6 +50,10 @@ class XMLscene extends CGFscene {
     initCameras() {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
+
+    /**
+     * Changes active camera.
+     */
     updateCamera() {
         this.camera = this.graph.views[this.selectedCamera]; //changes camera to selected one
         this.interface.setActiveCamera(this.camera); //enable to control with mouse
@@ -92,6 +96,9 @@ class XMLscene extends CGFscene {
         }
     }
 
+    /**
+     * Enable or disable lights.
+     */
     updateLights() {
         var i = 0;
         // Lights index.
