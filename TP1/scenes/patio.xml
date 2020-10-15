@@ -8,13 +8,20 @@
             <from x="7" y="10" z="25" />
             <to x="7" y="1" z="5" />
         </perspective>
+
         <perspective id="perspectiveSide" near="0.1" far="300" angle="30">
             <from x="28" y="6" z="10" />
             <to x="0" y="0" z="3" />
         </perspective>
-        <ortho id="demoOrtho" near="0.2" far="100" left="-0.2" right="0.2" top="0.2" bottom="-0.2">
-            <from x="5" y="0" z="10" />
-            <to x="5" y="0" z="0" />
+
+        <perspective id="perspectiveBack" near="0.1" far="300" angle="20">
+            <from x="7" y="5" z="-15" />
+            <to x="7" y="1" z="2" />
+        </perspective>
+
+        <ortho id="orthoFront" near="0.2" far="100" left="-7" right="7" top="10" bottom="-10">
+            <from x="7" y="7" z="20" />
+            <to x="7" y="2" z="5" />
             <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
         </ortho>
     </views>
@@ -26,21 +33,28 @@
 
 
     <lights>
-        <light id="demoLight">
-            <enable value="1" />
-            <!-- enable/disable -->
-            <position x="7" y="10" z="5" w="1.0" />
-            <ambient r="0" g="0" b="0" a="1.0" />                   <!-- ambient component -->
-            <diffuse r="0.9" g="0.9" b="0.9" a="1.0" />             <!-- diffuse component -->
-            <specular r="0.6" g="0.6" b="0.6" a="1.0" />            <!-- specular component -->
+        <light id="topCenterLight">
+            <enable value="1" />    <!-- enable/disable -->
+            <position x="7" y="7" z="5" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />   <!-- ambient component -->
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" /> <!-- diffuse component -->
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />    <!-- specular component -->
         </light>
-         <light id="sunLight">
-            <enable value="0" />
-            <!-- enable/disable -->
-            <position x="12" y="9" z="8" w="1.0" />
-            <ambient r="1.0" g="1.0" b="0.4" a="1.0" />             <!-- ambient component -->
-            <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />             <!-- diffuse component -->
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />            <!-- specular component -->
+
+        <light id="leftLight">
+            <enable value="1" />
+            <position x="0" y="3" z="8" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
+            <specular r="0.6" g="0.6" b="0.6" a="1.0" />
+        </light>
+
+        <light id="backLight">
+            <enable value="1" />
+            <position x="7" y="5" z="-3" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1.0" />
+            <diffuse r="0.4" g="0.4" b="0.4" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
         </light>
     </lights>
 
@@ -64,7 +78,7 @@
         <material id="white_diffuse_material">
             <shininess value="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
-            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
             <specular r="0.2" g="0.2" b="0.2" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
@@ -72,8 +86,8 @@
         <material id="white_specular_material">
             <shininess value="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
-            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
-            <specular r="0.6" g="0.6" b="0.6" a="1.0" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
