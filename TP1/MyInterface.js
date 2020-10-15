@@ -48,7 +48,7 @@ class MyInterface extends CGFinterface {
         return this.activeKeys[keyCode] || false;
     }
 
-    createInterface() {
+    createGUI() {
         this.createAxisCheckbox();
         this.createCamerasDropdown();
         this.createLightsCheckBox();
@@ -70,6 +70,7 @@ class MyInterface extends CGFinterface {
     createLightsCheckBox(){
         const group = this.gui.addFolder("Lights");
         group.open();
+
         const lights = this.scene.graph.lights;
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
@@ -77,7 +78,5 @@ class MyInterface extends CGFinterface {
                 group.add(this.scene.lightsAux, key).onChange(this.scene.updateLights.bind(this.scene));
             }
         }
-        console.log(this.scene.lightsAux);
-
     }
 }
