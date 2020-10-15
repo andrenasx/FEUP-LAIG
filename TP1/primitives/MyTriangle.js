@@ -34,13 +34,13 @@ class MyTriangle extends CGFobject {
 		];
 
 		this.normals = [
-			0,0,1,
-			0,0,1,
-			0,0,1,
+			0, 0, 1,
+			0, 0, 1,
+			0, 0, 1,
 		];
 
 		this.texCoords = [];
-		
+		//taken from class
 		this.a = Math.sqrt(Math.pow((this.x2-this.x1),2)+Math.pow((this.y2-this.y1),2));
 		var b = Math.sqrt(Math.pow((this.x3-this.x2),2)+Math.pow((this.y3-this.y2),2));
 		var c = Math.sqrt(Math.pow((this.x1-this.x3),2)+Math.pow((this.y1-this.y3),2));
@@ -63,7 +63,6 @@ class MyTriangle extends CGFobject {
 	}
 
 	applyTextures(afs, aft) {
-		
 		this.texCoords = [
 			0, 0,
 			this.a / afs, 0,
