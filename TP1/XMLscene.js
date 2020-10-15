@@ -33,6 +33,7 @@ class XMLscene extends CGFscene {
         this.axis = new CGFaxis(this);
         this.displayAxis = true;
         this.selectedCamera = null;
+        this.lightsAux = [];
 
         this.setUpdatePeriod(100);
 
@@ -73,12 +74,38 @@ class XMLscene extends CGFscene {
                 this.lights[i].setAmbient(...graphLight[2]);
                 this.lights[i].setDiffuse(...graphLight[3]);
                 this.lights[i].setSpecular(...graphLight[4]);
+                this.lights[i].setVisible(false);
 
-                this.lights[i].setVisible(true);
                 if (graphLight[0])
                     this.lights[i].enable();
                 else
                     this.lights[i].disable();
+
+                this.lights[i].update();
+
+                i++;
+            }
+        }
+    }
+
+    updateLights() {
+        var i = 0;
+        // Lights index.
+
+        // Reads the lights from the scene graph.
+        for (var key in this.lightsAux) {
+            if (i >= 8)
+                break;              // Only eight lights allowed by WebCGF on default shaders.
+
+            if (this.lightsAux.hasOwnProperty(key)) {
+                if (this.lightsAux[key]){
+                    this.lights[i].setVisible(true);
+                    this.lights[i].enable();
+                }
+                else{
+                    this.lights[i].setVisible(false);
+                    this.lights[i].disable();
+                }
 
                 this.lights[i].update();
 
@@ -101,6 +128,7 @@ class XMLscene extends CGFscene {
 
         this.initLights();
         this.updateCamera();
+        this.updateLights();
 
         this.sceneInited = true;
     }
@@ -125,7 +153,7 @@ class XMLscene extends CGFscene {
         this.pushMatrix();
 
         for (var i = 0; i < this.lights.length; i++) {
-            this.lights[i].setVisible(true);
+            //this.lights[i].setVisible(true);
             this.lights[i].update();
         }
 

@@ -51,6 +51,7 @@ class MyInterface extends CGFinterface {
     createInterface() {
         this.createAxisCheckbox();
         this.createCamerasDropdown();
+        this.createLightsCheckBox();
     }
 
     createAxisCheckbox() {
@@ -64,5 +65,19 @@ class MyInterface extends CGFinterface {
         this.scene.selectedCamera = this.scene.graph.viewsDefaultID;
 
         group.add(this.scene, 'selectedCamera', Object.keys(this.scene.graph.views)).name('Cameras').onChange(this.scene.updateCamera.bind(this.scene));
+    }
+
+    createLightsCheckBox(){
+        const group = this.gui.addFolder("Lights");
+        group.open();
+        const lights = this.scene.graph.lights;
+        for (var key in lights) {
+            if (lights.hasOwnProperty(key)) {
+                this.scene.lightsAux[key] = lights[key][0];
+                group.add(this.scene.lightsAux, key).onChange(this.scene.updateLights.bind(this.scene));
+            }
+        }
+        console.log(this.scene.lightsAux);
+
     }
 }
