@@ -1,7 +1,14 @@
 /**
  * MyCylinder
  * @constructor
+ * @param  {CGFscene} scene - MyScene object
+ * @param {float} height - height
+ * @param {float} topRadius - radius of the top circle
+ * @param {float} bottomRadius - radius of the bottom circle
+ * @param  {integer} stacks - number of stacks 
+ * @param  {integer} slices - number of slices 
  */
+
 class MyCylinder extends CGFobject {
 	constructor(scene, height, topRadius, bottomRadius, stacks, slices) {
         super(scene);
@@ -12,6 +19,7 @@ class MyCylinder extends CGFobject {
         this.slices = slices;
 
         this.cylinder_side = new MyCylinderSide(scene, height, topRadius, bottomRadius, stacks, slices);
+        //Bases
         this.top_circle = new MyCircle(scene, topRadius, slices);
         this.bottom_circle = new MyCircle(scene, bottomRadius, slices);
 		
