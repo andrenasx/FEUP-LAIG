@@ -31,9 +31,9 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
-        this.displayAxis = true;
-        this.selectedCamera = null;
-        this.lightsAux = [];
+        this.displayAxis = false;    // Boolean for axis display
+        this.selectedCamera = null; // Stores the ID of the currently selected camera
+        this.lightsAux = [];    // Auxiliar map ([lightID, True/False]) to enable or disable lights
 
         this.setUpdatePeriod(100);
 
@@ -51,8 +51,8 @@ class XMLscene extends CGFscene {
         this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
     }
     updateCamera() {
-        this.camera = this.graph.views[this.selectedCamera];
-        this.interface.setActiveCamera(this.camera);
+        this.camera = this.graph.views[this.selectedCamera]; //changes camera to selected one
+        this.interface.setActiveCamera(this.camera); //enable to control with mouse
     }
 
     /**
@@ -63,11 +63,11 @@ class XMLscene extends CGFscene {
         // Lights index.
 
         // Reads the lights from the scene graph.
-        for (var key in this.graph.lights) {
+        for (var key in this.lightsAux) {
             if (i >= 8)
                 break;              // Only eight lights allowed by WebCGF on default shaders.
 
-            if (this.graph.lights.hasOwnProperty(key)) {
+            if (this.lightsAux.hasOwnProperty(key)) {
                 var graphLight = this.graph.lights[key];
 
                 this.lights[i].setPosition(...graphLight[1]);
@@ -76,10 +76,14 @@ class XMLscene extends CGFscene {
                 this.lights[i].setSpecular(...graphLight[4]);
                 this.lights[i].setVisible(false);
 
-                if (graphLight[0])
+                if (this.lightsAux[key]){
+                    this.lights[i].setVisible(true);
                     this.lights[i].enable();
-                else
+                }
+                else{
+                    this.lights[i].setVisible(false);
                     this.lights[i].disable();
+                }
 
                 this.lights[i].update();
 
@@ -92,11 +96,8 @@ class XMLscene extends CGFscene {
         var i = 0;
         // Lights index.
 
-        // Reads the lights from the scene graph.
+        // Reads the lights from the lightsAux map.
         for (var key in this.lightsAux) {
-            if (i >= 8)
-                break;              // Only eight lights allowed by WebCGF on default shaders.
-
             if (this.lightsAux.hasOwnProperty(key)) {
                 if (this.lightsAux[key]){
                     this.lights[i].setVisible(true);
@@ -124,11 +125,10 @@ class XMLscene extends CGFscene {
 
         this.setGlobalAmbientLight(...this.graph.ambient);
 
-        this.interface.createInterface();
+        this.interface.createGUI();
 
         this.initLights();
         this.updateCamera();
-        this.updateLights();
 
         this.sceneInited = true;
     }
