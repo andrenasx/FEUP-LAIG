@@ -515,6 +515,9 @@ class MySceneGraph {
                 this.textures[textureID] = new CGFtexture(this.scene, "./scenes/images/" + file);
             }
         }
+
+        // Creates default texture on error
+        this.textures["error"] = new CGFtexture(this.scene, "./scenes/images/error.jpg");
         
         this.log("Parsed Textures.");
         return null;
@@ -562,19 +565,20 @@ class MySceneGraph {
                 nodeNames.push(grandChildren[j].nodeName);
             }
 
-            //Get index on XML
+            // Get index on XML
             const shininessIndex = nodeNames.indexOf("shininess");
             const ambientIndex = nodeNames.indexOf("ambient");
             const diffuseIndex = nodeNames.indexOf("diffuse");
             const specularIndex = nodeNames.indexOf("specular");
             const emissiveIndex = nodeNames.indexOf("emissive");
 
-            //  Checks if all material components are declared.
+            // Checks if all material components are declared.
             if (shininessIndex === -1 || emissiveIndex === -1 || ambientIndex === -1 || diffuseIndex === -1 || specularIndex === -1 || emissiveIndex === -1 ) {
-                this.onXMLError("Missing components for material. Material ID: " + materialID);
+                this.onXMLMinorError("Missing components for material. Material ID: " + materialID);
+                continue;
             }
 
-            //  Checks if shininess has wrong value or is bellow 1, defining 1 as default.
+            // Checks if shininess has wrong value or is bellow 1, defining 1 as default.
             let shininess = this.reader.getFloat(grandChildren[shininessIndex], "value");
             if (!(shininess != null && !isNaN(shininess))) {
                 this.onXMLMinorError("Wrong value for shininess. Material ID: " + materialID);
@@ -591,7 +595,7 @@ class MySceneGraph {
             const specular = this.parseColor(grandChildren[specularIndex], "specular component of material. Material ID: " + materialID);
             const emissive = this.parseColor(grandChildren[emissiveIndex], "emissive component of material. Material ID: " + materialID);
 
-            //Creates a new material and sets parsed components.
+            // Creates a new material and sets parsed components.
             this.materials[materialID] = new CGFappearance(this.scene);
             this.materials[materialID].setShininess(shininess);
             this.materials[materialID].setEmission(emissive[0], emissive[1], emissive[2], emissive[3]);
@@ -599,6 +603,14 @@ class MySceneGraph {
             this.materials[materialID].setDiffuse(diffuse[0], diffuse[1], diffuse[2], diffuse[3]);
             this.materials[materialID].setSpecular(specular[0], specular[1], specular[2], specular[3]);
         }
+
+        // Creates default material on error
+        this.materials["error"] = new CGFappearance(this.scene);
+        this.materials["error"].setShininess(1);
+        this.materials["error"].setEmission(1, 0, 0, 1);
+        this.materials["error"].setAmbient(1, 0, 0, 1);
+        this.materials["error"].setDiffuse(1, 0, 0, 1);
+        this.materials["error"].setSpecular(1, 0, 0, 1);
 
         this.log("Parsed Materials.");
         return null;
@@ -707,24 +719,28 @@ class MySceneGraph {
             }
 
             // Material
-            const materialID = this.reader.getString(grandChildren[materialIndex], "id");
+            let materialID = this.reader.getString(grandChildren[materialIndex], "id");
             if (materialID == null) {
-                this.onXMLMinorError("Material ID is not valid. Node ID: " + nodeID);
+                this.onXMLMinorError("Material ID not defined. Node ID: " + nodeID);
+                materialID = "error";
             }
             if (materialID !== "null") {
                 if (this.materials[materialID] == null) {
                     this.onXMLMinorError("Material with ID: " + materialID + " does not exist. Error on node ID: " + nodeID);
+                    materialID= "error";
                 }
             }
 
             // Texture
-            const textureID = this.reader.getString(grandChildren[textureIndex], "id");
+            let textureID = this.reader.getString(grandChildren[textureIndex], "id");
             if (textureID == null) {
-                this.onXMLMinorError("Texture ID is not valid. Node ID: " + nodeID);
+                this.onXMLMinorError("Texture ID not defined. Node ID: " + nodeID);
+                textureID = "error";
             }
             if (textureID !== "null" && textureID !== "clear") {
                 if (this.textures[textureID] == null) {
                     this.onXMLMinorError("Texture with ID: " + textureID + " does not exist. Error on node ID: " + nodeID);
+                    textureID = "error";
                 }
             }
 
@@ -752,7 +768,8 @@ class MySceneGraph {
             // Descendants
             const descendantsNodes = grandChildren[descendantsIndex].children;
             if (descendantsNodes.length === 0) {
-                return "No descendants defined! Node id: " + nodeID;
+                this.onXMLMinorError("No descendants defined! Node id: " + nodeID);
+                continue;
             }
 
             const childNodesID = [];
@@ -780,10 +797,12 @@ class MySceneGraph {
                             const y2_r = this.reader.getFloat(descendantsNodes[j], 'y2');
 
                             if (x1_r == null || x2_r == null || y1_r == null || y2_r == null) {
-                                return "Missing values for rectangle leaf. Node id: " + nodeID;
+                                this.onXMLMinorError("Missing values for rectangle leaf. Node id: " + nodeID);
+                                break;
                             }
                             if (isNaN(x1_r) || isNaN(x2_r) || isNaN(y1_r) || isNaN(y2_r)) {
-                                return "Invalid values for rectangle leaf. Node id: " + nodeID;
+                                this.onXMLMinorError("Invalid values for rectangle leaf. Node id: " + nodeID);
+                                break;
                             }
 
                             const rect = new MyRectangle(this.scene, x1_r, y1_r, x2_r, y2_r);
@@ -801,10 +820,12 @@ class MySceneGraph {
                             const y3 = this.reader.getFloat(descendantsNodes[j], 'y3');
 
                             if (x1 == null || x2 == null || y1 == null || y2 == null || x3 == null || y3 == null ) {
-                                return "Missing values for triangle leaf. Node id: " + nodeID;
+                                this.onXMLMinorError("Missing values for triangle leaf. Node id: " + nodeID);
+                                break;
                             }
                             if (isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2) || isNaN(x3) || isNaN(y3)) {
-                                return "Invalid values for triangle leaf. Node id: " + nodeID;
+                                this.onXMLMinorError("Invalid values for triangle leaf. Node id: " + nodeID);
+                                break;
                             }
 
                             const triangle = new MyTriangle(this.scene, x1, y1, x2, y2, x3, y3);
@@ -821,10 +842,12 @@ class MySceneGraph {
                             const slices_c = this.reader.getInteger(descendantsNodes[j],'slices');
 
                             if (height==null || topRadius==null || bottomRadius==null || stacks_c==null || slices_c==null) {
-                                return "Missing values for cylinder leaf. Node id: " + nodeID;
+                                this.onXMLMinorError("Missing values for cylinder leaf. Node id: " + nodeID);
+                                break;
                             }
                             else if (isNaN(height) || isNaN(topRadius) || isNaN(bottomRadius) || isNaN(stacks_c) || isNaN(slices_c)) {
-                                return "Invalid values for cylinder leaf. Node id: " + nodeID;
+                                this.onXMLMinorError("Invalid values for cylinder leaf. Node id: " + nodeID);
+                                break;
                             }
 
                             leafs.push(new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks_c, slices_c));
@@ -835,10 +858,14 @@ class MySceneGraph {
                             const slices_s = this.reader.getInteger(descendantsNodes[j], 'slices');
                             const stacks_s = this.reader.getInteger(descendantsNodes[j], 'stacks');
 
-                            if (radius == null || slices_s == null || stacks_s == null)
-                                return "Missing values for sphere leaf. Node id: " + nodeID;
-                            else if (isNaN(radius) || isNaN(slices_s) || isNaN(stacks_s))
-                                return "Invalid values for sphere leaf. Node id: " + nodeID;
+                            if (radius == null || slices_s == null || stacks_s == null){
+                                this.onXMLMinorError("Missing values for sphere leaf. Node id: " + nodeID);
+                                break;
+                            }
+                            else if (isNaN(radius) || isNaN(slices_s) || isNaN(stacks_s)){
+                                this.onXMLMinorError("Invalid values for sphere leaf. Node id: " + nodeID);
+                                break;
+                            }
 
                             leafs.push(new MySphere(this.scene, radius, slices_s, stacks_s));
                             break;
@@ -849,10 +876,14 @@ class MySceneGraph {
                             const loops = this.reader.getInteger(descendantsNodes[j],'loops');
                             const slices = this.reader.getInteger(descendantsNodes[j],'slices');
 
-                            if (inner == null || outer == null || loops == null || slices == null)
-                                return "Missing values for torus leaf. Node id: " + nodeID;
-                            else if (isNaN(inner) || isNaN(outer) || isNaN(loops) || isNaN(slices))
-                                return "Invalid values for torus leaf. Node id: " + nodeID;
+                            if (inner == null || outer == null || loops == null || slices == null){
+                                this.onXMLMinorError("Missing values for torus leaf. Node id: " + nodeID);
+                                break;
+                            }
+                            else if (isNaN(inner) || isNaN(outer) || isNaN(loops) || isNaN(slices)){
+                                this.onXMLMinorError("Invalid values for torus leaf. Node id: " + nodeID);
+                                break;
+                            }
 
                             leafs.push(new MyTorus(this.scene, inner, outer, slices, loops));
                             break;
@@ -867,7 +898,9 @@ class MySceneGraph {
 
         for (const [nodeID, node] of Object.entries(this.nodes)) {
             for (const childID of node.childNodesID) {
-                node.addChildNode(this.nodes[childID]);
+                if (this.nodes.hasOwnProperty(childID)) {
+                    node.addChildNode(this.nodes[childID]);
+                }
             }
         }
 
