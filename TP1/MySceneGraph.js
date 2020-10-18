@@ -863,7 +863,6 @@ class MySceneGraph {
             }
 
             this.nodes[nodeID] = new MySceneGraphNode(this.scene, nodeID, childNodesID, leafs, transformationsMatrix, this.materials[materialID], this.textures[textureID], textureID);
-            console.log(this.nodes[nodeID]);
         }
 
         for (const [nodeID, node] of Object.entries(this.nodes)) {
