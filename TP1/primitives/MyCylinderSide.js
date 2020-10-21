@@ -31,13 +31,12 @@
 		var angle = 2.0 *Math.PI / this.slices;
 
 		for(var stack = 0; stack <= this.stacks; stack++){
-			var beta = 0.0; //current angle
 			var radius = (this.topRadius - this.bottomRadius) * (stack / this.stacks) + this.bottomRadius; //current radius
 			var h = this.height * stack / this.stacks; //z
 
 			for(var slice = 0; slice <= this.slices; slice++){
-				var x_ang = Math.cos(beta) * radius;
-				var y_ang = Math.sin(beta) * radius;
+				var x_ang = Math.cos(angle*slice) * radius;
+				var y_ang = Math.sin(angle*slice) * radius;
 
 				//Vertices
 				this.vertices.push(x_ang, y_ang, h);
@@ -48,16 +47,15 @@
 				//Text Coords
 				this.texCoords.push(slice / this.slices, 1 - (stack / this.stacks));
 
-				beta += angle;
 			}
 		}
 		//Indices
-		for(var i = 0; i < this.stacks; i++){
-			for(var j = 0; j < this.slices; j++){
-				var ind1 = j + i * (this.slices+1);
-				var ind2 = j + i *(this.slices+1)+1;
-				var ind3 = j + (i+1)*(this.slices+1);
-				var ind4 = j + (i+1)*(this.slices+1)+1;
+		for(var stack = 0; stack < this.stacks; stack++){
+			for(var slice = 0; slice < this.slices; slice++){
+				var ind1 = slice + stack * (this.slices+1);
+				var ind2 = slice + stack *(this.slices+1)+1;
+				var ind3 = slice + (stack+1)*(this.slices+1);
+				var ind4 = slice + (stack+1)*(this.slices+1)+1;
 				this.indices.push(ind4, ind3, ind1);
 				this.indices.push(ind1,ind2,ind4);
 			}

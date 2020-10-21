@@ -283,7 +283,7 @@
         </node>
 
         <node id="pool_border">
-            <material id="white_specular_material" />
+            <material id="white_diffuse_material" />
 
             <texture id="border_texture">
                 <amplification afs="1.0" aft="1.0" />
@@ -397,7 +397,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.1" outer="0.4" slices="50" loops="20"/>
+                <leaf type="torus" inner="0.1" outer="0.4" slices="20" loops="50"/>
             </descendants>
 
         </node>
@@ -465,7 +465,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.08" outer="0.75" slices="50" loops="20"/>
+                <leaf type="torus" inner="0.08" outer="0.75" slices="20" loops="50"/>
             </descendants>
 
         </node>
@@ -912,7 +912,7 @@
         </node>
 
         <node id="swing_structure">
-            <material id="null" />
+            <material id="white_diffuse_material" />
 
             <texture id="wood_texture">
                 <amplification afs="1.0" aft="1.0" />
@@ -1028,7 +1028,7 @@
         </node>
 
         <node id="swing_seat">
-            <material id="white_diffuse_material" />
+            <material id="null" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
@@ -1045,7 +1045,7 @@
         </node>
 
         <node id="swing_seat_tire">
-            <material id="null" />
+            <material id="white_diffuse_material" />
 
             <texture id="tire_texture">
                 <amplification afs="1.0" aft="1.0" />
@@ -1056,7 +1056,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.08" outer="0.3" slices="50" loops="20"/>
+                <leaf type="torus" inner="0.08" outer="0.3" slices="20" loops="50"/>
             </descendants>
         </node>
 

@@ -25,37 +25,38 @@ class MyTorus extends CGFobject {
 		this.normals = [];
 		this.texCoords = [];
 
-		var alpha = 2 * Math.PI / this.loops; //loops angle
-		var beta = 2 * Math.PI / this.slices; //slices angle
+		for(var loop = 0; loop <= this.loops; loop++){
+			var alpha = loop * 2 * Math.PI / this.loops; //loops angle
 
-		for(var slice = 0; slice <= this.slices; slice++){
-			for(var loop = 0; loop <= this.loops; loop++){
-				var x = (this.outer + this.inner * Math.cos(alpha*loop)) * Math.cos(beta*slice);
-				var y = (this.outer + this.inner * Math.cos(alpha*loop)) * Math.sin(beta*slice);
-				var z = this.inner * Math.sin(alpha*loop);
+			for(var slice = 0; slice <= this.slices; slice++){
+				var beta = slice * 2 * Math.PI / this.slices; //slices angle
+
+				var x = (this.outer + this.inner * Math.cos(beta)) * Math.cos(alpha);
+				var y = (this.outer + this.inner * Math.cos(beta)) * Math.sin(alpha);
+				var z = this.inner * Math.sin(beta);
 
 				//Vertices
 				this.vertices.push(x,y,z);
 
 				//Text Coords
-				this.texCoords.push(slice/this.slices, loop/this.loops);
+				this.texCoords.push(loop/this.loops, slice/this.slices);
 				
 				//Normals
-				x -= Math.cos(beta*slice)*this.outer; // x normal component
-				y -= Math.sin(beta*slice)*this.outer; // y normal component
+				x -= Math.cos(alpha)*this.outer; // x normal component
+				y -= Math.sin(alpha)*this.outer; // y normal component
 				this.normals.push(x, y, z);
 			}
 		}
 
 		//Indices
-		for (let i = 0; i < this.slices; ++i) {
-			for(let j = 0; j < this.loops; ++j) {
-				this.indices.push(
-					(i+1)*(this.loops+1) + j, i*(this.loops+1) + j+1, i*(this.loops+1) + j,
-					i*(this.loops+1) + j+1, (i+1)*(this.loops+1) + j, (i+1)*(this.loops+1) + j+1
-				);
-			}
-		}
+		for (var loop = 0; loop < this.loops; loop++) {
+            for (var slice = 0; slice < this.slices; slice++) {
+                var first = loop*(this.slices + 1) + slice;
+                var second = first + this.slices + 1;
+                this.indices.push(first, second, first + 1);
+                this.indices.push(second, second + 1, first + 1);
+            }
+        }
 
 		this.primitiveType = this.scene.gl.TRIANGLES;
 		this.initGLBuffers();
