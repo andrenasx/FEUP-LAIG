@@ -744,22 +744,24 @@ class MySceneGraph {
                 }
             }
 
-            const amplificationNode = grandChildren[textureIndex].children;
             let amplification = {
                 afs: 1,
                 aft: 1
             }
-            for (let j = 0; j < amplificationNode.length; j++) {
-                if (amplificationNode[j].nodeName === "amplification") {
-                    const afs = this.reader.getFloat(amplificationNode[j], 'afs');
-                    const aft = this.reader.getFloat(amplificationNode[j], 'aft');
-                    if (aft == null || afs == null || isNaN(aft) || isNaN(afs)) {
-                        this.onXMLMinorError("Amplification values not valid, assuming 1.0. Node ID: " + nodeID);
-                    }
-                    else {
-                        amplification = {
-                            afs: afs,
-                            aft: aft
+            if (textureID !== "clear") {
+                const amplificationNode = grandChildren[textureIndex].children;
+                for (let j = 0; j < amplificationNode.length; j++) {
+                    if (amplificationNode[j].nodeName === "amplification") {
+                        const afs = this.reader.getFloat(amplificationNode[j], 'afs');
+                        const aft = this.reader.getFloat(amplificationNode[j], 'aft');
+                        if (aft == null || afs == null || isNaN(aft) || isNaN(afs)) {
+                            this.onXMLMinorError("Amplification values not valid, assuming 1.0. Node ID: " + nodeID);
+                        }
+                        else {
+                            amplification = {
+                                afs: afs,
+                                aft: aft
+                            }
                         }
                     }
                 }
@@ -893,9 +895,11 @@ class MySceneGraph {
                 }
             }
 
+            // Puts created node in nodes
             this.nodes[nodeID] = new MySceneGraphNode(this.scene, nodeID, childNodesID, leafs, transformationsMatrix, this.materials[materialID], this.textures[textureID], textureID);
         }
 
+        // Pre-process all nodes adding its child nodes objects
         for (const [nodeID, node] of Object.entries(this.nodes)) {
             for (const childID of node.childNodesID) {
                 if (this.nodes.hasOwnProperty(childID)) {
