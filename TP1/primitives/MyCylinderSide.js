@@ -30,21 +30,26 @@
     
 		var angle = 2.0 *Math.PI / this.slices;
 
-		for(var i = 0; i <= this.stacks; i++){
+		for(var stack = 0; stack <= this.stacks; stack++){
 			var beta = 0.0; //current angle
-			var radius = (this.topRadius - this.bottomRadius) * (i / this.stacks) + this.bottomRadius; //current radius
-			var h = this.height * i / this.stacks; //z
-			for(var j = 0; j <= this.slices; j++){
+			var radius = (this.topRadius - this.bottomRadius) * (stack / this.stacks) + this.bottomRadius; //current radius
+			var h = this.height * stack / this.stacks; //z
+
+			for(var slice = 0; slice <= this.slices; slice++){
 				var x_ang = Math.cos(beta) * radius;
 				var y_ang = Math.sin(beta) * radius;
+
 				//Vertices
 				this.vertices.push(x_ang, y_ang, h);
+
 				//Normals
 				this.normals.push(x_ang, y_ang, 0);
-				beta += angle;
+
 				//Text Coords
-				this.texCoords.push(j * 1 / this.slices, 1 - (i * 1 / this.stacks));
-				}
+				this.texCoords.push(slice / this.slices, 1 - (stack / this.stacks));
+
+				beta += angle;
+			}
 		}
 		//Indices
 		for(var i = 0; i < this.stacks; i++){

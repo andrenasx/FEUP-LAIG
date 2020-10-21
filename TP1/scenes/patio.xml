@@ -78,7 +78,7 @@
         <material id="white_diffuse_material">
             <shininess value="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
-            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
             <specular r="0.3" g="0.3" b="0.3" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
@@ -87,7 +87,7 @@
             <shininess value="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="0.4" g="0.4" b="0.4" a="1.0" />
-            <specular r="0.9" g="0.9" b="0.9" a="1.0" />
+            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
@@ -389,7 +389,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.1" outer="0.4" slices="200" loops="50"/>
+                <leaf type="torus" inner="0.1" outer="0.4" slices="50" loops="20"/>
             </descendants>
 
         </node>
@@ -457,7 +457,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.08" outer="0.75" slices="60" loops="50"/>
+                <leaf type="torus" inner="0.08" outer="0.75" slices="50" loops="20"/>
             </descendants>
 
         </node>
@@ -493,7 +493,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="0.7" topRadius="0.1" bottomRadius="0.08" stacks="60" slices="50"/>
+                <leaf type="cylinder" height="0.7" topRadius="0.1" bottomRadius="0.08" stacks="10" slices="20"/>
             </descendants>
         </node>
 
@@ -1048,7 +1048,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.08" outer="0.3" slices="200" loops="50"/>
+                <leaf type="torus" inner="0.08" outer="0.3" slices="50" loops="20"/>
             </descendants>
         </node>
 
