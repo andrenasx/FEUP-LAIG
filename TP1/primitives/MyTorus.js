@@ -33,19 +33,16 @@ class MyTorus extends CGFobject {
 				var x = (this.outer + this.inner * Math.cos(alpha*j)) * Math.cos(beta*i);
 				var y = (this.outer + this.inner * Math.cos(alpha*j)) * Math.sin(beta*i);
 				var z = this.inner * Math.sin(alpha*j);
+
 				//Vertices
 				this.vertices.push(x,y,z);
 				//Text Coords
 				this.texCoords.push(
-					i*1/this.slices, 
-					j*1/this.loops	
+					i/this.slices, 
+					j/this.loops	
 				);
 				//Normals
-				this.normals.push(
-					Math.cos(alpha*j) * Math.cos(beta*i), 
-                    Math.cos(alpha*j) * Math.sin(beta*i),
-                    0
-				);
+				this.normals.push(x,y,z);
 			}
 		}
 
