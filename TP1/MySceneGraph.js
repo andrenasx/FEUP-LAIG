@@ -503,16 +503,18 @@ class MySceneGraph {
                 return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
             }
 
-            // Get path and create texture
+            // Get path
             const file = this.reader.getString(children[i], 'path');
-            if (file.includes('scenes/images')) {
+            
+            // Check if texture file exists and create texture
+            let http = new XMLHttpRequest();
+            http.open('HEAD', file, false);
+            http.send();
+            if (http.status === 200) {
                 this.textures[textureID] = new CGFtexture(this.scene, file);
             }
-            else if (file.includes('images/')) {
-                this.textures[textureID] = new CGFtexture(this.scene, './scenes/' + file);
-            }
             else {
-                this.textures[textureID] = new CGFtexture(this.scene, "./scenes/images/" + file);
+                this.onXMLMinorError("Texture file " + file + " doesn't exist");
             }
         }
 
