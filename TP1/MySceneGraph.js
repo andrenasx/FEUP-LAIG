@@ -506,11 +506,8 @@ class MySceneGraph {
             // Get path
             const file = this.reader.getString(children[i], 'path');
             
-            // Check if texture file exists and create texture
-            let http = new XMLHttpRequest();
-            http.open('HEAD', file, false);
-            http.send();
-            if (http.status === 200) {
+            // Check if texture file exists. If so, create texture
+            if (this.checkFileExists(file)) {
                 this.textures[textureID] = new CGFtexture(this.scene, file);
             }
             else {
@@ -914,6 +911,16 @@ class MySceneGraph {
         return null;
     }
 
+    /**
+     * Check if file name given exists in workspace
+     * @param {string} file
+     */
+    checkFileExists(file) {
+        let http = new XMLHttpRequest();
+        http.open('HEAD', file, false);
+        http.send();
+        return (http.status === 200);
+    }
 
     parseBoolean(node, name, messageError) {
         var boolVal = this.reader.getBoolean(node, name);
@@ -922,7 +929,7 @@ class MySceneGraph {
            return true;
         }
         return boolVal;
-   }
+    }
     /**
      * Parse the coordinates from a node with ID = id
      * @param {block element} node
