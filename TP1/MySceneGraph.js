@@ -245,16 +245,21 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
+        // Boolean used to verify errors and then create a default view
+        let errorview = false;
+
         // Get id of the default view
         this.viewsDefaultID = this.reader.getString(viewsNode, 'default');
         if (this.viewsDefaultID === null) {
-            return "No default view ID defined!";
+            this.onXMLError("No default view ID defined! Creating a default view.");
+            errorview = true;
         }
 
         // Checks if there are child nodes declared
         const children = viewsNode.children;
         if(children.length === 0) {
-            this.onXMLError("No views defined!");
+            this.onXMLError("No views defined! Creating a default view.");
+            errorview = true;
         }
 
         this.views = [];
@@ -268,12 +273,14 @@ class MySceneGraph {
             // Get id of the current view.
             let viewID = this.reader.getString(children[i], 'id');
             if (viewID == null) {
-                return "no ID defined for <" + children[i] + ">";
+                this.onXMLMinorError("no ID defined for <" + children[i] + ">");
+                continue;
             }
 
             // Checks for repeated IDs.
             if (this.views[viewID] != null) {
-                return "ID must be unique for each view (conflict ID = " + viewID + " )";
+                this.onXMLMinorError("ID must be unique for each view (conflict ID = " + viewID + " )");
+                continue;
             }
 
             // Checks if view is perspective or ortho and gets components.
@@ -283,10 +290,12 @@ class MySceneGraph {
                 const angle = this.reader.getFloat(children[i], 'angle');
 
                 if (near == null || far == null || angle == null) {
-                    return "Missing values for view. View ID: " + viewID;
+                    this.onXMLMinorError("Missing values for view. View ID: " + viewID);
+                    continue;
                 }
                 if (isNaN(near) || isNaN(far) || isNaN(angle)) {
-                    return "Invalid values for view. View ID: " + viewID;
+                    this.onXMLMinorError("Invalid values for view. View ID: " + viewID);
+                    continue;
                 }
 
                 let from = null;
@@ -319,10 +328,12 @@ class MySceneGraph {
                 const bottom = this.reader.getFloat(children[i], 'bottom');
 
                 if (near == null || far == null || left == null || right == null || top == null || bottom == null) {
-                    return "Missing values for view. View ID: " + viewID;
+                    this.onXMLMinorError("Missing values for view. View ID: " + viewID);
+                    continue;
                 }
                 if (isNaN(near) || isNaN(far) || isNaN(left) || isNaN(right) || isNaN(top) || isNaN(bottom)) {
-                    return "Invalid values for view. View ID: " + viewID;
+                    this.onXMLMinorError("Invalid values for view. View ID: " + viewID);
+                    continue;
                 }
 
                 let from = null;
@@ -355,6 +366,16 @@ class MySceneGraph {
             }
         }
 
+        if(this.views[this.viewsDefaultID] === null){
+            this.onXMLMinorError("No view IDs correspond to the given defaultViewID! Creating a default view.");
+            errorview = true;
+        }
+
+        if(errorview === true){
+            this.viewsDefaultID = "defaultViewError";
+            this.views["defaultViewError"] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+        }
+
         this.log("Parsed Views.");
         return null;
     }
@@ -378,19 +399,22 @@ class MySceneGraph {
         var backgroundIndex = nodeNames.indexOf("background");
 
         var color = this.parseColor(children[ambientIndex], "ambient");
-        if (!Array.isArray(color))
-            return color;
+        if (!Array.isArray(color)){
+            this.onXMLMinorError("Wrong value on illumination's ambient component. Assuming default");
+            this.ambient = [1,0,0,1];
+        }
         else
             this.ambient = color;
 
         color = this.parseColor(children[backgroundIndex], "background");
-        if (!Array.isArray(color))
-            return color;
+        if (!Array.isArray(color)){
+            this.onXMLMinorError("Wrong value on illumination's background component. Assuming default");
+            this.background = [1,0,0,1];
+        }
         else
             this.background = color;
 
         this.log("Parsed Illumination.");
-
         return null;
     }
 
@@ -427,12 +451,16 @@ class MySceneGraph {
 
             // Get id of the current light.
             var lightId = this.reader.getString(children[i], 'id');
-            if (lightId == null)
-                return "no ID defined for light";
+            if (lightId == null){
+                this.onXMLMinorError("no ID defined for light");
+                continue;
+            }
 
             // Checks for repeated IDs.
-            if (this.lights[lightId] != null)
-                return "ID must be unique for each light (conflict: ID = " + lightId + ")";
+            if (this.lights[lightId] != null){
+                this.onXMLMinorError("ID must be unique for each light (conflict: ID = " + lightId + ")");
+                continue;
+            }
 
             grandChildren = children[i].children;
             // Specifications for the current light.
@@ -458,15 +486,19 @@ class MySceneGraph {
 
                     global.push(aux);
                 }
-                else
-                    return "light " + attributeNames[i] + " undefined for ID = " + lightId;
+                else{
+                    this.onXMLMinorError("light " + attributeNames[i] + " undefined for ID = " + lightId);
+                    continue;
+                }
             }
             this.lights[lightId] = global;
             numLights++;
         }
 
-        if (numLights == 0)
-            return "at least one light must be defined";
+        if (numLights == 0){
+            this.onXMLError("At least one light must be defined. Creating a default one.");
+            this.lights["defaultLightError"] = [true, [0,1,0,1], [0,0,0,0], [1,1,1,1], [1,1,1,1]];
+        }
         else if (numLights > 8)
             this.onXMLMinorError("too many lights defined; WebGL imposes a limit of 8 lights");
 
@@ -483,6 +515,9 @@ class MySceneGraph {
 
         this.textures = [];
 
+        // Creates default texture on error
+        this.textures["error"] = new CGFtexture(this.scene, "./scenes/images/error.jpg");
+
         //For each texture in textures block, check ID and file URL
 
         // Checks if there are child nodes declared
@@ -498,9 +533,16 @@ class MySceneGraph {
             }
 
             // Get id of the current texture
-            const textureID = this.reader.getString(children[i], 'id')
+            const textureID = this.reader.getString(children[i], 'id');
+            if (textureID == null){
+                this.onXMLMinorError("no ID defined for light");
+                continue;
+            }
+
+            // Check for repeated IDs
             if (this.textures[textureID] != null) {
-                return "ID must be unique for each texture (conflict: ID = " + textureID + ")";
+                this.onXMLMinorError("ID must be unique for each texture (conflict: ID = " + textureID + ")");
+                continue;
             }
 
             // Get path
@@ -514,9 +556,6 @@ class MySceneGraph {
                 this.onXMLMinorError("Texture file " + file + " doesn't exist");
             }
         }
-
-        // Creates default texture on error
-        this.textures["error"] = new CGFtexture(this.scene, "./scenes/images/error.jpg");
         
         this.log("Parsed Textures.");
         return null;
@@ -532,6 +571,14 @@ class MySceneGraph {
         this.materials = [];
 
         var grandChildren = [];
+
+        // Creates default material on error
+        this.materials["error"] = new CGFappearance(this.scene);
+        this.materials["error"].setShininess(1);
+        this.materials["error"].setEmission(1, 0, 0, 1);
+        this.materials["error"].setAmbient(1, 0, 0, 1);
+        this.materials["error"].setDiffuse(1, 0, 0, 1);
+        this.materials["error"].setSpecular(1, 0, 0, 1);
 
         // Checks if there are child nodes declared
         if(children.length === 0) {
@@ -549,12 +596,16 @@ class MySceneGraph {
 
             // Get id of the current material.
             var materialID = this.reader.getString(children[i], 'id');
-            if (materialID == null)
-                return "no ID defined for material";
+            if (materialID == null){
+                this.onXMLMinorError("no ID defined for material");
+                continue;
+            }
 
             // Checks for repeated IDs.
-            if (this.materials[materialID] != null)
-                return "ID must be unique for each material (conflict: ID = " + materialID + ")";
+            if (this.materials[materialID] != null){
+                this.onXMLMinorError("ID must be unique for each material (conflict: ID = " + materialID + ")");
+                continue;
+            }
 
             //Parsing
             grandChildren = children[i].children;
@@ -601,15 +652,7 @@ class MySceneGraph {
             this.materials[materialID].setAmbient(ambient[0], ambient[1], ambient[2], ambient[3]);
             this.materials[materialID].setDiffuse(diffuse[0], diffuse[1], diffuse[2], diffuse[3]);
             this.materials[materialID].setSpecular(specular[0], specular[1], specular[2], specular[3]);
-        }
-
-        // Creates default material on error
-        this.materials["error"] = new CGFappearance(this.scene);
-        this.materials["error"].setShininess(1);
-        this.materials["error"].setEmission(1, 0, 0, 1);
-        this.materials["error"].setAmbient(1, 0, 0, 1);
-        this.materials["error"].setDiffuse(1, 0, 0, 1);
-        this.materials["error"].setSpecular(1, 0, 0, 1);
+        }        
 
         this.log("Parsed Materials.");
         return null;
@@ -621,6 +664,12 @@ class MySceneGraph {
    */
   parseNodes(nodesNode) {
         const children = nodesNode.children;
+
+        // Checks if there are child nodes declared
+        if(children.length === 0) {
+            this.onXMLError("No nodes defined!");
+            return null;
+        }
 
         this.nodes = [];
 
@@ -636,12 +685,16 @@ class MySceneGraph {
 
             // Get id of the current node.
             var nodeID = this.reader.getString(children[i], 'id');
-            if (nodeID == null)
-                return "no ID defined for nodeID";
+            if (nodeID == null){
+                this.onXMLMinorError("no ID defined for node");
+                continue;
+            }
 
             // Checks for repeated IDs.
-            if (this.nodes[nodeID] != null)
-                return "ID must be unique for each node (conflict: ID = " + nodeID + ")";
+            if (this.nodes[nodeID] != null){
+                this.onXMLMinorError("ID must be unique for each node (conflict: ID = " + nodeID + ")");
+                continue;
+            }
 
             grandChildren = children[i].children;
 
@@ -780,10 +833,18 @@ class MySceneGraph {
                 if (descendantsNodes[j].nodeName === "noderef") {
                     const descendantID = this.reader.getString(descendantsNodes[j], "id");
 
-                    if (descendantID == null)
-                        return "Undefined ID for descendant. Node id: " + nodeID;
-                    else if (descendantID === nodeID)
-                        return "Duplicated node id: " + nodeID;
+                    if (descendantID == null){
+                        this.onXMLMinorError("Undefined ID for descendant. Node ID: " + nodeID);
+                        continue;
+                    }
+                    else if (descendantID === nodeID){
+                        this.onXMLMinorError("Descendant with the same parent's ID. Node ID: " + nodeID);
+                        continue
+                    }
+                    else if(childNodesID.includes(descendantID)){
+                        this.onXMLMinorError("Duplicated descendant ID (" + descendantID + "). Node ID: " + nodeID);
+                        continue
+                    }
 
                     childNodesID.push(descendantID);
                 }
@@ -904,6 +965,9 @@ class MySceneGraph {
                 if (this.nodes.hasOwnProperty(childID)) {
                     node.addChildNode(this.nodes[childID]);
                 }
+                else {
+                    this.onXMLMinorError("Child node not defined. Child ID: " + childID);
+                }
             }
         }
 
@@ -1020,6 +1084,7 @@ class MySceneGraph {
      * Displays the scene, processing each node, starting in the root node.
      */
     displayScene() {
-        this.nodes[this.idRoot].display(this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture);
+        if(this.nodes[this.idRoot] != null)
+            this.nodes[this.idRoot].display(this.nodes[this.idRoot].material, this.nodes[this.idRoot].texture);
     }
 }
