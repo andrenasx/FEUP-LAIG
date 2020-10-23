@@ -245,16 +245,21 @@ class MySceneGraph {
      * @param {view block element} viewsNode
      */
     parseViews(viewsNode) {
+        // Boolean used to verify errors and then create a default view
+        let errorview = false;
+
         // Get id of the default view
         this.viewsDefaultID = this.reader.getString(viewsNode, 'default');
         if (this.viewsDefaultID === null) {
-            return "No default view ID defined!";
+            this.onXMLError("No default view ID defined! Creating a default view.");
+            errorview = true;
         }
 
         // Checks if there are child nodes declared
         const children = viewsNode.children;
         if(children.length === 0) {
-            this.onXMLError("No views defined!");
+            this.onXMLError("No views defined! Creating a default view.");
+            errorview = true;
         }
 
         this.views = [];
@@ -353,6 +358,16 @@ class MySceneGraph {
 
                 this.views[viewID] = new CGFcameraOrtho(left, right, bottom, top, near, far, vec3.fromValues(from[0], from[1], from[2]), vec3.fromValues(to[0], to[1], to[2]), vec3.fromValues(up[0], up[1], up[2]));
             }
+        }
+
+        if(this.views[this.viewsDefaultID] === null){
+            this.onXMLMinorError("No view IDs correspond to the given defaultViewID! Creating a default view.");
+            errorview = true;
+        }
+
+        if(errorview === true){
+            this.viewsDefaultID = "defaultViewError";
+            this.views["defaultViewError"] = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
         }
 
         this.log("Parsed Views.");
