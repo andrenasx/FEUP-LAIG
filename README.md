@@ -26,7 +26,7 @@
 
 - Scene
   - A cena consiste num pátio com piscina, uma mesa com 2 cadeiras almofadadas, um guarda-sol, um baloiço e uma bóia.
-  - [Link relativo para a cena](./scenes/patio.xml)
+  - [Link relativo para a cena](./TP1/scenes/patio.xml)
 
 -----
 
