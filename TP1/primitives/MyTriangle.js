@@ -48,11 +48,11 @@ class MyTriangle extends CGFobject {
 		var sin_alpha = Math.sqrt(1-Math.pow(cos_alpha,2));
 
 		this.aux1 = c * cos_alpha;
-		this.aux2 = c * sin_alpha;
+		this.aux2 = 1 - c * sin_alpha;
 		
 		this.texCoords = [
-			0, 0,
-			this.a, 0,
+			0, 1,
+			this.a, 1,
 			this.aux1, this.aux2
 		];
 		
@@ -65,8 +65,8 @@ class MyTriangle extends CGFobject {
 
 	applyTextures(afs, aft) {
 		this.texCoords = [
-			0, 0,
-			this.a / afs, 0,
+			0, 1,
+			this.a / afs, 1,
 			this.aux1 / afs, this.aux2 / aft
 		];
 
