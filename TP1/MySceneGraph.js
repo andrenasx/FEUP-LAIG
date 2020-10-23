@@ -726,6 +726,11 @@ class MySceneGraph {
                             //Gets values
                             xyz = this.parseCoordinates3D(transformationsNode[j], "node with ID: " + nodeID);
 
+                            if(!Array.isArray(xyz)){
+                                this.onXMLMinorError("Wrong value on translation. Node ID: " + nodeID);
+                                continue;
+                            }
+
                             //Multiplies new translation matrix
                             mat4.translate(transformationsMatrix, transformationsMatrix, xyz);
                             break;
@@ -737,10 +742,12 @@ class MySceneGraph {
 
                             //Checks for errors
                             if (axis == null || (axis !== "x" && axis !== "y" && axis !== "z")) {
-                                return "Wrong value for axis on rotation. Node id: " + nodeID;
+                                this.onXMLMinorError("Wrong value for axis on rotation. Node ID: " + nodeID);
+                                continue;
                             }
                             if (angle == null || isNaN(angle)) {
-                                return "Wrong value for angle on rotation. Node id: " + nodeID;
+                                this.onXMLMinorError("Wrong value for angle on rotation. Node ID: " + nodeID);
+                                continue;
                             }
 
                             //Multiplies new rotation matrix
@@ -755,10 +762,12 @@ class MySceneGraph {
 
                             //Checks for errors
                             if (sx == null || sy == null || sz == null) {
-                                return "Missing values for scale. Node id: " + nodeID
+                                this.onXMLMinorError("Missing values for scale. Node ID: " + nodeID);
+                                continue;
                             }
                             if (isNaN(sx) || isNaN(sy) || isNaN(sz)) {
-                                return "Wrong values for scale. Node id: " + nodeID
+                                this.onXMLMinorError("Wrong values for scale. Node ID: " + nodeID);
+                                continue;
                             }
 
                             //Multiplies new scale matrix
@@ -791,7 +800,7 @@ class MySceneGraph {
             }
             if (textureID !== "null" && textureID !== "clear") {
                 if (this.textures[textureID] == null) {
-                    this.onXMLMinorError("Texture with ID: " + textureID + " does not exist. Error on node ID: " + nodeID);
+                    this.onXMLMinorError("Texture with ID: " + textureID + " does not exist. Node ID: " + nodeID);
                     textureID = "error";
                 }
             }
@@ -822,7 +831,7 @@ class MySceneGraph {
             // Descendants
             const descendantsNodes = grandChildren[descendantsIndex].children;
             if (descendantsNodes.length === 0) {
-                this.onXMLMinorError("No descendants defined! Node id: " + nodeID);
+                this.onXMLMinorError("No descendants defined! Node ID: " + nodeID);
                 continue;
             }
 
@@ -859,11 +868,11 @@ class MySceneGraph {
                             const y2_r = this.reader.getFloat(descendantsNodes[j], 'y2');
 
                             if (x1_r == null || x2_r == null || y1_r == null || y2_r == null) {
-                                this.onXMLMinorError("Missing values for rectangle leaf. Node id: " + nodeID);
+                                this.onXMLMinorError("Missing values for rectangle leaf. Node ID: " + nodeID);
                                 break;
                             }
                             if (isNaN(x1_r) || isNaN(x2_r) || isNaN(y1_r) || isNaN(y2_r)) {
-                                this.onXMLMinorError("Invalid values for rectangle leaf. Node id: " + nodeID);
+                                this.onXMLMinorError("Invalid values for rectangle leaf. Node ID: " + nodeID);
                                 break;
                             }
 
@@ -882,11 +891,11 @@ class MySceneGraph {
                             const y3 = this.reader.getFloat(descendantsNodes[j], 'y3');
 
                             if (x1 == null || x2 == null || y1 == null || y2 == null || x3 == null || y3 == null ) {
-                                this.onXMLMinorError("Missing values for triangle leaf. Node id: " + nodeID);
+                                this.onXMLMinorError("Missing values for triangle leaf. Node ID: " + nodeID);
                                 break;
                             }
                             if (isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2) || isNaN(x3) || isNaN(y3)) {
-                                this.onXMLMinorError("Invalid values for triangle leaf. Node id: " + nodeID);
+                                this.onXMLMinorError("Invalid values for triangle leaf. Node ID: " + nodeID);
                                 break;
                             }
 
@@ -904,11 +913,11 @@ class MySceneGraph {
                             const slices_c = this.reader.getInteger(descendantsNodes[j],'slices');
 
                             if (height==null || topRadius==null || bottomRadius==null || stacks_c==null || slices_c==null) {
-                                this.onXMLMinorError("Missing values for cylinder leaf. Node id: " + nodeID);
+                                this.onXMLMinorError("Missing values for cylinder leaf. Node ID: " + nodeID);
                                 break;
                             }
                             else if (isNaN(height) || isNaN(topRadius) || isNaN(bottomRadius) || isNaN(stacks_c) || isNaN(slices_c)) {
-                                this.onXMLMinorError("Invalid values for cylinder leaf. Node id: " + nodeID);
+                                this.onXMLMinorError("Invalid values for cylinder leaf. Node ID: " + nodeID);
                                 break;
                             }
 
@@ -921,11 +930,11 @@ class MySceneGraph {
                             const stacks_s = this.reader.getInteger(descendantsNodes[j], 'stacks');
 
                             if (radius == null || slices_s == null || stacks_s == null){
-                                this.onXMLMinorError("Missing values for sphere leaf. Node id: " + nodeID);
+                                this.onXMLMinorError("Missing values for sphere leaf. Node ID: " + nodeID);
                                 break;
                             }
                             else if (isNaN(radius) || isNaN(slices_s) || isNaN(stacks_s)){
-                                this.onXMLMinorError("Invalid values for sphere leaf. Node id: " + nodeID);
+                                this.onXMLMinorError("Invalid values for sphere leaf. Node ID: " + nodeID);
                                 break;
                             }
 
@@ -939,11 +948,11 @@ class MySceneGraph {
                             const slices = this.reader.getInteger(descendantsNodes[j],'slices');
 
                             if (inner == null || outer == null || loops == null || slices == null){
-                                this.onXMLMinorError("Missing values for torus leaf. Node id: " + nodeID);
+                                this.onXMLMinorError("Missing values for torus leaf. Node ID: " + nodeID);
                                 break;
                             }
                             else if (isNaN(inner) || isNaN(outer) || isNaN(loops) || isNaN(slices)){
-                                this.onXMLMinorError("Invalid values for torus leaf. Node id: " + nodeID);
+                                this.onXMLMinorError("Invalid values for torus leaf. Node ID: " + nodeID);
                                 break;
                             }
 
