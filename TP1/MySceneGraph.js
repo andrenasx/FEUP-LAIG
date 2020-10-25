@@ -291,10 +291,12 @@ class MySceneGraph {
 
                 if (near == null || far == null || angle == null) {
                     this.onXMLMinorError("Missing values for view. View ID: " + viewID);
+                    errorview = true;
                     continue;
                 }
                 if (isNaN(near) || isNaN(far) || isNaN(angle)) {
                     this.onXMLMinorError("Invalid values for view. View ID: " + viewID);
+                    errorview = true;
                     continue;
                 }
 
@@ -304,7 +306,7 @@ class MySceneGraph {
                 const perspectiveChildren = children[i].children;
                 for (let j = 0; j < perspectiveChildren.length; j++) {
                     if (perspectiveChildren[j].nodeName !== "from" && perspectiveChildren[j].nodeName !== "to") {
-                        this.onXMLMinorError("unknown tag <" + perspectiveChildren[j].nodeName + ">")
+                        this.onXMLMinorError("unknown tag <" + perspectiveChildren[j].nodeName + ">");
                         continue;
                     }
 
@@ -811,17 +813,22 @@ class MySceneGraph {
             }
             if (textureID !== "clear") {
                 const amplificationNode = grandChildren[textureIndex].children;
-                for (let j = 0; j < amplificationNode.length; j++) {
-                    if (amplificationNode[j].nodeName === "amplification") {
-                        const afs = this.reader.getFloat(amplificationNode[j], 'afs');
-                        const aft = this.reader.getFloat(amplificationNode[j], 'aft');
-                        if (aft == null || afs == null || isNaN(aft) || isNaN(afs)) {
-                            this.onXMLMinorError("Amplification values not valid, assuming 1.0. Node ID: " + nodeID);
-                        }
-                        else {
-                            amplification = {
-                                afs: afs,
-                                aft: aft
+                if(amplificationNode.length == 0){
+                    this.onXMLMinorError("Amplification tag missing, assuming 1.0. Node ID: " + nodeID);
+                }
+                else{
+                    for (let j = 0; j < amplificationNode.length; j++) {
+                        if (amplificationNode[j].nodeName === "amplification") {
+                            const afs = this.reader.getFloat(amplificationNode[j], 'afs');
+                            const aft = this.reader.getFloat(amplificationNode[j], 'aft');
+                            if (aft == null || afs == null || isNaN(aft) || isNaN(afs)) {
+                                this.onXMLMinorError("Amplification values not valid, assuming 1.0. Node ID: " + nodeID);
+                            }
+                            else {
+                                amplification = {
+                                    afs: afs,
+                                    aft: aft
+                                }
                             }
                         }
                     }
