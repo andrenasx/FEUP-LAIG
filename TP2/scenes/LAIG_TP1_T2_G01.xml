@@ -108,6 +108,39 @@
         </material>
     </materials>
 
+    <animations>
+        <animation id="swing_animation">
+            <keyframe instant = "0" >
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "5" >
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="15" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "10" >
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="-15" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "15" >
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+        </animation>
+    </animations>
+
     <nodes>     
         <node id="root">
             <material id="white_diffuse_material" />
@@ -1037,6 +1070,10 @@
             <transformations>
                 <translation x="1.25" y="0.7" z="0" />
             </transformations>
+
+            <animations>
+				<animationref id="swing_animation" />
+			</animations>
 
             <descendants>
                 <noderef id="swing_seat_tire" />
