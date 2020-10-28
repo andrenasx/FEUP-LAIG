@@ -728,8 +728,8 @@ class MySceneGraph {
 
                 let transformations = [];
 
-                transformationsNode = grandChildren[j].children;
-                if(grandGrandChildren.length == 0){
+                transformationsNode = keyframesNode[j].children;
+                if(transformationsNode.length == 0){
                     this.onXMLMinorError("No transformations defined! Keyframe instant:" + instant + ", Animation ID: " + animationID);
                     continue;
                 }
@@ -741,10 +741,10 @@ class MySceneGraph {
                             let xyz = null;
 
                             //Gets values
-                            xyz = this.parseCoordinates3D(transformationsNode[j], "node with ID: " + nodeID);
+                            xyz = this.parseCoordinates3D(transformationsNode[j], "animation with ID: " + animationID);
 
                             if(!Array.isArray(xyz)){
-                                this.onXMLMinorError("Wrong value on translation. Node ID: " + nodeID);
+                                this.onXMLMinorError("Wrong value on translation. Aniamation ID: " + animationID);
                                 continue;
                             }
 
@@ -768,7 +768,7 @@ class MySceneGraph {
                             }
 
                             //Multiplies new rotation matrix
-                            mat4.rotate(transformationsMatrix, transformationsMatrix, angle*DEGREE_TO_RAD, this.axisCoords[axis]);
+                            transformations.push([angle*DEGREE_TO_RAD, this.axisCoords[axis]]);
                             break;
 
                         case ("scale"):
@@ -921,13 +921,15 @@ class MySceneGraph {
             }
 
             // Animation
-            let animationID = this.reader.getString(grandChildren[animationIndex], "id");
-            if (animationID == null) {
-                this.onXMLMinorError("Animation ID not defined. Node ID: " + nodeID);
-            }
-            if (this.animations[animationID] == null) {
-                this.onXMLMinorError("Animation with ID: " + animationID + " does not exist. Error on node ID: " + nodeID);
-                animationID = null;
+            if(animationIndex != -1){
+                let animationID = this.reader.getString(grandChildren[animationIndex], "id");
+                if (animationID == null) {
+                    this.onXMLMinorError("Animation ID not defined. Node ID: " + nodeID);
+                }
+                if (this.animations[animationID] == null) {
+                    this.onXMLMinorError("Animation with ID: " + animationID + " does not exist. Error on node ID: " + nodeID);
+                    animationID = null;
+                }
             }
 
             // Material
