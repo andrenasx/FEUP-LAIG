@@ -683,7 +683,6 @@ class MySceneGraph {
         const children = animationsNode.children;
 
         this.animations = [];
-        this.keyframes = [];
 
         var keyframesNode = [];
         var transformationsNode = [];
@@ -700,7 +699,7 @@ class MySceneGraph {
                 continue;
             }
 
-            // Get id of the current material.
+            // Get id of the current animation.
             var animationID = this.reader.getString(children[i], 'id');
             if (animationID == null){
                 this.onXMLMinorError("no ID defined for material");
@@ -714,6 +713,7 @@ class MySceneGraph {
             }
 
             //Parsing
+            let keyframes = [];
             keyframesNode = children[i].children;
 
             if(keyframesNode.length == 0){
@@ -736,12 +736,13 @@ class MySceneGraph {
                 
                 for (let k = 0; k < transformationsNode.length; k++){
                     // Check transformation
-                    switch (transformationsNode[j].nodeName) {
+                    switch (transformationsNode[k].nodeName) {
                         case ("translation") :
+                            if(k!==0) this.onXMLMinorError("Transformation out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
                             let xyz = null;
 
                             //Gets values
-                            xyz = this.parseCoordinates3D(transformationsNode[j], "animation with ID: " + animationID);
+                            xyz = this.parseCoordinates3D(transformationsNode[k], "animation with ID: " + animationID);
 
                             if(!Array.isArray(xyz)){
                                 this.onXMLMinorError("Wrong value on translation. Aniamation ID: " + animationID);
@@ -749,13 +750,13 @@ class MySceneGraph {
                             }
 
                             //Multiplies new translation matrix
-                            transformations.push(xyz)
+                            transformations[0] = xyz;
                             break;
 
                         case ("rotation"):
                             //Gets values
-                            const axis = this.reader.getString(transformationsNode[j], 'axis');
-                            const angle = this.reader.getFloat(transformationsNode[j], 'angle');
+                            const axis = this.reader.getString(transformationsNode[k], 'axis');
+                            const angle = this.reader.getFloat(transformationsNode[k], 'angle');
 
                             //Checks for errors
                             if (axis == null || (axis !== "x" && axis !== "y" && axis !== "z")) {
@@ -767,15 +768,27 @@ class MySceneGraph {
                                 continue;
                             }
 
-                            //Multiplies new rotation matrix
-                            transformations.push([angle*DEGREE_TO_RAD, this.axisCoords[axis]]);
+                            if(axis==="x" && k!==1){
+                                this.onXMLMinorError("X Rotation out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
+                                transformations[1] = angle * DEGREE_TO_RAD;
+                            }
+                            else if(axis==="y" && k!==2){
+                                this.onXMLMinorError("Y Rotation out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
+                                transformations[2] = angle * DEGREE_TO_RAD;
+                            }
+                            else if(axis==="z" && k!==3){
+                                this.onXMLMinorError("Y Rotation out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
+                                transformations[3] = angle * DEGREE_TO_RAD;
+                            }
+
                             break;
 
                         case ("scale"):
+                            if(k !== 4) this.onXMLMinorError("Scale out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
                             //Gets values
-                            const sx = this.reader.getFloat(transformationsNode[j], "sx");
-                            const sy = this.reader.getFloat(transformationsNode[j], "sy");
-                            const sz = this.reader.getFloat(transformationsNode[j], "sz");
+                            const sx = this.reader.getFloat(transformationsNode[k], "sx");
+                            const sy = this.reader.getFloat(transformationsNode[k], "sy");
+                            const sz = this.reader.getFloat(transformationsNode[k], "sz");
 
                             //Checks for errors
                             if (sx == null || sy == null || sz == null) {
@@ -788,14 +801,23 @@ class MySceneGraph {
                             }
 
                             //Multiplies new scale matrix
-                            transformations.push([sx, sy, sz]);
+                            transformations[4] = [sx, sy, sz];
                             break;
                         default:
                             break;
                     }
                 }
+
+                keyframes.push({instant: instant, transformations: transformations});
             }
+
+            keyframes.sort(function(a,b){return a.instant - b.instant});
+            let keyframeAnimation = new MyKeyframeAnimation(keyframes);
+            this.animations[animationID] = keyframeAnimation;
         }
+
+        this.onXMLMinorError("TODO: Parsed Animations.");
+        return null;
     }
 
     /**
