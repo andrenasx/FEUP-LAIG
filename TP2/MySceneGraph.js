@@ -944,8 +944,9 @@ class MySceneGraph {
             }
 
             // Animation
+            let animationID = null
             if(animationIndex != -1){
-                let animationID = this.reader.getString(grandChildren[animationIndex], "id");
+                animationID = this.reader.getString(grandChildren[animationIndex], "id");
                 if (animationID == null) {
                     this.onXMLMinorError("Animation ID not defined. Node ID: " + nodeID);
                 }

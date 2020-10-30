@@ -22,7 +22,9 @@ class MySceneGraphNode {
     display(material, texture){
         this.scene.pushMatrix();
         this.scene.multMatrix(this.transfMatrix);
-        this.animation.apply(this.scene);
+        if(this.animation != null){
+            this.animation.apply(this.scene);
+        }
 
         let currentMaterial = material;
         let currentTexture = texture;
