@@ -23,6 +23,8 @@ class MyAnimation {
     }
 
     update(deltaTime){
+        this.elapsedTime += deltaTime;
+
         if(this.elapsedTime>=this.startTime && !this.finished) {
             let percentTime = this.elapsedTime/this.endTime;
             if(percentTime >= 1) {
@@ -34,8 +36,6 @@ class MyAnimation {
             vec3.lerp(this.currentRot, this.startRot, this.endRot, percentTime);
             vec3.lerp(this.currentScale, this.startScale, this.endScale, percentTime);
         }
-
-        this.elapsedTime += deltaTime;
     }
 
     apply(scene){

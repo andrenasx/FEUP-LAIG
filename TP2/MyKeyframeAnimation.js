@@ -14,10 +14,10 @@ class MyKeyframeAnimation {
     }
 
     update(deltaTime){
+        this.elapsedTime += deltaTime;
+
         if(this.frame === this.keyframes.length)
             return;
-
-        this.activeAnimation.update(deltaTime);
 
         if(this.elapsedTime > this.keyframes[this.frame].instant){
             if(this.activeAnimation.finished){
@@ -28,7 +28,8 @@ class MyKeyframeAnimation {
                 this.activeAnimation = new MyAnimation(0, this.keyframes[this.frame].instant-this.keyframes[this.frame-1].instant, this.keyframes[this.frame-1].transformations, this.keyframes[this.frame].transformations);
             }
         }
-        this.elapsedTime += deltaTime;
+
+        this.activeAnimation.update(deltaTime);
     }
 }
 
