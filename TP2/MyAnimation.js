@@ -45,6 +45,7 @@ class MyAnimation {
         mat4.rotate(animationMatrix, animationMatrix, this.currentRot[0], [1,0,0]);
         mat4.rotate(animationMatrix, animationMatrix, this.currentRot[1], [0,1,0]);
         mat4.rotate(animationMatrix, animationMatrix, this.currentRot[2], [0,0,1]);
+        mat4.scale(animationMatrix, animationMatrix, this.currentScale);
 
         scene.multMatrix(animationMatrix);
     }
