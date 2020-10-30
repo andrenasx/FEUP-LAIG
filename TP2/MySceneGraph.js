@@ -812,7 +812,6 @@ class MySceneGraph {
             }
 
             keyframes.sort(function(a,b){return a.instant - b.instant});
-            console.log(keyframes);
             let keyframeAnimation = new MyKeyframeAnimation(keyframes);
             this.animations[animationID] = keyframeAnimation;
         }

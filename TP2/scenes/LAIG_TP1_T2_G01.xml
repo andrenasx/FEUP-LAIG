@@ -163,6 +163,44 @@
                 <scale sx="1.0" sy="1.0" sz="1.0" />
             </keyframe>
         </animation>
+
+        <animation id="parasol_sides_animation">
+            <keyframe instant = "0" >
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="30" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="0.58" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "1" >
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="30" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="0.58" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "2" >
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="20" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="0.75" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "3" >
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="10" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="0.90" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "4" >
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+        </animation>
     </animations>
 
     <nodes>     
@@ -802,6 +840,8 @@
             <transformations>
                 <rotation axis="x" angle="30" />
             </transformations>
+
+            <animationref id="parasol_sides_animation" />
 
             <descendants>
                 <leaf type="triangle" x1="-0.575" y1="-1.6" x2="0.575" y2="-1.6" x3="0" y3="0"/>         
