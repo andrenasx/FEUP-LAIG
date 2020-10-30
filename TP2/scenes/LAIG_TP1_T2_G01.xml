@@ -1068,7 +1068,7 @@
             </texture>
 
             <transformations>
-                <translation x="1.25" y="0.7" z="0" />
+                <translation x="1.25" y="2.30" z="0" />
             </transformations>
 
             <animationref id="swing_animation" />
@@ -1087,6 +1087,7 @@
             </texture>
 
             <transformations>
+                <translation x="0" y="-1.6" z="0" />
                 <rotation axis="x" angle="90" />
             </transformations>
 
@@ -1120,7 +1121,7 @@
 
             <transformations>
                 <translation x="0.285" y="0" z="0" />
-                <rotation axis="x" angle="-90" />
+                <rotation axis="x" angle="90" />
             </transformations>
 
             <descendants>
