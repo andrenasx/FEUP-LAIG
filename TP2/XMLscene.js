@@ -35,12 +35,13 @@ class XMLscene extends CGFscene {
         this.selectedCamera = null; // Stores the ID of the currently selected camera
         this.lightsAux = [];    // Auxiliar map ([lightID, True/False]) to enable or disable lights
 
-        this.setUpdatePeriod(100);
 
         this.loadingProgressObject=new MyRectangle(this, -1, -.1, 1, .1);
         this.loadingProgress=0;
 
         this.defaultAppearance=new CGFappearance(this);
+
+        this.currentTime = 0;
 
     }
 
@@ -122,6 +123,19 @@ class XMLscene extends CGFscene {
         }
     }
 
+    update(t){
+        if(this.currentTime == 0){
+            this.currentTime = t / 1000 % 1000;
+            return;
+        }
+
+        let deltaTime = (t / 1000 % 1000) - this.currentTime;
+        tis.currentTime = t / 1000 % 1000;
+        for(let [id, animation] of this.graph.animations){
+            animation.update(deltaTime);
+        }
+    }
+
     /** Handler called when the graph is finally loaded. 
      * As loading is asynchronous, this may be called already after the application has started the run loop
      */
@@ -138,6 +152,8 @@ class XMLscene extends CGFscene {
         this.updateCamera();
 
         this.sceneInited = true;
+
+        this.setUpdatePeriod(100);
     }
 
     /**
