@@ -2,7 +2,7 @@
  * GraphNode class, representing a graph node.
  */
 class MySceneGraphNode {
-    constructor(scene, nodeID, childNodesID, leafs, tranfMatrix, material, texture, textureID) {
+    constructor(scene, nodeID, childNodesID, leafs, tranfMatrix, material, texture, textureID, animation) {
         this.scene = scene;
         this.nodeID = nodeID;
         this.childNodesID = childNodesID;
@@ -12,6 +12,7 @@ class MySceneGraphNode {
         this.material = material;
         this.texture = texture;
         this.textureID = textureID;
+        this.animation = animation;
     }
 
     addChildNode(child) {
@@ -21,6 +22,7 @@ class MySceneGraphNode {
     display(material, texture){
         this.scene.pushMatrix();
         this.scene.multMatrix(this.transfMatrix);
+        this.animation.apply(this.scene);
 
         let currentMaterial = material;
         let currentTexture = texture;

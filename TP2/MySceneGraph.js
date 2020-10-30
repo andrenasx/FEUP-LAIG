@@ -781,6 +781,7 @@ class MySceneGraph {
                                 transformations[3] = angle * DEGREE_TO_RAD;
                             }
 
+                            transformations[k] = angle * DEGREE_TO_RAD;
                             break;
 
                         case ("scale"):
@@ -816,7 +817,7 @@ class MySceneGraph {
             this.animations[animationID] = keyframeAnimation;
         }
 
-        this.onXMLMinorError("TODO: Parsed Animations.");
+        this.log("Parsed Animations.");
         return null;
     }
 
@@ -950,7 +951,6 @@ class MySceneGraph {
                 }
                 if (this.animations[animationID] == null) {
                     this.onXMLMinorError("Animation with ID: " + animationID + " does not exist. Error on node ID: " + nodeID);
-                    animationID = null;
                 }
             }
 
@@ -1145,7 +1145,7 @@ class MySceneGraph {
             }
 
             // Puts created node in nodes
-            this.nodes[nodeID] = new MySceneGraphNode(this.scene, nodeID, childNodesID, leafs, transformationsMatrix, this.materials[materialID], this.textures[textureID], textureID);
+            this.nodes[nodeID] = new MySceneGraphNode(this.scene, nodeID, childNodesID, leafs, transformationsMatrix, this.materials[materialID], this.textures[textureID], textureID, this.animations[animationID]);
         }
 
         // Pre-process all nodes adding its child nodes objects

@@ -1,10 +1,8 @@
 class MyKeyframeAnimation extends MyAnimation{
     constructor(keyframes){
-        this.start = this.keyframes[0].instant;
+        this.keyframes = keyframes;
         this.frame = 1;
         this.elapsedTime = 0;
-        this.isFinished = false;
-        this.keyframes = keyframes;
         if(this.keyframes.length === 1)
             this.activeAnimation = new MyAnimation(this.keyframes[this.frame-1].instant, this.keyframes[this.frame-1].instant, this.keyframes[this.frame-1].transformations, this.keyframes[this.frame-1]);
         else
@@ -15,14 +13,14 @@ class MyKeyframeAnimation extends MyAnimation{
         this.activeAnimation.apply(scene);
     }
 
-    update(delta){
+    update(deltaTime){
         if(this.frame === this.keyframes.length)
             return;
 
-        this.activeAnimation.update(delta);
+        this.activeAnimation.update(deltaTime);
 
         if(this.elapsedTime > this.keyframes[this.frame].instant){
-            if(this.activeAnimation.isFinished){
+            if(this.activeAnimation.finished){
                 this.frame++;
                 if(this.frame === this.keyframes.length)
                     return;
@@ -30,7 +28,7 @@ class MyKeyframeAnimation extends MyAnimation{
                 this.activeAnimation = new MyAnimation(0, this.keyframes[this.frame].instant-this.keyframes[this.frame-1].instant, this.keyframes[this.frame-1].transformations, this.keyframes[this.frame]);
             }
         }
-        this.elapsedTime += delta;
+        this.elapsedTime += deltaTime;
     }
 }
 
