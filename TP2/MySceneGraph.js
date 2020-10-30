@@ -768,20 +768,19 @@ class MySceneGraph {
                                 continue;
                             }
 
-                            if(axis==="x" && k!==1){
-                                this.onXMLMinorError("X Rotation out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
+                            if(axis==="x"){
+                                if(k!==1) this.onXMLMinorError("X Rotation out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
                                 transformations[1] = angle * DEGREE_TO_RAD;
                             }
-                            else if(axis==="y" && k!==2){
-                                this.onXMLMinorError("Y Rotation out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
+                            else if(axis==="y"){
+                                if(k!==2) this.onXMLMinorError("Y Rotation out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
                                 transformations[2] = angle * DEGREE_TO_RAD;
                             }
-                            else if(axis==="z" && k!==3){
-                                this.onXMLMinorError("Y Rotation out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
+                            else if(axis==="z"){
+                                if(k!==3) this.onXMLMinorError("Z Rotation out of order. Keyframe instant:" + instant + ", Animation ID: " + animationID);
                                 transformations[3] = angle * DEGREE_TO_RAD;
                             }
 
-                            transformations[k] = angle * DEGREE_TO_RAD;
                             break;
 
                         case ("scale"):
@@ -813,6 +812,7 @@ class MySceneGraph {
             }
 
             keyframes.sort(function(a,b){return a.instant - b.instant});
+            console.log(keyframes);
             let keyframeAnimation = new MyKeyframeAnimation(keyframes);
             this.animations[animationID] = keyframeAnimation;
         }

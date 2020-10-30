@@ -139,6 +139,30 @@
                 <scale sx="1.0" sy="1.0" sz="1.0" />
             </keyframe>
         </animation>
+
+        <animation id="floater_animation">
+            <keyframe instant = "0" >
+                <translation x="0" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "10" >
+                <translation x="1" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="180" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "20" >
+                <translation x="2" y="0" z="0" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="360" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+        </animation>
     </animations>
 
     <nodes>     
@@ -425,9 +449,11 @@
             </texture>
 
             <transformations>
-                <translation x="11" y="0.1" z="8" />
+                <translation x="8" y="0.1" z="7" />
                 <rotation axis="x" angle="90"/>
             </transformations>
+
+            <animationref id="floater_animation" />
 
             <descendants>
                 <leaf type="torus" inner="0.1" outer="0.4" slices="20" loops="50"/>
