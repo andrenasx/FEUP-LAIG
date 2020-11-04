@@ -1038,7 +1038,7 @@ class MySceneGraph {
                     childNodesID.push(descendantID);
                 }
                 else if (descendantsNodes[j].nodeName === "leaf") {
-                    const type = this.reader.getString(descendantsNodes[j], "type", ['triangle', 'rectangle', 'cylinder', 'sphere', 'torus']);
+                    const type = this.reader.getString(descendantsNodes[j], "type", ['triangle', 'rectangle', 'cylinder', 'sphere', 'torus', 'spritetext']);
                     // Check leaf type, get values and create primitive object
                     switch (type) {
                         case ("rectangle"):
@@ -1137,6 +1137,16 @@ class MySceneGraph {
                             }
 
                             leafs.push(new MyTorus(this.scene, inner, outer, slices, loops));
+                            break;
+                        case ("spritetext"):
+                            const text = this.reader.getString(descendantsNodes[j],'text');
+
+                            if(text == null){
+                                this.onXMLMinorError("Undefined text for spritesheet. Node ID: " + nodeID);
+                                break;
+                            }
+
+                            leafs.push(new MySpriteText(this.scene, text));
                             break;
                         default:
                             break;
