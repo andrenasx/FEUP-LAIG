@@ -6,9 +6,10 @@ var VIEWS_INDEX = 1;
 var ILLUMINATION_INDEX = 2;
 var LIGHTS_INDEX = 3;
 var TEXTURES_INDEX = 4;
-var MATERIALS_INDEX = 5;
-var ANIMATIONS_INDEX = 6;
-var NODES_INDEX = 7;
+var SPRITESHEETS_INDEX = 5;
+var MATERIALS_INDEX = 6;
+var ANIMATIONS_INDEX = 7;
+var NODES_INDEX = 8;
 
 /**
  * MySceneGraph class, representing the scene graph.
@@ -162,6 +163,7 @@ class MySceneGraph {
             if ((error = this.parseLights(nodes[index])) != null)
                 return error;
         }
+
         // <textures>
         if ((index = nodeNames.indexOf("textures")) == -1)
             return "tag <textures> missing";
@@ -171,6 +173,18 @@ class MySceneGraph {
 
             //Parse textures block
             if ((error = this.parseTextures(nodes[index])) != null)
+                return error;
+        }
+
+        // <spritesheets>
+        if ((index = nodeNames.indexOf("spritesheets")) == -1)
+            return "tag <spritesheets> missing";
+        else {
+            if (index != SPRITESHEETS_INDEX)
+                this.onXMLMinorError("tag <spritesheets> out of order");
+
+            //Parse textures block
+            if ((error = this.parseSpritesheets(nodes[index])) != null)
                 return error;
         }
 
@@ -552,7 +566,7 @@ class MySceneGraph {
             // Get id of the current texture
             const textureID = this.reader.getString(children[i], 'id');
             if (textureID == null){
-                this.onXMLMinorError("no ID defined for light");
+                this.onXMLMinorError("no ID defined for texture");
                 continue;
             }
 
@@ -571,10 +585,82 @@ class MySceneGraph {
             }
             else {
                 this.onXMLMinorError("Texture file " + file + " doesn't exist");
+                continue;
             }
         }
         
         this.log("Parsed Textures.");
+        return null;
+    }
+
+    /**
+     * Parses the <spritesheets> block. 
+     * @param {spritesheets block element} spritesheetsNode
+     */
+    parseSpritesheets(spritesheetsNode) {
+        const children = spritesheetsNode.children;
+
+        this.spritesheets = [];
+
+        // Creates default texture on error
+        //this.textures["error"] = new CGFtexture(this.scene, "./scenes/images/error.jpg");
+
+        //For each spritesheet in spritesheet block, check ID and file URL
+
+        // Checks if there are child nodes declared
+        if(children.length === 0) {
+            this.onXMLMinorError("No spritesheets defined!");
+            return null;
+        }
+
+        for (let i = 0; i < children.length; i++) {
+            if (children[i].nodeName != "spritesheet") {
+                this.onXMLMinorError("unknown tag <" + children[i].nodeName + ">");
+                continue;
+            }
+
+            // Get id of the current texture
+            const spritesheetID = this.reader.getString(children[i], 'id');
+            if (spritesheetID == null){
+                this.onXMLMinorError("no ID defined for spritesheet");
+                continue;
+            }
+
+            // Check for repeated IDs
+            if (this.spritesheets[spritesheetID] != null) {
+                this.onXMLMinorError("ID must be unique for each spritesheet (conflict: ID = " + spritesheetID + ")");
+                continue;
+            }
+
+            // Parse sizeM and check for errors
+            const sizeM = this.reader.getFloat(children[i], 'sizeM');
+            if (sizeM == null || isNaN(sizeM)) {
+                this.onXMLMinorError("Missing values for sizeM. Spritesheet ID: " + spritesheetID);
+                continue;
+            }
+
+            // Parse sizeN and check for errors
+            const sizeN = this.reader.getFloat(children[i], 'sizeN');
+            if (sizeN == null || isNaN(sizeN)) {
+                this.onXMLMinorError("Missing values for sizeN. Spritesheet ID: " + spritesheetID);
+                continue;
+            }
+
+
+            // Get path
+            const file = this.reader.getString(children[i], 'path');
+            
+            // Check if texture file exists. If so, create spritesheet
+            if (this.checkFileExists(file)) {
+                this.spritesheets[spritesheetID] = new MySpritesheet(this.scene, new CGFtexture(this.scene, file), sizeM, sizeN);
+            }
+            else {
+                this.onXMLMinorError("Spritesheet file " + file + " doesn't exist");
+                continue;
+            }
+        }
+        
+        this.log("Parsed Spritesheets.");
         return null;
     }
 
@@ -1038,7 +1124,7 @@ class MySceneGraph {
                     childNodesID.push(descendantID);
                 }
                 else if (descendantsNodes[j].nodeName === "leaf") {
-                    const type = this.reader.getString(descendantsNodes[j], "type", ['triangle', 'rectangle', 'cylinder', 'sphere', 'torus', 'spritetext']);
+                    const type = this.reader.getString(descendantsNodes[j], "type", ['triangle', 'rectangle', 'cylinder', 'sphere', 'torus', 'spritetext', 'spriteanim']);
                     // Check leaf type, get values and create primitive object
                     switch (type) {
                         case ("rectangle"):
@@ -1147,6 +1233,14 @@ class MySceneGraph {
                             }
 
                             leafs.push(new MySpriteText(this.scene, text));
+                            break;
+                        case ("spriteanim"):
+                            const ssid = this.reader.getString(descendantsNodes[j],'ssid');
+                            const startCell = this.reader.getInteger(descendantsNodes[j],'startCell');
+                            const endCell = this.reader.getInteger(descendantsNodes[j],'endCell');
+                            const duration = this.reader.getFloat(descendantsNodes[j],'duration');
+
+                            leafs.push(new MySpriteAnimation(this.scene, this.spritesheets[ssid], startCell, endCell, duration));
                             break;
                         default:
                             break;

@@ -81,6 +81,9 @@
         <texture id="grainwood_texture" path="./scenes/images/grainwood.jpg" />
     </textures>
 
+    <spritesheets>
+        <spritesheet id="ola" path="./spritesheets/images/text.png" sizeM="16" sizeN="16" />
+    </spritesheets>
 
     <materials>
         <material id="white_diffuse_material">
@@ -216,6 +219,7 @@
 
             <descendants>
                 <leaf type="spritetext" text="Hello!" />
+                <leaf type="spriteanim" ssid="ola" startCell="0" endCell="16" duration="3" />
                 <noderef id="grass" />
                 <noderef id="pool" />
                 <noderef id="floater" />
