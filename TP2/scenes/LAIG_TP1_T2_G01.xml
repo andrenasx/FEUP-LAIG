@@ -82,7 +82,7 @@
     </textures>
 
     <spritesheets>
-        <spritesheet id="number_anim" path="./spritesheets/images/text.png" sizeM="16" sizeN="16" />
+        <spritesheet id="fire_anim" path="./spritesheets/images/fire.png" sizeM="8" sizeN="4" />
     </spritesheets>
 
     <materials>
@@ -219,7 +219,7 @@
 
             <descendants>
                 <!--<leaf type="spritetext" text="Hello!" />-->
-                <leaf type="spriteanim" ssid="number_anim" startCell="48" endCell="57" duration="5" />
+                <leaf type="spriteanim" ssid="fire_anim" startCell="0" endCell="31" duration="2" />
                 <noderef id="grass" />
                 <noderef id="pool" />
                 <noderef id="floater" />
