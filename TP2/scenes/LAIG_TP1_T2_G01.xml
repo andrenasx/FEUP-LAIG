@@ -82,7 +82,7 @@
     </textures>
 
     <spritesheets>
-        <spritesheet id="ola" path="./spritesheets/images/text.png" sizeM="16" sizeN="16" />
+        <spritesheet id="number_anim" path="./spritesheets/images/text.png" sizeM="16" sizeN="16" />
     </spritesheets>
 
     <materials>
@@ -218,8 +218,8 @@
             </transformations>
 
             <descendants>
-                <leaf type="spritetext" text="Hello!" />
-                <leaf type="spriteanim" ssid="ola" startCell="0" endCell="16" duration="3" />
+                <!--<leaf type="spritetext" text="Hello!" />-->
+                <leaf type="spriteanim" ssid="number_anim" startCell="48" endCell="57" duration="5" />
                 <noderef id="grass" />
                 <noderef id="pool" />
                 <noderef id="floater" />

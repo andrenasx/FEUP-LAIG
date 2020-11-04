@@ -29,6 +29,7 @@ class MySceneGraph {
         scene.graph = this;
 
         this.nodes = [];
+        this.spriteanims = [];
 
         this.idRoot = null; // The id of the root element.
 
@@ -1240,7 +1241,9 @@ class MySceneGraph {
                             const endCell = this.reader.getInteger(descendantsNodes[j],'endCell');
                             const duration = this.reader.getFloat(descendantsNodes[j],'duration');
 
-                            leafs.push(new MySpriteAnimation(this.scene, this.spritesheets[ssid], startCell, endCell, duration));
+                            let spriteanim = new MySpriteAnimation(this.scene, this.spritesheets[ssid], startCell, endCell, duration);
+                            this.spriteanims.push(spriteanim);
+                            leafs.push(spriteanim);
                             break;
                         default:
                             break;

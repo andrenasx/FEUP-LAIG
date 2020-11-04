@@ -7,18 +7,25 @@ class MySpriteAnimation extends CGFobject {
         this.spritesheet = spritesheet;
 
         this.elapsedTime = 0;
-        this.p = startCell;
+        this.finished = false;
+        this.p = this.startCell;
+        this.totalP = this.endCell - this.startCell;
 
         this.rectangle = new MyRectangle(this.scene, 0,0,1,1);
     }
 
     update(deltaTime){
-        this.elapsedTime += deltaTime;
+        if(!this.finished) this.elapsedTime += deltaTime;
 
         if(this.elapsedTime < this.duration){
-            this.p = this.startCell + this.elapsedTime * ((this.endCell - this.startCell) / this.duration);
+            this.p = this.startCell + this.elapsedTime * (this.totalP / this.duration);
         }
-
+        else{
+            if(!this.finished){
+                this.p = this.endCell;
+                this.finished = true;
+            }
+        }
     }
 
     display(){
@@ -31,7 +38,5 @@ class MySpriteAnimation extends CGFobject {
         this.scene.popMatrix();
 
         this.scene.setActiveShader(this.scene.defaultShader);
-
     }
-
 }

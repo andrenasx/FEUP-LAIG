@@ -124,15 +124,18 @@ class XMLscene extends CGFscene {
     }
 
     update(t){
+        let time = t / 1000 % 1000;
         if(this.currentTime == 0){
-            this.currentTime = t / 1000 % 1000;
-            return;
+            this.currentTime = time;
         }
 
-        let deltaTime = (t / 1000 % 1000) - this.currentTime;
-        this.currentTime = t / 1000 % 1000;
+        let deltaTime = time - this.currentTime;
+        this.currentTime = time;
         for(let [id, animation] of Object.entries(this.graph.animations)){
             animation.update(deltaTime);
+        }
+        for(let spriteanim of this.graph.spriteanims){
+            spriteanim.update(deltaTime);
         }
     }
 
