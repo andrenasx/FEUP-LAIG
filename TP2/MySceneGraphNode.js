@@ -40,12 +40,11 @@ class MySceneGraphNode {
         if (currentMaterial != null) {
             currentMaterial.apply();
         }
-            
-        if (currentTexture != null)  {
-            currentTexture.bind();
-        }
 
         for (let leaf of this.leafs) {
+            if (currentTexture != null)  {
+                currentTexture.bind();
+            }
             leaf.display();
         }
 
