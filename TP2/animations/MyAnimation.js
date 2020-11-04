@@ -20,6 +20,7 @@ class MyAnimation {
         this.currentRot = vec3.create();
         this.currentScale = vec3.create();
 
+        this.animationMatrix = mat4.create();
     }
 
     update(deltaTime){
@@ -35,18 +36,17 @@ class MyAnimation {
             vec3.lerp(this.currentTransl, this.startTransl, this.endTransl, percentTime);
             vec3.lerp(this.currentRot, this.startRot, this.endRot, percentTime);
             vec3.lerp(this.currentScale, this.startScale, this.endScale, percentTime);
+
+            mat4.identity(this.animationMatrix);
+            mat4.translate(this.animationMatrix, this.animationMatrix, this.currentTransl);
+            mat4.rotate(this.animationMatrix, this.animationMatrix, this.currentRot[0], [1,0,0]);
+            mat4.rotate(this.animationMatrix, this.animationMatrix, this.currentRot[1], [0,1,0]);
+            mat4.rotate(this.animationMatrix, this.animationMatrix, this.currentRot[2], [0,0,1]);
+            mat4.scale(this.animationMatrix, this.animationMatrix, this.currentScale);
         }
     }
 
     apply(scene){
-        let animationMatrix = mat4.create();
-
-        mat4.translate(animationMatrix, animationMatrix, this.currentTransl);
-        mat4.rotate(animationMatrix, animationMatrix, this.currentRot[0], [1,0,0]);
-        mat4.rotate(animationMatrix, animationMatrix, this.currentRot[1], [0,1,0]);
-        mat4.rotate(animationMatrix, animationMatrix, this.currentRot[2], [0,0,1]);
-        mat4.scale(animationMatrix, animationMatrix, this.currentScale);
-
-        scene.multMatrix(animationMatrix);
+        scene.multMatrix(this.animationMatrix);
     }
 }
