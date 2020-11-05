@@ -603,9 +603,6 @@ class MySceneGraph {
 
         this.spritesheets = [];
 
-        // Creates default texture on error
-        //this.textures["error"] = new CGFtexture(this.scene, "./scenes/images/error.jpg");
-
         //For each spritesheet in spritesheet block, check ID and file URL
 
         // Checks if there are child nodes declared
@@ -1237,9 +1234,32 @@ class MySceneGraph {
                             break;
                         case ("spriteanim"):
                             const ssid = this.reader.getString(descendantsNodes[j],'ssid');
+                            if(ssid == null) {
+                                this.onXMLMinorError("ssid of spriteanim not defined. Node ID: " + nodeID);
+                                break;
+                            }
+                            if(this.spritesheets[ssid] == null){
+                                this.onXMLMinorError("Spritesheet with given ssid: " + ssid + " does not exist. Node ID: " + nodeID);
+                                break;
+                            }
+
                             const startCell = this.reader.getInteger(descendantsNodes[j],'startCell');
+                            if(startCell == null || isNaN(startCell)){
+                                this.onXMLMinorError("Wrong values for spriteanim starCell. Node ID: " + nodeID);
+                                break;
+                            }
+
                             const endCell = this.reader.getInteger(descendantsNodes[j],'endCell');
+                            if(endCell == null || isNaN(endCell)){
+                                this.onXMLMinorError("Wrong values for spriteanim endCell. Node ID: " + nodeID);
+                                break;
+                            }
+
                             const duration = this.reader.getFloat(descendantsNodes[j],'duration');
+                            if(duration == null || isNaN(duration)){
+                                this.onXMLMinorError("Wrong values for spriteanim duration. Node ID: " + nodeID);
+                                break;
+                            }
 
                             let spriteanim = new MySpriteAnimation(this.scene, this.spritesheets[ssid], startCell, endCell, duration);
                             this.spriteanims.push(spriteanim);
