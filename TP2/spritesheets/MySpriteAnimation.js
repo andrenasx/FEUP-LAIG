@@ -14,19 +14,15 @@ class MySpriteAnimation extends CGFobject {
     }
 
     update(deltaTime){
-        if(this.cell == this.endCell) this.cell = this.startCell;
-        
         this.elapsedTime += deltaTime;
         
-        if(this.elapsedTime >= this.cellTime){
-            this.cell++;
-            this.elapsedTime = 0;
-        }
+        if(this.elapsedTime > this.duration) this.elapsedTime=0;
+
+        this.cell = Math.floor(this.elapsedTime / this.cellTime) + this.startCell;
     }
 
     display(){
-        this.scene.setActiveShader(this.spritesheet.shader);
-        this.spritesheet.texture.bind(0);
+        this.spritesheet.setUniValues();
 
         this.scene.pushMatrix();
         this.spritesheet.activateCellP(this.cell);

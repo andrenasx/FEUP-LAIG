@@ -27,8 +27,7 @@ class MySpriteText {
     }
 
     display(){
-        this.scene.setActiveShader(this.spritesheet.shader);
-        this.spritesheet.texture.bind(0);
+        this.spritesheet.setUniValues();
 
         this.scene.pushMatrix();
         this.scene.translate(this.centerX, -0.5, 0);

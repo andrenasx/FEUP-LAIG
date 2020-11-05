@@ -9,9 +9,15 @@ class MySpritesheet extends CGFobject {
         this.resizeN = 1/sizeN;
 
         this.shader = new CGFshader(this.scene.gl, "./spritesheets/shaders/shader.vert", "./spritesheets/shaders/shader.frag");
+        this.shader.setUniformsValues({uSampler: 0});
+    }
+
+    setUniValues(){
         this.shader.setUniformsValues({resizeM: this.resizeM});
         this.shader.setUniformsValues({resizeN: this.resizeN});
-        this.shader.setUniformsValues({uSampler: 0});
+
+        this.scene.setActiveShader(this.shader);
+        this.texture.bind(0);
     }
 
     activateCellMN(m, n){
