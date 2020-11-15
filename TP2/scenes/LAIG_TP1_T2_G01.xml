@@ -218,7 +218,7 @@
             </transformations>
 
             <descendants>
-                <!--<leaf type="spritetext" text="Hello!" />-->
+                <leaf type="spritetext" text="Hello LAIG" />
                 <leaf type="spriteanim" ssid="fire_anim" startCell="0" endCell="31" duration="2" />
                 <noderef id="grass" />
                 <noderef id="pool" />
