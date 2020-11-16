@@ -220,6 +220,7 @@
             <descendants>
                 <leaf type="spritetext" text="Hello LAIG" />
                 <leaf type="spriteanim" ssid="fire_anim" startCell="0" endCell="31" duration="2" />
+                <leaf type="plane" npartsU="5" npartsV="8" />
                 <noderef id="grass" />
                 <noderef id="pool" />
                 <noderef id="floater" />
