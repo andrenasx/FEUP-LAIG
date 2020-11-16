@@ -1122,31 +1122,31 @@ class MySceneGraph {
                     childNodesID.push(descendantID);
                 }
                 else if (descendantsNodes[j].nodeName === "leaf") {
-                    const type = this.reader.getString(descendantsNodes[j], "type", ['triangle', 'rectangle', 'cylinder', 'sphere', 'torus', 'spritetext', 'spriteanim']);
+                    const type = this.reader.getString(descendantsNodes[j], "type");
                     // Check leaf type, get values and create primitive object
                     switch (type) {
-                        case ("rectangle"):
-                            const x1_r = this.reader.getFloat(descendantsNodes[j], 'x1');
-                            const y1_r = this.reader.getFloat(descendantsNodes[j], 'y1');
-                            const x2_r = this.reader.getFloat(descendantsNodes[j], 'x2');
-                            const y2_r = this.reader.getFloat(descendantsNodes[j], 'y2');
+                        case ("rectangle"): {
+                            const x1 = this.reader.getFloat(descendantsNodes[j], 'x1');
+                            const y1 = this.reader.getFloat(descendantsNodes[j], 'y1');
+                            const x2 = this.reader.getFloat(descendantsNodes[j], 'x2');
+                            const y2 = this.reader.getFloat(descendantsNodes[j], 'y2');
 
-                            if (x1_r == null || x2_r == null || y1_r == null || y2_r == null) {
+                            if (x1 == null || x2 == null || y1 == null || y2 == null) {
                                 this.onXMLMinorError("Missing values for rectangle leaf. Node ID: " + nodeID);
                                 break;
                             }
-                            if (isNaN(x1_r) || isNaN(x2_r) || isNaN(y1_r) || isNaN(y2_r)) {
+                            if (isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2)) {
                                 this.onXMLMinorError("Invalid values for rectangle leaf. Node ID: " + nodeID);
                                 break;
                             }
 
-                            const rect = new MyRectangle(this.scene, x1_r, y1_r, x2_r, y2_r);
+                            const rect = new MyRectangle(this.scene, x1, y1, x2, y2);
                             rect.applyTextures(amplification.afs, amplification.aft);
 
                             leafs.push(rect);
                             break;
-
-                        case ("triangle"):
+                        }
+                        case ("triangle"): {
                             const x1 = this.reader.getFloat(descendantsNodes[j], 'x1');
                             const y1 = this.reader.getFloat(descendantsNodes[j], 'y1');
                             const x2 = this.reader.getFloat(descendantsNodes[j], 'x2');
@@ -1168,44 +1168,44 @@ class MySceneGraph {
 
                             leafs.push(triangle);
                             break;
-
-                        case ("cylinder"):
+                        }
+                        case ("cylinder"): {
                             const height = this.reader.getFloat(descendantsNodes[j],'height');
                             const topRadius = this.reader.getFloat(descendantsNodes[j],'topRadius');
                             const bottomRadius = this.reader.getFloat(descendantsNodes[j],'bottomRadius');
-                            const stacks_c = this.reader.getInteger(descendantsNodes[j],'stacks');
-                            const slices_c = this.reader.getInteger(descendantsNodes[j],'slices');
+                            const stacks = this.reader.getInteger(descendantsNodes[j],'stacks');
+                            const slices = this.reader.getInteger(descendantsNodes[j],'slices');
 
-                            if (height==null || topRadius==null || bottomRadius==null || stacks_c==null || slices_c==null) {
+                            if (height==null || topRadius==null || bottomRadius==null || stacks==null || slices==null) {
                                 this.onXMLMinorError("Missing values for cylinder leaf. Node ID: " + nodeID);
                                 break;
                             }
-                            else if (isNaN(height) || isNaN(topRadius) || isNaN(bottomRadius) || isNaN(stacks_c) || isNaN(slices_c)) {
+                            else if (isNaN(height) || isNaN(topRadius) || isNaN(bottomRadius) || isNaN(stacks) || isNaN(slices)) {
                                 this.onXMLMinorError("Invalid values for cylinder leaf. Node ID: " + nodeID);
                                 break;
                             }
 
-                            leafs.push(new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks_c, slices_c));
+                            leafs.push(new MyCylinder(this.scene, height, topRadius, bottomRadius, stacks, slices));
                             break;
-
-                        case ("sphere"):
+                        }
+                        case ("sphere"): {
                             const radius = this.reader.getFloat(descendantsNodes[j], 'radius');
-                            const slices_s = this.reader.getInteger(descendantsNodes[j], 'slices');
-                            const stacks_s = this.reader.getInteger(descendantsNodes[j], 'stacks');
+                            const slices = this.reader.getInteger(descendantsNodes[j], 'slices');
+                            const stacks = this.reader.getInteger(descendantsNodes[j], 'stacks');
 
-                            if (radius == null || slices_s == null || stacks_s == null){
+                            if (radius == null || slices == null || stacks == null){
                                 this.onXMLMinorError("Missing values for sphere leaf. Node ID: " + nodeID);
                                 break;
                             }
-                            else if (isNaN(radius) || isNaN(slices_s) || isNaN(stacks_s)){
+                            else if (isNaN(radius) || isNaN(slices) || isNaN(stacks)){
                                 this.onXMLMinorError("Invalid values for sphere leaf. Node ID: " + nodeID);
                                 break;
                             }
 
-                            leafs.push(new MySphere(this.scene, radius, slices_s, stacks_s));
+                            leafs.push(new MySphere(this.scene, radius, slices, stacks));
                             break;
-
-                        case ("torus"):
+                        }
+                        case ("torus"): {
                             const inner = this.reader.getFloat(descendantsNodes[j],'inner');
                             const outer = this.reader.getFloat(descendantsNodes[j],'outer');
                             const loops = this.reader.getInteger(descendantsNodes[j],'loops');
@@ -1222,7 +1222,8 @@ class MySceneGraph {
 
                             leafs.push(new MyTorus(this.scene, inner, outer, slices, loops));
                             break;
-                        case ("spritetext"):
+                        }
+                        case ("spritetext"): {
                             const text = this.reader.getString(descendantsNodes[j],'text');
 
                             if(text == null){
@@ -1232,7 +1233,8 @@ class MySceneGraph {
 
                             leafs.push(new MySpriteText(this.scene, text));
                             break;
-                        case ("spriteanim"):
+                        }
+                        case ("spriteanim"): {
                             const ssid = this.reader.getString(descendantsNodes[j],'ssid');
                             if(ssid == null) {
                                 this.onXMLMinorError("ssid of spriteanim not defined. Node ID: " + nodeID);
@@ -1265,7 +1267,85 @@ class MySceneGraph {
                             this.spriteanims.push(spriteanim);
                             leafs.push(spriteanim);
                             break;
+                        }
+                        case ("plane"): {
+                            const npartsU = this.reader.getInteger(descendantsNodes[j],'npartsU');
+                            if(npartsU == null || isNaN(npartsU)){
+                                this.onXMLMinorError("Wrong values for plane npartsU. Node ID: " + nodeID);
+                                break;
+                            }
+
+                            const npartsV = this.reader.getInteger(descendantsNodes[j],'npartsV');
+                            if(npartsV == null || isNaN(npartsV)){
+                                this.onXMLMinorError("Wrong values for plane npartsV. Node ID: " + nodeID);
+                                break;
+                            }
+                            
+                            leafs.push(new MyPlane(this.scene, npartsU, npartsV));
+                            break;
+                        }
+                        /*case ("patch"): {
+                            const npartsU = this.reader.getInteger(descendantsNodes[j],'npartsU');
+                            if(npartsU == null || isNaN(npartsU)){
+                                this.onXMLMinorError("Wrong values for plane npartsU. Node ID: " + nodeID);
+                                break;
+                            }
+
+                            const npartsV = this.reader.getInteger(descendantsNodes[j],'npartsV');
+                            if(npartsV == null || isNaN(npartsV)){
+                                this.onXMLMinorError("Wrong values for plane npartsV. Node ID: " + nodeID);
+                                break;
+                            }
+
+                            const npointsU = this.reader.getInteger(descendantsNodes[j],'npointsU');
+                            if(npointsU == null || isNaN(npointsU)){
+                                this.onXMLMinorError("Wrong values for plane npartsU. Node ID: " + nodeID);
+                                break;
+                            }
+
+                            const npointsV = this.reader.getInteger(descendantsNodes[j],'npointsV');
+                            if(npointsV == null || isNaN(npointsV)){
+                                this.onXMLMinorError("Wrong values for plane npointsV. Node ID: " + nodeID);
+                                break;
+                            }
+                            
+                            break;
+                        }*/
+                        /*case ("defbarrel"): {
+                            const base = this.reader.getFloat(descendantsNodes[j], 'base');
+                            if(base == null || isNaN(base)){
+                                this.onXMLMinorError("Wrong values for defbarrel base. Node ID: " + nodeID);
+                                break;
+                            
+                            }
+                            const middle = this.reader.getFloat(descendantsNodes[j], 'middle');
+                            if(middle == null || isNaN(middle)){
+                                this.onXMLMinorError("Wrong values for defbarrel middle. Node ID: " + nodeID);
+                                break;
+                            }
+
+                            const height = this.reader.getFloat(descendantsNodes[j], 'height');
+                            if(height == null || isNaN(height)){
+                                this.onXMLMinorError("Wrong values for defbarrel height. Node ID: " + nodeID);
+                                break;
+                            }
+                            
+                            const slices = this.reader.getInteger(descendantsNodes[j], 'slices');
+                            if(slices == null || isNaN(slices)){
+                                this.onXMLMinorError("Wrong values for defbarrel slices. Node ID: " + nodeID);
+                                break;
+                            }
+
+                            const stacks = this.reader.getInteger(descendantsNodes[j], 'stacks');
+                            if(stacks == null || isNaN(stacks)){
+                                this.onXMLMinorError("Wrong values for defbarrel stacks. Node ID: " + nodeID);
+                                break;
+                            }
+
+                            break;
+                        }*/
                         default:
+                            this.onXMLMinorError("Undefined leaf type: " + type + ". Node ID: " + nodeID);
                             break;
                     }
                 }
@@ -1286,6 +1366,8 @@ class MySceneGraph {
                 }
             }
         }
+
+        console.log(this.nodes);
 
         this.log("Parsed Nodes.");
         return null;
