@@ -1284,33 +1284,65 @@ class MySceneGraph {
                             leafs.push(new MyPlane(this.scene, npartsU, npartsV));
                             break;
                         }
-                        /*case ("patch"): {
+                        case ("patch"): {
                             const npartsU = this.reader.getInteger(descendantsNodes[j],'npartsU');
                             if(npartsU == null || isNaN(npartsU)){
-                                this.onXMLMinorError("Wrong values for plane npartsU. Node ID: " + nodeID);
+                                this.onXMLMinorError("Wrong values for patch npartsU. Node ID: " + nodeID);
                                 break;
                             }
 
                             const npartsV = this.reader.getInteger(descendantsNodes[j],'npartsV');
                             if(npartsV == null || isNaN(npartsV)){
-                                this.onXMLMinorError("Wrong values for plane npartsV. Node ID: " + nodeID);
+                                this.onXMLMinorError("Wrong values for patch npartsV. Node ID: " + nodeID);
                                 break;
                             }
 
                             const npointsU = this.reader.getInteger(descendantsNodes[j],'npointsU');
                             if(npointsU == null || isNaN(npointsU)){
-                                this.onXMLMinorError("Wrong values for plane npartsU. Node ID: " + nodeID);
+                                this.onXMLMinorError("Wrong values for patch npartsU. Node ID: " + nodeID);
                                 break;
                             }
 
                             const npointsV = this.reader.getInteger(descendantsNodes[j],'npointsV');
                             if(npointsV == null || isNaN(npointsV)){
-                                this.onXMLMinorError("Wrong values for plane npointsV. Node ID: " + nodeID);
+                                this.onXMLMinorError("Wrong values for patch npointsV. Node ID: " + nodeID);
                                 break;
                             }
+
+                            const controlPointsNodes = descendantsNodes[j].children;
+                            if (controlPointsNodes.length === 0) {
+                                this.onXMLMinorError("No control points defined for patch! Node ID: " + nodeID);
+                                continue;
+                            }
+
+                            const controlPointsNum = npointsU*npointsV;
+                            if(controlPointsNodes.length !== controlPointsNum) {
+                                this.onXMLMinorError("Wrong number of control points provided for patch! (required " + controlPointsNum + "). Node ID: " + nodeID);
+                                continue;
+                            }
+
+                            let controlPoints = [];
+                            let index = 0;
+                            for(let u = 0; u < npointsU; u++){
+                                let uList = [];
+
+                                for(let v = 0; v < npointsV; v++, index++){
+                                    let x = this.reader.getFloat(controlPointsNodes[index], 'xx');
+                                    let y = this.reader.getFloat(controlPointsNodes[index], 'yy');
+                                    let z = this.reader.getFloat(controlPointsNodes[index], 'zz');
+
+                                    uList.push([x, y, z, 1]);
+                                }
+
+                                controlPoints.push(uList);
+                            }
+
+                            let patch = [npointsU, npointsV, npartsU, npartsV, controlPoints];
+
+                            console.log(patch);
                             
                             break;
-                        }*/
+                        }
                         /*case ("defbarrel"): {
                             const base = this.reader.getFloat(descendantsNodes[j], 'base');
                             if(base == null || isNaN(base)){
@@ -1366,8 +1398,6 @@ class MySceneGraph {
                 }
             }
         }
-
-        console.log(this.nodes);
 
         this.log("Parsed Nodes.");
         return null;
