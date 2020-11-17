@@ -313,19 +313,14 @@ class MySceneGraph {
                 continue;
             }
 
-            // Checks if view is perspective or ortho and gets components.
+            // Checks if view is perspective or ortho, gets components and parses errors.
             if (children[i].nodeName === "perspective") {
                 const near =  this.reader.getFloat(children[i], 'near');
                 const far = this.reader.getFloat(children[i], 'far');
                 const angle = this.reader.getFloat(children[i], 'angle');
 
-                if (near == null || far == null || angle == null) {
-                    this.onXMLMinorError("Missing values for view. View ID: " + viewID);
-                    errorview = true;
-                    continue;
-                }
-                if (isNaN(near) || isNaN(far) || isNaN(angle)) {
-                    this.onXMLMinorError("Invalid values for view. View ID: " + viewID);
+                if (!this.checkNumber(near) || !this.checkNumber(far) || !this.checkNumber(angle)) {
+                    this.onXMLMinorError("Wrong values for view. View ID: " + viewID);
                     errorview = true;
                     continue;
                 }
@@ -359,12 +354,8 @@ class MySceneGraph {
                 const top = this.reader.getFloat(children[i], 'top');
                 const bottom = this.reader.getFloat(children[i], 'bottom');
 
-                if (near == null || far == null || left == null || right == null || top == null || bottom == null) {
-                    this.onXMLMinorError("Missing values for view. View ID: " + viewID);
-                    continue;
-                }
-                if (isNaN(near) || isNaN(far) || isNaN(left) || isNaN(right) || isNaN(top) || isNaN(bottom)) {
-                    this.onXMLMinorError("Invalid values for view. View ID: " + viewID);
+                if(!this.checkNumber(near) || !this.checkNumber(far) || !this.checkNumber(left)|| !this.checkNumber(right)|| !this.checkNumber(top)|| !this.checkNumber(bottom)){
+                    this.onXMLMinorError("Wrong values for view. View ID: " + viewID);
                     continue;
                 }
 
@@ -632,14 +623,14 @@ class MySceneGraph {
 
             // Parse sizeM and check for errors
             const sizeM = this.reader.getFloat(children[i], 'sizeM');
-            if (sizeM == null || isNaN(sizeM)) {
+            if (!this.checkPositiveNumber(sizeM)) {
                 this.onXMLMinorError("Missing values for sizeM. Spritesheet ID: " + spritesheetID);
                 continue;
             }
 
             // Parse sizeN and check for errors
             const sizeN = this.reader.getFloat(children[i], 'sizeN');
-            if (sizeN == null || isNaN(sizeN)) {
+            if (!this.checkPositiveNumber(sizeN)) {
                 this.onXMLMinorError("Missing values for sizeN. Spritesheet ID: " + spritesheetID);
                 continue;
             }
@@ -731,7 +722,7 @@ class MySceneGraph {
 
             // Checks if shininess has wrong value or is bellow 1, defining 1 as default.
             let shininess = this.reader.getFloat(grandChildren[shininessIndex], "value");
-            if (!(shininess != null && !isNaN(shininess))) {
+            if (!this.checkNumber(shininess)) {
                 this.onXMLMinorError("Wrong value for shininess. Material ID: " + materialID);
                 shininess = 1;
             }
@@ -829,7 +820,7 @@ class MySceneGraph {
                             xyz = this.parseCoordinates3D(transformationsNode[k], "animation with ID: " + animationID);
 
                             if(!Array.isArray(xyz)){
-                                this.onXMLMinorError("Wrong value on translation. Aniamation ID: " + animationID);
+                                this.onXMLMinorError("Wrong value on translation. Keyframe instant:" + instant + ", Aniamation ID: " + animationID);
                                 continue;
                             }
 
@@ -844,11 +835,11 @@ class MySceneGraph {
 
                             //Checks for errors
                             if (axis == null || (axis !== "x" && axis !== "y" && axis !== "z")) {
-                                this.onXMLMinorError("Wrong value for axis on rotation. Node ID: " + nodeID);
+                                this.onXMLMinorError("Wrong value for axis on rotation. Keyframe instant:" + instant + ", Aniamation ID: " + animationID);
                                 continue;
                             }
-                            if (angle == null || isNaN(angle)) {
-                                this.onXMLMinorError("Wrong value for angle on rotation. Node ID: " + nodeID);
+                            if (!this.checkNumber(angle)) {
+                                this.onXMLMinorError("Wrong value for angle on rotation. Keyframe instant:" + instant + ", Aniamation ID: " + animationID);
                                 continue;
                             }
 
@@ -875,12 +866,8 @@ class MySceneGraph {
                             const sz = this.reader.getFloat(transformationsNode[k], "sz");
 
                             //Checks for errors
-                            if (sx == null || sy == null || sz == null) {
-                                this.onXMLMinorError("Missing values for scale. Node ID: " + nodeID);
-                                continue;
-                            }
-                            if (isNaN(sx) || isNaN(sy) || isNaN(sz)) {
-                                this.onXMLMinorError("Wrong values for scale. Node ID: " + nodeID);
+                            if (!this.checkNumber(sx) || !this.checkNumber(sy) || !this.checkNumber(sz)) {
+                                this.onXMLMinorError("Wrong values for scale. Keyframe instant:" + instant + ", Animation ID: " + animationID);
                                 continue;
                             }
 
@@ -992,7 +979,7 @@ class MySceneGraph {
                                 this.onXMLMinorError("Wrong value for axis on rotation. Node ID: " + nodeID);
                                 continue;
                             }
-                            if (angle == null || isNaN(angle)) {
+                            if (!this.checkNumber(angle)) {
                                 this.onXMLMinorError("Wrong value for angle on rotation. Node ID: " + nodeID);
                                 continue;
                             }
@@ -1008,11 +995,7 @@ class MySceneGraph {
                             const sz = this.reader.getFloat(transformationsNode[j], "sz");
 
                             //Checks for errors
-                            if (sx == null || sy == null || sz == null) {
-                                this.onXMLMinorError("Missing values for scale. Node ID: " + nodeID);
-                                continue;
-                            }
-                            if (isNaN(sx) || isNaN(sy) || isNaN(sz)) {
+                            if (!this.checkNumber(sx) || !this.checkNumber(sy) || !this.checkNumber(sz)) {
                                 this.onXMLMinorError("Wrong values for scale. Node ID: " + nodeID);
                                 continue;
                             }
@@ -1078,7 +1061,7 @@ class MySceneGraph {
                         if (amplificationNode[j].nodeName === "amplification") {
                             const afs = this.reader.getFloat(amplificationNode[j], 'afs');
                             const aft = this.reader.getFloat(amplificationNode[j], 'aft');
-                            if (aft == null || afs == null || isNaN(aft) || isNaN(afs)) {
+                            if (!this.checkPositiveNumber(afs) || !this.checkPositiveNumber(aft)) {
                                 this.onXMLMinorError("Amplification values not valid, assuming 1.0. Node ID: " + nodeID);
                             }
                             else {
@@ -1131,12 +1114,8 @@ class MySceneGraph {
                             const x2 = this.reader.getFloat(descendantsNodes[j], 'x2');
                             const y2 = this.reader.getFloat(descendantsNodes[j], 'y2');
 
-                            if (x1 == null || x2 == null || y1 == null || y2 == null) {
-                                this.onXMLMinorError("Missing values for rectangle leaf. Node ID: " + nodeID);
-                                break;
-                            }
-                            if (isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2)) {
-                                this.onXMLMinorError("Invalid values for rectangle leaf. Node ID: " + nodeID);
+                            if (!this.checkNumber(x1) || !this.checkNumber(x2) || !this.checkNumber(y1) || !this.checkNumber(y2)) {
+                                this.onXMLMinorError("Wrong values for rectangle leaf. Node ID: " + nodeID);
                                 break;
                             }
 
@@ -1154,12 +1133,8 @@ class MySceneGraph {
                             const x3 = this.reader.getFloat(descendantsNodes[j], 'x3');
                             const y3 = this.reader.getFloat(descendantsNodes[j], 'y3');
 
-                            if (x1 == null || x2 == null || y1 == null || y2 == null || x3 == null || y3 == null ) {
-                                this.onXMLMinorError("Missing values for triangle leaf. Node ID: " + nodeID);
-                                break;
-                            }
-                            if (isNaN(x1) || isNaN(x2) || isNaN(y1) || isNaN(y2) || isNaN(x3) || isNaN(y3)) {
-                                this.onXMLMinorError("Invalid values for triangle leaf. Node ID: " + nodeID);
+                            if (!this.checkNumber(x1) || !this.checkNumber(x2) || !this.checkNumber(y1) || !this.checkNumber(y2) || !this.checkNumber(x3) || !this.checkNumber(y3)) {
+                                this.onXMLMinorError("Wrong values for triangle leaf. Node ID: " + nodeID);
                                 break;
                             }
 
@@ -1176,12 +1151,8 @@ class MySceneGraph {
                             const stacks = this.reader.getInteger(descendantsNodes[j],'stacks');
                             const slices = this.reader.getInteger(descendantsNodes[j],'slices');
 
-                            if (height==null || topRadius==null || bottomRadius==null || stacks==null || slices==null) {
-                                this.onXMLMinorError("Missing values for cylinder leaf. Node ID: " + nodeID);
-                                break;
-                            }
-                            else if (isNaN(height) || isNaN(topRadius) || isNaN(bottomRadius) || isNaN(stacks) || isNaN(slices)) {
-                                this.onXMLMinorError("Invalid values for cylinder leaf. Node ID: " + nodeID);
+                            if (!this.checkPositiveNumber(height) || !this.checkPositiveNumber(topRadius) || !this.checkPositiveNumber(bottomRadius) || !this.checkPositiveNumber(stacks) || !this.checkPositiveNumber(slices)) {
+                                this.onXMLMinorError("Wrong values for cylinder leaf. Node ID: " + nodeID);
                                 break;
                             }
 
@@ -1193,12 +1164,8 @@ class MySceneGraph {
                             const slices = this.reader.getInteger(descendantsNodes[j], 'slices');
                             const stacks = this.reader.getInteger(descendantsNodes[j], 'stacks');
 
-                            if (radius == null || slices == null || stacks == null){
-                                this.onXMLMinorError("Missing values for sphere leaf. Node ID: " + nodeID);
-                                break;
-                            }
-                            else if (isNaN(radius) || isNaN(slices) || isNaN(stacks)){
-                                this.onXMLMinorError("Invalid values for sphere leaf. Node ID: " + nodeID);
+                            if (!this.checkPositiveNumber(radius) || !this.checkPositiveNumber(slices) || !this.checkPositiveNumber(stacks)){
+                                this.onXMLMinorError("Wrong values for sphere leaf. Node ID: " + nodeID);
                                 break;
                             }
 
@@ -1211,12 +1178,8 @@ class MySceneGraph {
                             const loops = this.reader.getInteger(descendantsNodes[j],'loops');
                             const slices = this.reader.getInteger(descendantsNodes[j],'slices');
 
-                            if (inner == null || outer == null || loops == null || slices == null){
-                                this.onXMLMinorError("Missing values for torus leaf. Node ID: " + nodeID);
-                                break;
-                            }
-                            else if (isNaN(inner) || isNaN(outer) || isNaN(loops) || isNaN(slices)){
-                                this.onXMLMinorError("Invalid values for torus leaf. Node ID: " + nodeID);
+                            if (!this.checkPositiveNumber(inner) || !this.checkPositiveNumber(outer) || !this.checkPositiveNumber(loops) || !this.checkPositiveNumber(slices)){
+                                this.onXMLMinorError("Wrong values for torus leaf. Node ID: " + nodeID);
                                 break;
                             }
 
@@ -1246,19 +1209,19 @@ class MySceneGraph {
                             }
 
                             const startCell = this.reader.getInteger(descendantsNodes[j],'startCell');
-                            if(startCell == null || isNaN(startCell)){
+                            if(!this.checkPositiveNumber(startCell)){
                                 this.onXMLMinorError("Wrong values for spriteanim starCell. Node ID: " + nodeID);
                                 break;
                             }
 
                             const endCell = this.reader.getInteger(descendantsNodes[j],'endCell');
-                            if(endCell == null || isNaN(endCell)){
+                            if(!this.checkPositiveNumber(endCell)){
                                 this.onXMLMinorError("Wrong values for spriteanim endCell. Node ID: " + nodeID);
                                 break;
                             }
 
                             const duration = this.reader.getFloat(descendantsNodes[j],'duration');
-                            if(duration == null || isNaN(duration)){
+                            if(!this.checkPositiveNumber(duration)){
                                 this.onXMLMinorError("Wrong values for spriteanim duration. Node ID: " + nodeID);
                                 break;
                             }
@@ -1270,13 +1233,13 @@ class MySceneGraph {
                         }
                         case ("plane"): {
                             const npartsU = this.reader.getInteger(descendantsNodes[j],'npartsU');
-                            if(npartsU == null || isNaN(npartsU)){
+                            if(!this.checkPositiveNumber(npartsU)){
                                 this.onXMLMinorError("Wrong values for plane npartsU. Node ID: " + nodeID);
                                 break;
                             }
 
                             const npartsV = this.reader.getInteger(descendantsNodes[j],'npartsV');
-                            if(npartsV == null || isNaN(npartsV)){
+                            if(!this.checkPositiveNumber(npartsV)){
                                 this.onXMLMinorError("Wrong values for plane npartsV. Node ID: " + nodeID);
                                 break;
                             }
@@ -1286,25 +1249,25 @@ class MySceneGraph {
                         }
                         case ("patch"): {
                             const npartsU = this.reader.getInteger(descendantsNodes[j],'npartsU');
-                            if(npartsU == null || isNaN(npartsU)){
+                            if(!this.checkPositiveNumber(npartsU)){
                                 this.onXMLMinorError("Wrong values for patch npartsU. Node ID: " + nodeID);
                                 break;
                             }
 
                             const npartsV = this.reader.getInteger(descendantsNodes[j],'npartsV');
-                            if(npartsV == null || isNaN(npartsV)){
+                            if(!this.checkPositiveNumber(npartsV)){
                                 this.onXMLMinorError("Wrong values for patch npartsV. Node ID: " + nodeID);
                                 break;
                             }
 
                             const npointsU = this.reader.getInteger(descendantsNodes[j],'npointsU');
-                            if(npointsU == null || isNaN(npointsU)){
+                            if(!this.checkPositiveNumber(npointsU)){
                                 this.onXMLMinorError("Wrong values for patch npartsU. Node ID: " + nodeID);
                                 break;
                             }
 
                             const npointsV = this.reader.getInteger(descendantsNodes[j],'npointsV');
-                            if(npointsV == null || isNaN(npointsV)){
+                            if(!this.checkPositiveNumber(npointsV)){
                                 this.onXMLMinorError("Wrong values for patch npointsV. Node ID: " + nodeID);
                                 break;
                             }
@@ -1325,7 +1288,7 @@ class MySceneGraph {
                             let index = 0;
                             for(let u = 0; u < npointsU; u++){
                                 let uList = [];
-
+                                
                                 for(let v = 0; v < npointsV; v++, index++){
                                     let x = this.reader.getFloat(controlPointsNodes[index], 'xx');
                                     let y = this.reader.getFloat(controlPointsNodes[index], 'yy');
@@ -1345,31 +1308,31 @@ class MySceneGraph {
                         }
                         /*case ("defbarrel"): {
                             const base = this.reader.getFloat(descendantsNodes[j], 'base');
-                            if(base == null || isNaN(base)){
+                            if(!this.checkPositiveNumber(base)){
                                 this.onXMLMinorError("Wrong values for defbarrel base. Node ID: " + nodeID);
                                 break;
                             
                             }
                             const middle = this.reader.getFloat(descendantsNodes[j], 'middle');
-                            if(middle == null || isNaN(middle)){
+                            if(!this.checkPositiveNumber(middle)){
                                 this.onXMLMinorError("Wrong values for defbarrel middle. Node ID: " + nodeID);
                                 break;
                             }
 
                             const height = this.reader.getFloat(descendantsNodes[j], 'height');
-                            if(height == null || isNaN(height)){
+                            if(!this.checkPositiveNumber(height)){
                                 this.onXMLMinorError("Wrong values for defbarrel height. Node ID: " + nodeID);
                                 break;
                             }
                             
                             const slices = this.reader.getInteger(descendantsNodes[j], 'slices');
-                            if(slices == null || isNaN(slices)){
+                            if(!this.checkPositiveNumber(slices)){
                                 this.onXMLMinorError("Wrong values for defbarrel slices. Node ID: " + nodeID);
                                 break;
                             }
 
                             const stacks = this.reader.getInteger(descendantsNodes[j], 'stacks');
-                            if(stacks == null || isNaN(stacks)){
+                            if(!this.checkPositiveNumber(stacks)){
                                 this.onXMLMinorError("Wrong values for defbarrel stacks. Node ID: " + nodeID);
                                 break;
                             }
@@ -1506,6 +1469,14 @@ class MySceneGraph {
         color.push(...[r, g, b, a]);
 
         return color;
+    }
+
+    checkNumber(number){
+        return (number != null && !isNaN(number));
+    }
+
+    checkPositiveNumber(number){
+        return (this.checkNumber(number) && number>=0);
     }
 
     /**
