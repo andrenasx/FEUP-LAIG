@@ -26,37 +26,43 @@ class MyDefbarrel extends CGFobject {
             //P1
             [
                 [-this.base, 0, this.height, 1], //Q4
-                [-this.base - H, 0, this.height - aux, 1], //Q3
-                [-this.base - H, 0, aux, 1], //Q2
+                [-this.base - H, 0, aux, 1], //Q3
+                [-this.base - H, 0, this.height - aux, 1], //Q2
                 [-this.base, 0, 0, 1], //Q1
             ],
 
             [
                 [-this.base, h, this.height, 1],
-                [(this.base + H) * Math.cos(Math.PI - angle), Math.sin(Math.PI - angle) * (this.base + h), this.height - aux, 1],
                 [(this.base + H) * Math.cos(Math.PI - angle), Math.sin(Math.PI - angle) * (this.base + h), aux, 1],
+                [(this.base + H) * Math.cos(Math.PI - angle), Math.sin(Math.PI - angle) * (this.base + h), this.height - aux, 1],
                 [-this.base, h, 0, 1],
             ],
 
             [
                 [this.base, h, this.height, 1],
-                [(this.base + H) * Math.cos(angle), Math.sin(angle) * (this.base + h), this.height - aux, 1],
                 [(this.base + H) * Math.cos(angle), Math.sin(angle) * (this.base + h), aux, 1],
+                [(this.base + H) * Math.cos(angle), Math.sin(angle) * (this.base + h), this.height - aux, 1],
                 [this.base, h, 0, 1],
             ],
 
             [
                 [this.base, 0, this.height, 1],
-                [this.base + H, 0, this.height - aux, 1],
                 [this.base + H, 0, aux, 1],
+                [this.base + H, 0, this.height - aux, 1],
                 [this.base, 0, 0, 1],
             ],
         ];
 
-        this.defbarrel = new MyPatch(this.scene, this.stacks, this.slices, 3, 3, controlPoints);
+        console.log(controlPoints);
+
+        this.defbarrel = new MyPatch(this.scene, this.stacks, this.slices, 4, 4, controlPoints);
     }
     
     display() {
-		this.defbarrel.display();
+        this.defbarrel.display();
+        this.scene.pushMatrix();
+        this.scene.rotate(Math.PI, 0,0,1);
+        this.defbarrel.display()
+        this.scene.popMatrix();        
 	}
 }
