@@ -1300,10 +1300,7 @@ class MySceneGraph {
                                 controlPoints.push(uList);
                             }
 
-                            let patch = [npointsU, npointsV, npartsU, npartsV, controlPoints];
-
-                            console.log(patch);
-                            
+                            leafs.push(new MyPatch(this.scene, npartsU, npartsV, npointsU, npointsV, controlPoints));                            
                             break;
                         }
                         /*case ("defbarrel"): {
