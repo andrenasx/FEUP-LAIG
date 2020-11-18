@@ -247,6 +247,8 @@
                     <controlpoint xx="1.5" yy="1.5" zz="0.0" />
                 </leaf>
 
+                <leaf type="defbarrel" base="1" middle="1.5" height="2" slices="10" stacks="10" />
+
                 <noderef id="grass" />
                 <noderef id="pool" />
                 <noderef id="floater" />

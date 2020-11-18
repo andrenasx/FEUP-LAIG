@@ -1303,7 +1303,7 @@ class MySceneGraph {
                             leafs.push(new MyPatch(this.scene, npartsU, npartsV, npointsU, npointsV, controlPoints));                            
                             break;
                         }
-                        /*case ("defbarrel"): {
+                        case ("defbarrel"): {
                             const base = this.reader.getFloat(descendantsNodes[j], 'base');
                             if(!this.checkPositiveNumber(base)){
                                 this.onXMLMinorError("Wrong values for defbarrel base. Node ID: " + nodeID);
@@ -1334,8 +1334,9 @@ class MySceneGraph {
                                 break;
                             }
 
+                            leafs.push(new MyDefbarrel(this.scene, base, middle, height, slices, stacks));
                             break;
-                        }*/
+                        }
                         default:
                             this.onXMLMinorError("Undefined leaf type: " + type + ". Node ID: " + nodeID);
                             break;
