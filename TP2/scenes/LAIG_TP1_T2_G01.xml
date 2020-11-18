@@ -37,8 +37,8 @@
             <enable value="1" />    <!-- enable/disable -->
             <position x="7" y="7" z="4" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />   <!-- ambient component -->
-            <diffuse r="0.8" g="0.8" b="0.8" a="1.0" /> <!-- diffuse component -->
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />    <!-- specular component -->
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" /> <!-- diffuse component -->
+            <specular r="0.8" g="0.8" b="0.8" a="0.8" />    <!-- specular component -->
         </light>
 
         <light id="left">
@@ -98,7 +98,7 @@
             <shininess value="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="0.4" g="0.4" b="0.4" a="1.0" />
-            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.7" g="0.7" b="0.7" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
@@ -114,7 +114,7 @@
             <shininess value="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="0.4" g="0.4" b="0.4" a="1.0" />
-            <specular r="0.8" g="0.8" b="0.8" a="1.0" />
+            <specular r="0.7" g="0.7" b="0.7" a="1.0" />
             <emissive r="0.2" g="0.2" b="0.2" a="1.0" />
         </material>
     </materials>

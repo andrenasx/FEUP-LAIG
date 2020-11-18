@@ -1300,7 +1300,7 @@ class MySceneGraph {
                                 controlPoints.push(uList);
                             }
 
-                            leafs.push(new MyPatch(this.scene, npartsU, npartsV, npointsU, npointsV, controlPoints));                            
+                            leafs.push(new MyPatch(this.scene, npartsU, npartsV, npointsU, npointsV, controlPoints));
                             break;
                         }
                         case ("defbarrel"): {
