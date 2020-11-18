@@ -226,11 +226,11 @@
             </transformations>
 
             <descendants>
-                <leaf type="spritetext" text="Hello LAIG" />
+                <!--<leaf type="spritetext" text="Hello LAIG" />
                 <leaf type="spriteanim" ssid="fire_anim" startCell="0" endCell="31" duration="2" />
 
-                <leaf type="plane" npartsU="5" npartsV="8" />
-                <leaf type="patch" npointsU="3" npointsV="4" npartsU="20" npartsV="20" >
+                <leaf type="plane" npartsU="5" npartsV="8" />-->
+                <!--<leaf type="patch" npointsU="3" npointsV="4" npartsU="20" npartsV="20" >
                     <controlpoint xx="-1.5" yy="-1.5" zz="0" />
                     <controlpoint xx="-2.0" yy="-2.0" zz="2.0" />
                     <controlpoint xx="-2.0" yy="2.0" zz="2.0" />
@@ -245,9 +245,9 @@
                     <controlpoint xx="2.0" yy="-2.0" zz="2.0" />
                     <controlpoint xx="2.0" yy="2.0" zz="2.0" />
                     <controlpoint xx="1.5" yy="1.5" zz="0.0" />
-                </leaf>
+                </leaf>-->
 
-                <leaf type="defbarrel" base="1" middle="1.5" height="2" slices="10" stacks="10" />
+                <leaf type="defbarrel" base="1" middle="2" height="5" slices="10" stacks="10" />
 
                 <noderef id="grass" />
                 <noderef id="pool" />
