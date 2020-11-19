@@ -17,14 +17,13 @@ class MyDefbarrel extends CGFobject {
         this.slices = slices;
         this.stacks = stacks;
 
-        let angle = Math.PI / 6;
         let h = 4 / 3 * this.base;
         let H = 4 / 3 * (this.middle - this.base);
         
         let middleX = (this.base + H);
         let middleY = (4/3) * middleX;
-        let Q2Z = H / Math.tan(angle);
-        let Q3Z = this.height - Q2Z;
+        let Q2Z = this.height/3;
+        let Q3Z = this.height*2/3;
         
         let controlPoints = [
             //P4
