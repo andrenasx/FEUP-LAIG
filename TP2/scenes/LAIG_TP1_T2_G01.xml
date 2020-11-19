@@ -250,6 +250,7 @@
                 <noderef id="parasol" />
                 <noderef id="swing" />
                 <noderef id="flower_pot" />
+                <noderef id="slide" />
             </descendants>
         </node>
 
@@ -518,7 +519,7 @@
             </texture>
 
             <transformations>
-                <translation x="8" y="0.1" z="7" />
+                <translation x="5" y="0.1" z="7" />
                 <rotation axis="x" angle="90"/>
             </transformations>
 
@@ -1562,6 +1563,253 @@
             <descendants>
                 <noderef id="flower" />
                 <noderef id="vase" />
+            </descendants>
+        </node>
+
+        <node id="slide">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="11" y="0" z="7" />
+                <rotation axis="y" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <noderef id="slide_tube" />
+                <noderef id="slide_support" />
+            </descendants>
+        </node>
+
+        <node id="slide_tube">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="slide_tube_outer" />
+                <noderef id="slide_tube_inner" />
+            </descendants>
+        </node>
+
+        <node id="slide_tube_outer">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <leaf type="patch" npointsU="3" npointsV="4" npartsU="20" npartsV="20" >
+                    <controlpoint x="-0.5" y="0" z="1.8" /> 
+                    <controlpoint x="-0.5" y="0.3" z="0" />
+                    <controlpoint x="-0.5" y="1.9" z="0" />
+                    <controlpoint x="-0.5" y="1.799" z="-1.5" />
+
+                    <controlpoint x="0" y="0" z="1.8" />
+                    <controlpoint x="0" y="0.3" z="-2.4" />
+                    <controlpoint x="0" y="1.9" z="-0.1" />
+                    <controlpoint x="0" y="1.799" z="-1.5" />
+
+                    <controlpoint x="0.5" y="0" z="1.8" />
+                    <controlpoint x="0.5" y="0.3" z="0" />
+                    <controlpoint x="0.5" y="1.9" z="0" />
+                    <controlpoint x="0.5" y="1.799" z="-1.5" />
+                </leaf>
+            </descendants>
+        </node>
+
+        <node id="slide_tube_inner">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="-1" sy="1" sz="1" />
+            </transformations>
+
+            <descendants>
+                <noderef id="slide_tube_outer" />
+            </descendants>
+        </node>
+
+         <node id="slide_support">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="-0.5" z="0" />
+                <rotation axis="x" angle="10" />
+            </transformations>
+
+            <descendants>
+                <noderef id="slide_stairs" />
+                <noderef id="slide_steps" />
+            </descendants>
+        </node>
+
+        <node id="slide_stairs">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="stairs_right" />
+                <noderef id="stairs_left" />
+            </descendants>
+        </node>
+
+        <node id="stairs_right">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="0.57" y="0" z="-1.84" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="2.15" topRadius="0.07" bottomRadius="0.07" stacks="20" slices="50" />
+            </descendants>
+        </node>
+
+        <node id="stairs_left">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="-1.14" y="0" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="stairs_right" />
+            </descendants>
+        </node>
+
+        <node id="slide_steps">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="step_1" />
+                <noderef id="step_2" />
+                <noderef id="step_3" />
+                <noderef id="step_4" />
+                <noderef id="step_5" />
+            </descendants>
+        </node>
+
+        <node id="step_1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations> 
+                <translation x="-0.56" y="0.3913" z="-1.84" />
+                <rotation axis="y" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="1.1" topRadius="0.05" bottomRadius="0.05" stacks="20" slices="20" />
+            </descendants>
+        </node>
+
+        <node id="step_2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations> 
+                <translation x="0" y="0.3913" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="step_1" />
+            </descendants>
+        </node>
+
+        <node id="step_3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations> 
+                <translation x="0" y="0.3913" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="step_2" />
+            </descendants>
+        </node>
+
+        <node id="step_4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations> 
+                <translation x="0" y="0.3913" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="step_3" />
+            </descendants>
+        </node>
+
+        <node id="step_5">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations> 
+                <translation x="0" y="0.3913" z="0" />
+            </transformations>
+
+            <descendants>
+                <noderef id="step_4" />
             </descendants>
         </node>
     </nodes>
