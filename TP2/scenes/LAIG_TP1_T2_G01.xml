@@ -229,25 +229,7 @@
                 <!--<leaf type="spritetext" text="Hello LAIG" />
                 <leaf type="spriteanim" ssid="fire_anim" startCell="0" endCell="31" duration="2" />
 
-                <leaf type="plane" npartsU="5" npartsV="8" />-->
-                <!--<leaf type="patch" npointsU="3" npointsV="4" npartsU="20" npartsV="20" >
-                    <controlpoint x="-1.5" y="-1.5" z="0" />
-                    <controlpoint x="-2.0" y="-2.0" z="2.0" />
-                    <controlpoint x="-2.0" y="2.0" z="2.0" />
-                    <controlpoint x="-1.5" y="1.5" z="0.0" />
-
-                    <controlpoint x="0" y="0" z="3.0" />
-                    <controlpoint x="0" y="-2" z="3.0" />
-                    <controlpoint x="0" y="2" z="3.0" />
-                    <controlpoint x="0" y="0" z="3.0" />
-
-                    <controlpoint x="1.5" y="-1.5" z="0" />
-                    <controlpoint x="2.0" y="-2.0" z="2.0" />
-                    <controlpoint x="2.0" y="2.0" z="2.0" />
-                    <controlpoint x="1.5" y="1.5" z="0.0" />
-                </leaf>-->
-
-                <leaf type="defbarrel" base="1" middle="2" height="5" slices="10" stacks="10" />
+                <leaf type="defbarrel" base="1" middle="2" height="5" slices="10" stacks="10" />-->
 
                 <noderef id="grass" />
                 <noderef id="pool" />
@@ -257,6 +239,8 @@
                 <noderef id="chair_right" />
                 <noderef id="parasol" />
                 <noderef id="swing" />
+                <noderef id="petals" />
+                <noderef id="flower_bottom" />
             </descendants>
         </node>
 
@@ -1246,6 +1230,201 @@
 
             <descendants>
                 <noderef id="swing_seat_support_right" />
+            </descendants>
+        </node>
+
+        <!-- Flower -->
+        <node id="flower">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="petals" />
+                <noderef id="flower_bottom" />
+            </descendants>
+        </node>
+
+        <node id="flower_bottom">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.5" topRadius="0.015" bottomRadius="0.015" stacks="5" slices="5"/>
+            </descendants>
+        </node>
+
+        <node id="petals">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="petal1" />
+                <noderef id="petal2" />
+                <noderef id="petal3" />
+                <noderef id="petal4" />
+                <noderef id="petal5" />
+                <noderef id="petal6" />
+                <noderef id="petal7" />
+                <noderef id="petal8" />
+            </descendants>
+
+
+        </node>
+        
+        <node id="petal1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="15" />
+            </transformations>
+
+            <descendants>
+                <leaf type="patch" npointsU="3" npointsV="2" npartsU="20" npartsV="20" >
+                    <controlpoint x="0" y="0" z="-0.25"/>
+                    <controlpoint x="0" y="0" z="-0.25"/>
+                    
+
+                    <controlpoint x="-0.1" y="0" z="-0.15"/>
+                    <controlpoint x="0.1" y="0" z="-0.15"/>
+
+                    <controlpoint x="-0.02" y="0" z="0"/>
+                    <controlpoint x="0.02" y="0" z="0"/>
+                </leaf>
+            </descendants>
+        </node>
+
+        <node id="petal2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="45" />
+            </transformations>
+
+            <descendants>
+                <noderef id="petal1" />
+            </descendants>
+        </node>
+
+        <node id="petal3">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="45" />
+            </transformations>
+
+            <descendants>
+                <noderef id="petal2" />
+            </descendants>
+        </node>
+
+        <node id="petal4">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="45" />
+            </transformations>
+
+            <descendants>
+                <noderef id="petal3" />
+            </descendants>
+        </node>
+
+        <node id="petal5">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="45" />
+            </transformations>
+
+            <descendants>
+                <noderef id="petal4" />
+            </descendants>
+        </node>
+
+        <node id="petal6">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="45" />
+            </transformations>
+
+            <descendants>
+                <noderef id="petal5" />
+            </descendants>
+        </node>
+
+        <node id="petal7">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="45" />
+            </transformations>
+
+            <descendants>
+                <noderef id="petal6" />
+            </descendants>
+        </node>
+
+        <node id="petal8">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="y" angle="45" />
+            </transformations>
+
+            <descendants>
+                <noderef id="petal7" />
             </descendants>
         </node>
     </nodes>
