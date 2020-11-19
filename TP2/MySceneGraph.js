@@ -1286,19 +1286,27 @@ class MySceneGraph {
 
                             let controlPoints = [];
                             let index = 0;
+                            let error = false;
+
+                            f:
                             for(let u = 0; u < npointsU; u++){
                                 let uList = [];
                                 
                                 for(let v = 0; v < npointsV; v++, index++){
-                                    let x = this.reader.getFloat(controlPointsNodes[index], 'xx');
-                                    let y = this.reader.getFloat(controlPointsNodes[index], 'yy');
-                                    let z = this.reader.getFloat(controlPointsNodes[index], 'zz');
+                                    let xyz = this.parseCoordinates3D(controlPointsNodes[index], "patch control points. Node ID: " + nodeID);
+                                    if(!Array.isArray(xyz)){
+                                        this.onXMLMinorError("Wrong value on patch control points. Node ID: " + nodeID);
+                                        error = true;
+                                        break f;
+                                    }
 
-                                    uList.push([x, y, z, 1]);
+                                    uList.push([xyz[0], xyz[1], xyz[2], 1]);
                                 }
 
                                 controlPoints.push(uList);
                             }
+
+                            if(error) break;
 
                             leafs.push(new MyPatch(this.scene, npartsU, npartsV, npointsU, npointsV, controlPoints));
                             break;

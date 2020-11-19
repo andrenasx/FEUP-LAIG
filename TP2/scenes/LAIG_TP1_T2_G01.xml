@@ -231,20 +231,20 @@
 
                 <leaf type="plane" npartsU="5" npartsV="8" />-->
                 <!--<leaf type="patch" npointsU="3" npointsV="4" npartsU="20" npartsV="20" >
-                    <controlpoint xx="-1.5" yy="-1.5" zz="0" />
-                    <controlpoint xx="-2.0" yy="-2.0" zz="2.0" />
-                    <controlpoint xx="-2.0" yy="2.0" zz="2.0" />
-                    <controlpoint xx="-1.5" yy="1.5" zz="0.0" />
+                    <controlpoint x="-1.5" y="-1.5" z="0" />
+                    <controlpoint x="-2.0" y="-2.0" z="2.0" />
+                    <controlpoint x="-2.0" y="2.0" z="2.0" />
+                    <controlpoint x="-1.5" y="1.5" z="0.0" />
 
-                    <controlpoint xx="0" yy="0" zz="3.0" />
-                    <controlpoint xx="0" yy="-2" zz="3.0" />
-                    <controlpoint xx="0" yy="2" zz="3.0" />
-                    <controlpoint xx="0" yy="0" zz="3.0" />
+                    <controlpoint x="0" y="0" z="3.0" />
+                    <controlpoint x="0" y="-2" z="3.0" />
+                    <controlpoint x="0" y="2" z="3.0" />
+                    <controlpoint x="0" y="0" z="3.0" />
 
-                    <controlpoint xx="1.5" yy="-1.5" zz="0" />
-                    <controlpoint xx="2.0" yy="-2.0" zz="2.0" />
-                    <controlpoint xx="2.0" yy="2.0" zz="2.0" />
-                    <controlpoint xx="1.5" yy="1.5" zz="0.0" />
+                    <controlpoint x="1.5" y="-1.5" z="0" />
+                    <controlpoint x="2.0" y="-2.0" z="2.0" />
+                    <controlpoint x="2.0" y="2.0" z="2.0" />
+                    <controlpoint x="1.5" y="1.5" z="0.0" />
                 </leaf>-->
 
                 <leaf type="defbarrel" base="1" middle="2" height="5" slices="10" stacks="10" />
@@ -507,11 +507,11 @@
 
             <descendants>
                 <leaf type="patch" npointsU="2" npointsV="2" npartsU="20" npartsV="20" >
-                    <controlpoint xx="1.25" yy="0" zz="8.75" /> 
-                    <controlpoint xx="1.25" yy="0" zz="5.25" />
+                    <controlpoint x="1.25" y="0" z="8.75" /> 
+                    <controlpoint x="1.25" y="0" z="5.25" />
 
-                    <controlpoint xx="9.75" yy="0" zz="8.75" />
-                    <controlpoint xx="9.75" yy="0" zz="5.25" />
+                    <controlpoint x="9.75" y="0" z="8.75" />
+                    <controlpoint x="9.75" y="0" z="5.25" />
                 </leaf>
             </descendants>
         </node>
