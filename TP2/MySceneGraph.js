@@ -943,13 +943,21 @@ class MySceneGraph {
             var textureIndex = nodeNames.indexOf("texture");
             var descendantsIndex = nodeNames.indexOf("descendants");
 
-            // Transformations
+            // If descendants node is not defined ignore node and parse next
+            if (descendantsIndex == -1) {
+                this.onXMLMinorError("No <descendants> node declared. Node ID: " + nodeID);
+                continue;
+            }
+
+            // TRANSFORMATIONS
             let transformationsMatrix = mat4.create(); //Base matrix
 
             if (transformationsIndex == -1) {
+                // If transformations node is not defined transformationsMatrix is identity matrix
                 this.onXMLMinorError("No <transformations> node declared. Assuming no transformations for this node. Node ID: " + nodeID);
             }
             else {
+                // Parse transformations if defined
                 const transformationsNode = grandChildren[transformationsIndex].children;
                 for (let j = 0; j < transformationsNode.length; j++){
                     // Check transformation
@@ -1009,65 +1017,97 @@ class MySceneGraph {
                 }
             }
 
-            // Animation
+            // ANIMATION
             let animationID = null
+
+            // Parse if animations node is defined
             if(animationIndex != -1){
                 animationID = this.reader.getString(grandChildren[animationIndex], "id");
+
                 if (animationID == null) {
                     this.onXMLMinorError("Animation ID not defined. Node ID: " + nodeID);
                 }
+
+                // Check if parsed animationID is in animations map
                 if (this.animations[animationID] == null) {
                     this.onXMLMinorError("Animation with ID: " + animationID + " does not exist. Error on node ID: " + nodeID);
                 }
             }
 
-            // Material
-            let materialID = this.reader.getString(grandChildren[materialIndex], "id");
-            if (materialID == null) {
-                this.onXMLMinorError("Material ID not defined. Node ID: " + nodeID);
+            // MATERIAL
+            let materialID = null;
+
+            if (materialIndex == -1) {
+                // If material node is not defined defaults materialID to error
+                this.onXMLMinorError("No <material> node declared. Node ID: " + nodeID);
                 materialID = "error";
             }
-            if (materialID !== "null") {
-                if (this.materials[materialID] == null) {
-                    this.onXMLMinorError("Material with ID: " + materialID + " does not exist. Error on node ID: " + nodeID);
-                    materialID= "error";
+            else {
+                // Parse material if defined
+                materialID= this.reader.getString(grandChildren[materialIndex], "id");
+
+                if (materialID == null) {
+                    this.onXMLMinorError("Material ID not defined. Node ID: " + nodeID);
+                    materialID = "error";
+                }
+
+                // Check if parsed materialID is in materials map
+                if (materialID !== "null") {
+                    if (this.materials[materialID] == null) {
+                        this.onXMLMinorError("Material with ID: " + materialID + " does not exist. Error on node ID: " + nodeID);
+                        materialID= "error";
+                    }
                 }
             }
 
-            // Texture
-            let textureID = this.reader.getString(grandChildren[textureIndex], "id");
-            if (textureID == null) {
-                this.onXMLMinorError("Texture ID not defined. Node ID: " + nodeID);
-                textureID = "error";
-            }
-            if (textureID !== "null" && textureID !== "clear") {
-                if (this.textures[textureID] == null) {
-                    this.onXMLMinorError("Texture with ID: " + textureID + " does not exist. Node ID: " + nodeID);
-                    textureID = "error";
-                }
-            }
-
+            // TEXTURE
+            let textureID = null;
             let amplification = {
                 afs: 1,
                 aft: 1
             }
-            if (textureID !== "clear") {
-                const amplificationNode = grandChildren[textureIndex].children;
-                if(amplificationNode.length == 0){
-                    this.onXMLMinorError("Amplification tag missing, assuming 1.0. Node ID: " + nodeID);
+
+            if (textureIndex == -1) {
+                // If texture node is not defined defaults textureID to error
+                this.onXMLMinorError("No <texture> node declared. Node ID: " + nodeID);
+                textureID = "error";
+            }
+            else {
+                // Parse texture if defined
+                textureID = this.reader.getString(grandChildren[textureIndex], "id");
+
+                if (textureID == null) {
+                    this.onXMLMinorError("Texture ID not defined. Node ID: " + nodeID);
+                    textureID = "error";
                 }
-                else{
-                    for (let j = 0; j < amplificationNode.length; j++) {
-                        if (amplificationNode[j].nodeName === "amplification") {
-                            const afs = this.reader.getFloat(amplificationNode[j], 'afs');
-                            const aft = this.reader.getFloat(amplificationNode[j], 'aft');
-                            if (!this.checkPositiveNumber(afs) || !this.checkPositiveNumber(aft)) {
-                                this.onXMLMinorError("Amplification values not valid, assuming 1.0. Node ID: " + nodeID);
-                            }
-                            else {
-                                amplification = {
-                                    afs: afs,
-                                    aft: aft
+
+                // Check if parsed textureID is in textures map
+                if (textureID !== "null" && textureID !== "clear") {
+                    if (this.textures[textureID] == null) {
+                        this.onXMLMinorError("Texture with ID: " + textureID + " does not exist. Node ID: " + nodeID);
+                        textureID = "error";
+                    }
+                }
+                
+                // If textureID isn't "clear" parse amplification
+                if (textureID !== "clear") {
+                    const amplificationNode = grandChildren[textureIndex].children;
+                    if(amplificationNode.length == 0){
+                        this.onXMLMinorError("Amplification tag missing, assuming 1.0. Node ID: " + nodeID);
+                    }
+                    else{
+                        for (let j = 0; j < amplificationNode.length; j++) {
+                            if (amplificationNode[j].nodeName === "amplification") {
+                                const afs = this.reader.getFloat(amplificationNode[j], 'afs');
+                                const aft = this.reader.getFloat(amplificationNode[j], 'aft');
+                                if (!this.checkPositiveNumber(afs) || !this.checkPositiveNumber(aft)) {
+                                    this.onXMLMinorError("Amplification values not valid, assuming 1.0. Node ID: " + nodeID);
+                                }
+                                else {
+                                    amplification = {
+                                        afs: afs,
+                                        aft: aft
+                                    }
                                 }
                             }
                         }
@@ -1075,7 +1115,7 @@ class MySceneGraph {
                 }
             }
 
-            // Descendants
+            // DESCENDANTS
             const descendantsNodes = grandChildren[descendantsIndex].children;
             if (descendantsNodes.length === 0) {
                 this.onXMLMinorError("No descendants defined! Node ID: " + nodeID);
