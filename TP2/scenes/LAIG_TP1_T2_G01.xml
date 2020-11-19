@@ -239,8 +239,7 @@
                 <noderef id="chair_right" />
                 <noderef id="parasol" />
                 <noderef id="swing" />
-                <noderef id="petals" />
-                <noderef id="flower_bottom" />
+                <noderef id="flower_pot" />
             </descendants>
         </node>
 
@@ -1242,6 +1241,7 @@
             </texture>
 
             <transformations>
+                <translation x="0" y="0.9" z="0" />
             </transformations>
 
             <descendants>
@@ -1425,6 +1425,72 @@
 
             <descendants>
                 <noderef id="petal7" />
+            </descendants>
+        </node>
+
+        <!-- Vase -->
+        <node id="vase">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="vase_barrel" />
+                <noderef id="vase_soil" />
+            </descendants>
+        </node>
+
+        <node id="vase_barrel">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="defbarrel" base="0.2" middle="0.4" height="0.8" slices="10" stacks="10" />
+            </descendants>
+        </node>
+
+        <node id="vase_soil">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="cylinder" height="0.4" topRadius="0.4" bottomRadius="0.2" stacks="10" slices="20"/>
+            </descendants>
+        </node>
+
+        <!-- Flower Pot -->
+        <node id="flower_pot">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>s
+            </transformations>
+
+            <descendants>
+                <noderef id="flower" />
+                <noderef id="vase" />
             </descendants>
         </node>
     </nodes>
