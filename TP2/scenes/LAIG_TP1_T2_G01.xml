@@ -80,6 +80,7 @@
         <texture id="metal_texture" path="./scenes/images/metal.jpg" />
         <texture id="grainwood_texture" path="./scenes/images/grainwood.jpg" />
         <texture id="soil_texture" path="./scenes/images/soil.jpg" />
+        <texture id="pot_texture" path="./scenes/images/pot.jpg" />
     </textures>
 
     <spritesheets>
@@ -117,6 +118,14 @@
             <diffuse r="0.4" g="0.4" b="0.4" a="1.0" />
             <specular r="0.7" g="0.7" b="0.7" a="1.0" />
             <emissive r="0.2" g="0.2" b="0.2" a="1.0" />
+        </material>
+
+        <material id="petal_material">
+            <shininess value="1" />
+            <ambient r="0.98" g="0.68" b="0.12" a="1.0" />
+            <diffuse r="0.98" g="0.68" b="0.12" a="1.0" />
+            <specular r="0.98" g="0.68" b="0.12" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
     </materials>
 
@@ -1242,7 +1251,7 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0.9" z="0" />
+                <translation x="0" y="0.95" z="0" />
             </transformations>
 
             <descendants>
@@ -1252,6 +1261,22 @@
         </node>
 
         <node id="flower_bottom">
+            <material id="grass_material" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="flower_stem" />
+                <noderef id="flower_leaf" />
+            </descendants>
+        </node>
+
+        <node id="flower_stem">
             <material id="null" />
 
             <texture id="null">
@@ -1267,8 +1292,36 @@
             </descendants>
         </node>
 
-        <node id="petals">
+        <node id="flower_leaf">
             <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <scale sx="0.5" sy="0.5" sz="0.5" />
+                <translation x="0" y="-0.35" z="0" />
+                <rotation axis="z" angle="25" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                    <leaf type="patch" npointsU="3" npointsV="2" npartsU="20" npartsV="20" >
+                    <controlpoint x="0" y="0" z="-0.25"/>
+                    <controlpoint x="0" y="0" z="-0.25"/>
+                    
+                    <controlpoint x="-0.1" y="0" z="-0.15"/>
+                    <controlpoint x="0.1" y="0" z="-0.15"/>
+
+                    <controlpoint x="-0.02" y="0" z="0"/>
+                    <controlpoint x="0.02" y="0" z="0"/>
+                </leaf>
+            </descendants>
+        </node>
+
+        <node id="petals">
+            <material id="petal_material" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
@@ -1307,7 +1360,6 @@
                     <controlpoint x="0" y="0" z="-0.25"/>
                     <controlpoint x="0" y="0" z="-0.25"/>
                     
-
                     <controlpoint x="-0.1" y="0" z="-0.15"/>
                     <controlpoint x="0.1" y="0" z="-0.15"/>
 
@@ -1433,7 +1485,7 @@
         <node id="vase">
             <material id="white_diffuse_material" />
 
-            <texture id="null">
+            <texture id="pot_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
