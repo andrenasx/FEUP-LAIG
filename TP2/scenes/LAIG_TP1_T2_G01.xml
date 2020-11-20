@@ -245,9 +245,7 @@
             </transformations>
 
             <descendants>
-                <!--<leaf type="spritetext" text="Hello LAIG" />
-                <leaf type="spriteanim" ssid="fire_anim" startCell="0" endCell="31" duration="2" />-->
-
+                <!--<leaf type="spritetext" text="Hello LAIG" />-->
 
                 <noderef id="grass" />
                 <noderef id="pool" />
@@ -259,6 +257,7 @@
                 <noderef id="swing" />
                 <noderef id="flower_pot" />
                 <noderef id="slide" />
+                <noderef id="tablet" />
             </descendants>
         </node>
 
@@ -1809,6 +1808,40 @@
 
             <descendants>
                 <noderef id="step_4" />
+            </descendants>
+        </node>
+
+        <node id="tablet">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="tablet_structure" />
+                <noderef id="tablet_spritesheet" />
+            </descendants>
+        </node>
+
+        <node id="tablet_structure">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="5.5" y="0.82" z="2.8" />
+                <rotation axis="y" angle="-50" />
+                <scale sx="0.4" sy="0.01" sz="0.3" />
+            </transformations>
+
+            <descendants>
+                <noderef id="cube" />
             </descendants>
         </node>
     </nodes>
