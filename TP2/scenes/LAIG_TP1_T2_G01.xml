@@ -124,7 +124,7 @@
             <shininess value="1" />
             <ambient r="0.98" g="0.68" b="0.12" a="1.0" />
             <diffuse r="0.98" g="0.68" b="0.12" a="1.0" />
-            <specular r="0.98" g="0.68" b="0.12" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
     </materials>
@@ -1304,20 +1304,11 @@
                 <scale sx="0.5" sy="0.5" sz="0.5" />
                 <translation x="0" y="-0.35" z="0" />
                 <rotation axis="z" angle="25" />
-                <rotation axis="x" angle="90" />
+                <rotation axis="x" angle="75" />
             </transformations>
 
             <descendants>
-                    <leaf type="patch" npointsU="3" npointsV="2" npartsU="20" npartsV="20" >
-                    <controlpoint x="0" y="0" z="-0.25"/>
-                    <controlpoint x="0" y="0" z="-0.25"/>
-                    
-                    <controlpoint x="-0.1" y="0" z="-0.15"/>
-                    <controlpoint x="0.1" y="0" z="-0.15"/>
-
-                    <controlpoint x="-0.02" y="0" z="0"/>
-                    <controlpoint x="0.02" y="0" z="0"/>
-                </leaf>
+                <noderef id="petal" />
             </descendants>
         </node>
 
@@ -1332,7 +1323,7 @@
             </transformations>
 
             <descendants>
-                <noderef id="petal1" />
+                <noderef id="petal" />
                 <noderef id="petal2" />
                 <noderef id="petal3" />
                 <noderef id="petal4" />
@@ -1345,7 +1336,7 @@
 
         </node>
         
-        <node id="petal1">
+        <node id="petal">
             <material id="null" />
 
             <texture id="null">
@@ -1382,7 +1373,7 @@
             </transformations>
 
             <descendants>
-                <noderef id="petal1" />
+                <noderef id="petal" />
             </descendants>
         </node>
 
@@ -1574,7 +1565,7 @@
             </texture>
 
             <transformations>
-                <translation x="11" y="0" z="7" />
+                <translation x="11.45" y="0" z="7" />
                 <rotation axis="y" angle="-90" />
             </transformations>
 
