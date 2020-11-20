@@ -19,6 +19,11 @@
             <to x="7" y="1" z="2" />
         </perspective>
 
+        <perspective id="perspectiveTablet" near="0.1" far="300" angle="35">
+            <from x="7" y="7" z="8" />
+            <to x="7" y="1" z="2" />
+        </perspective>
+
         <ortho id="orthoTop" near="0.1" far="300" left="-10" right="10" top="10" bottom="-10">
             <from x="7" y="10" z="5" />
             <to x="6" y="5" z="5" />
