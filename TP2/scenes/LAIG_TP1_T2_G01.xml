@@ -81,6 +81,7 @@
         <texture id="grainwood_texture" path="./scenes/images/grainwood.jpg" />
         <texture id="soil_texture" path="./scenes/images/soil.jpg" />
         <texture id="pot_texture" path="./scenes/images/pot.jpg" />
+        <texture id="orange_plastic_texture" path="./scenes/images/slide_plastic.jpg" />
     </textures>
 
     <spritesheets>
@@ -124,6 +125,14 @@
             <shininess value="1" />
             <ambient r="0.98" g="0.68" b="0.12" a="1.0" />
             <diffuse r="0.98" g="0.68" b="0.12" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="yellow_material">
+            <shininess value="1" />
+            <ambient r="0.98" g="0.97" b="0.53" a="1.0" />
+            <diffuse r="0.98" g="0.97" b="0.53" a="1.0" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
@@ -237,9 +246,8 @@
 
             <descendants>
                 <!--<leaf type="spritetext" text="Hello LAIG" />
-                <leaf type="spriteanim" ssid="fire_anim" startCell="0" endCell="31" duration="2" />
+                <leaf type="spriteanim" ssid="fire_anim" startCell="0" endCell="31" duration="2" />-->
 
-                <leaf type="defbarrel" base="1" middle="2" height="5" slices="10" stacks="10" />-->
 
                 <noderef id="grass" />
                 <noderef id="pool" />
@@ -1576,9 +1584,9 @@
         </node>
 
         <node id="slide_tube">
-            <material id="null" />
+            <material id="white_specular_material" />
 
-            <texture id="null">
+            <texture id="orange_plastic_texture">
                 <amplification afs="1.0" aft="1.0" />
             </texture>
 
@@ -1638,7 +1646,7 @@
         </node>
 
          <node id="slide_support">
-            <material id="null" />
+            <material id="yellow_material" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
