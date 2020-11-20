@@ -189,22 +189,78 @@
             <keyframe instant = "0" >
                 <translation x="0" y="0" z="0" />
                 <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="12" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "3" >
+                <translation x="-0.08" y="0" z="0.025" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="15" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "6.5" >
+                <translation x="-0.3" y="0" z="0.115" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="28" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "7" >
+                <translation x="-0.55" y="0" z="0.3" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="45" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "7.5" >
+                <translation x="-0.8" y="0" z="0.6" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="50" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "8" >
+                <translation x="-1.2" y="0" z="1.09" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="45" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "8.5" >
+                <translation x="-2" y="0" z="1.55" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="15" />
+                <rotation axis="z" angle="0" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "9" >
+                <translation x="-3" y="0" z="1.75" />
+                <rotation axis="x" angle="0" />
                 <rotation axis="y" angle="0" />
                 <rotation axis="z" angle="0" />
                 <scale sx="1.0" sy="1.0" sz="1.0" />
             </keyframe>
             <keyframe instant = "10" >
-                <translation x="1" y="0" z="0" />
+                <translation x="-4.65" y="0" z="1.75" />
                 <rotation axis="x" angle="0" />
                 <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="180" />
+                <rotation axis="z" angle="60" />
                 <scale sx="1.0" sy="1.0" sz="1.0" />
             </keyframe>
-            <keyframe instant = "20" >
-                <translation x="2" y="0" z="0" />
+            <keyframe instant = "11" >
+                <translation x="-6" y="0" z="1.75" />
                 <rotation axis="x" angle="0" />
                 <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="360" />
+                <rotation axis="z" angle="130" />
+                <scale sx="1.0" sy="1.0" sz="1.0" />
+            </keyframe>
+            <keyframe instant = "12" >
+                <translation x="-7" y="0" z="1.75" />
+                <rotation axis="x" angle="0" />
+                <rotation axis="y" angle="0" />
+                <rotation axis="z" angle="175" />
                 <scale sx="1.0" sy="1.0" sz="1.0" />
             </keyframe>
         </animation>
@@ -541,14 +597,14 @@
             </texture>
 
             <transformations>
-                <translation x="5" y="0.1" z="7" />
+                <translation x="12.5" y="1.85" z="7" />
                 <rotation axis="x" angle="90"/>
             </transformations>
 
             <animationref id="floater_animation" />
 
             <descendants>
-                <leaf type="torus" inner="0.1" outer="0.4" slices="20" loops="50"/>
+                <leaf type="torus" inner="0.08" outer="0.3" slices="20" loops="50"/>
             </descendants>
 
         </node>
@@ -1870,7 +1926,7 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0.017" z="0" />
+                <translation x="0" y="0.011" z="0" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
@@ -1887,7 +1943,7 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0.019" z="0" />
+                <translation x="0" y="0.012" z="0" />
                 <scale sx="0.6" sy="1" sz="0.5" />
                 <translation x="0.5" y="0" z="0.5" />
                 <rotation axis="y" angle="90" />
