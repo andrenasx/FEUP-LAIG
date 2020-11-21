@@ -20,7 +20,7 @@
 
 -----
 
-### [TP2 - Scene Graph](TP2)
+### [TP2 - Keyframe animations, Spritesheets and Nurbs](TP2)
 - Scene
   -  A cena consiste num pátio com piscina com indicações de profundidade, uma bóia, um escorrega, uma mesa com um tablet pousado e 2 cadeiras almofadadas, um guarda-sol, um baloiço e um vaso com uma flor.
   - [Link relativo para a cena](./TP2/scenes/LAIG_TP2_T2_G01.xml)
