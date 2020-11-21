@@ -19,9 +19,9 @@
             <to x="7" y="1" z="2" />
         </perspective>
 
-        <perspective id="perspectiveTablet" near="0.1" far="300" angle="35">
-            <from x="7" y="7" z="8" />
-            <to x="7" y="1" z="2" />
+        <perspective id="perspectiveTablet" near="0.1" far="300" angle="20">
+            <from x="8" y="7" z="8" />
+            <to x="5" y="1" z="2" />
         </perspective>
 
         <ortho id="orthoTop" near="0.1" far="300" left="-10" right="10" top="10" bottom="-10">
@@ -1979,14 +1979,14 @@
 
             <transformations>
                 <translation x="0" y="0.012" z="0" />
-                <scale sx="0.6" sy="1" sz="0.5" />
+                <scale sx="0.4" sy="1" sz="0.4" />
                 <translation x="0.5" y="0" z="0.5" />
                 <rotation axis="y" angle="90" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
             <descendants>
-                <leaf type="spriteanim" ssid="game_anim" startCell="0" endCell="53" duration="5" />
+                <leaf type="spriteanim" ssid="game_anim" startCell="0" endCell="26" duration="2" />
             </descendants>
         </node>
     </nodes>
