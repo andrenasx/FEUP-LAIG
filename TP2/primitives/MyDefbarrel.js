@@ -2,9 +2,9 @@
  * MyDefbarrel
  * @constructor
  * @param {CGFscene} scene - Reference to MyScene object
- * @param {float} base
- * @param {float} middle
- * @param {float} height
+ * @param {float} base - radius of the base
+ * @param {float} middle - center of the base
+ * @param {float} height - height of the barrel
  * @param {integer} slices
  * @param {integer} stacks
  */

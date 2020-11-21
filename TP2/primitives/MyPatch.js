@@ -4,6 +4,9 @@
  * @param {CGFscene} scene - Reference to MyScene object
  * @param {integer} npartsU - number of divisions in the U direction
  * @param {integer} npartsV - number of divisions in the V direction
+ * @param {integer} npointsU - number of points in the U direction
+ * @param {integer} npointsV - number of points in the V direction
+ * @param {integer} controlPoints
  */
 class MyPatch extends CGFobject {
 	constructor(scene, npartsU, npartsV, npointsU, npointsV, controlPoints) {
