@@ -90,7 +90,6 @@
     </textures>
 
     <spritesheets>
-        <spritesheet id="fire_anim" path="./spritesheets/images/fire.png" sizeM="8" sizeN="4" />
         <spritesheet id="game_anim" path="./spritesheets/images/game.png" sizeM="9" sizeN="6" />
     </spritesheets>
 
@@ -527,11 +526,13 @@
 
             <transformations>
             </transformations>
+
             <descendants>
                 <noderef id="pool_border_top" />
                 <noderef id="pool_border_bottom" />
                 <noderef id="pool_border_left" />
                 <noderef id="pool_border_right" />
+                <noderef id="pool_border_depth" />
             </descendants>
         </node>
 
@@ -599,6 +600,58 @@
 
             <descendants>
                 <noderef id="pool_border_left" />
+            </descendants>
+        </node>
+
+        <node id="pool_border_depth">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="pool_border_depth_1" />
+                <noderef id="pool_border_depth_2" />
+            </descendants>
+        </node>
+
+        <node id="pool_border_depth_1">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="1.74" y="0.01" z="5.1" />
+                <scale sx="0.125" sy="1" sz="0.25" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spritetext" text="0.5m" />
+            </descendants>
+        </node>
+
+        <node id="pool_border_depth_2">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+                <translation x="8.74" y="0.01" z="5.1" />
+                <scale sx="0.125" sy="1" sz="0.25" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="spritetext" text="3.0m" />
             </descendants>
         </node>
 
@@ -1670,6 +1723,7 @@
             </descendants>
         </node>
 
+        <!-- Slide -->
         <node id="slide">
             <material id="null" />
 
