@@ -123,7 +123,7 @@
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
             <diffuse r="0.4" g="0.4" b="0.4" a="1.0" />
             <specular r="0.7" g="0.7" b="0.7" a="1.0" />
-            <emissive r="0.2" g="0.2" b="0.2" a="1.0" />
+            <emissive r="0.3" g="0.3" b="0.3" a="1.0" />
         </material>
 
         <material id="petal_material">
@@ -150,6 +150,13 @@
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
     
+        <material id="screen_material">
+            <shininess value="1" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.4" g="0.4" b="0.4" a="1.0" />
+            <emissive r="0.6" g="0.6" b="0.6" a="1.0" />
+        </material>
     </materials>
 
     <animations>
@@ -1812,7 +1819,7 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="-0.32" z="0" />
+                <translation x="0" y="-0.325" z="0" />
                 <rotation axis="x" angle="10" />
             </transformations>
 
@@ -2008,7 +2015,7 @@
         </node>
 
         <node id="tablet_screen">
-            <material id="white_diffuse_material" />
+            <material id="screen_material" />
 
             <texture id="null">
                 <amplification afs="1.0" aft="1.0" />
