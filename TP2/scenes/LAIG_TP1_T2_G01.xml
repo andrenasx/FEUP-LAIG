@@ -645,7 +645,7 @@
             </texture>
 
             <transformations>
-                <translation x="8.74" y="0.01" z="5.1" />
+                <translation x="9.25" y="0.01" z="5.1" />
                 <scale sx="0.125" sy="1" sz="0.25" />
                 <rotation axis="x" angle="-90" />
             </transformations>
