@@ -1116,7 +1116,10 @@ class MySceneGraph {
             }
 
             // DESCENDANTS
+
             const descendantsNodes = grandChildren[descendantsIndex].children;
+
+            // If no child nodes declared inside descendant nodes ignore and parse next
             if (descendantsNodes.length === 0) {
                 this.onXMLMinorError("No descendants defined! Node ID: " + nodeID);
                 continue;
@@ -1133,10 +1136,14 @@ class MySceneGraph {
                         this.onXMLMinorError("Undefined ID for descendant. Node ID: " + nodeID);
                         continue;
                     }
+
+                    // Ignore if descendant is parent, avoids cycles
                     else if (descendantID === nodeID){
                         this.onXMLMinorError("Descendant with the same parent's ID. Node ID: " + nodeID);
                         continue
                     }
+
+                    // Check for duplicated descendant, ignores if so
                     else if(childNodesID.includes(descendantID)){
                         this.onXMLMinorError("Duplicated descendant ID (" + descendantID + "). Node ID: " + nodeID);
                         continue

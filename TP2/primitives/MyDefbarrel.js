@@ -56,16 +56,17 @@ class MyDefbarrel extends CGFobject {
             ]
         ];
 
-        console.log(controlPoints);
-
         this.defbarrel = new MyPatch(this.scene, this.stacks, this.slices, 4, 4, controlPoints);
     }
     
     display() {
+        //Top half
         this.defbarrel.display();
+
+        //Lower half
         this.scene.pushMatrix();
         this.scene.rotate(Math.PI, 0,0,1);
-        this.defbarrel.display()
-        this.scene.popMatrix();        
+        this.defbarrel.display();
+        this.scene.popMatrix();
 	}
 }
