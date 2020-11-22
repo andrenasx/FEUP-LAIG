@@ -608,7 +608,7 @@ class MySceneGraph {
                 continue;
             }
 
-            // Get id of the current texture
+            // Get id of the current spritesheet
             const spritesheetID = this.reader.getString(children[i], 'id');
             if (spritesheetID == null){
                 this.onXMLMinorError("no ID defined for spritesheet");
@@ -639,7 +639,7 @@ class MySceneGraph {
             // Get path
             const file = this.reader.getString(children[i], 'path');
             
-            // Check if texture file exists. If so, create spritesheet
+            // Check if spritesheet file exists. If so, create spritesheet
             if (this.checkFileExists(file)) {
                 this.spritesheets[spritesheetID] = new MySpritesheet(this.scene, new CGFtexture(this.scene, file), sizeM, sizeN);
             }
@@ -1524,10 +1524,18 @@ class MySceneGraph {
         return color;
     }
 
+    /**
+     * Check if number argument isn't null or not a number
+     * @param {number} number
+     */
     checkNumber(number){
         return (number != null && !isNaN(number));
     }
 
+    /**
+     * Check if number argument isn't null or not a number, and is positive
+     * @param {number} number
+     */
     checkPositiveNumber(number){
         return (this.checkNumber(number) && number>=0);
     }
