@@ -357,8 +357,6 @@
             </transformations>
 
             <descendants>
-                <!--<leaf type="spritetext" text="Hello LAIG" />-->
-
                 <noderef id="grass" />
                 <noderef id="pool" />
                 <noderef id="floater" />
@@ -2041,7 +2039,6 @@
             <transformations>
                 <translation x="0" y="0.012" z="0" />
                 <scale sx="0.4" sy="1" sz="0.4" />
-                <translation x="0.5" y="0" z="0.5" />
                 <rotation axis="y" angle="90" />
                 <rotation axis="x" angle="-90" />
             </transformations>

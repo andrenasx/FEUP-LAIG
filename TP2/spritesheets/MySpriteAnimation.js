@@ -10,7 +10,7 @@ class MySpriteAnimation extends CGFobject {
         this.cell = this.startCell;
         this.cellTime = duration/(this.endCell - this.startCell + 1);
 
-        this.rectangle = new MyRectangle(this.scene, 0,0,1,1);
+        this.rectangle = new MyRectangle(this.scene, -0.5,-0.5,0.5,0.5);
     }
 
     update(deltaTime){
