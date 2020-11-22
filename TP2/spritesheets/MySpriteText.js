@@ -4,7 +4,7 @@ class MySpriteText {
         this.text = text;
 
         this.spritesheet = new MySpritesheet(this.scene, new CGFtexture(this.scene, "./spritesheets/images/text.png"), 16, 16);
-        this.rectangle = new MyRectangle(this.scene, 0,0,1,1);
+        this.rectangle = new MyRectangle(this.scene, -0.5,-0.5,0.5,0.5);
 
         this.map = {
             ' ':32, '!':33,'"':34, "#":35, '$':36, '%':37, '&':38, '\'':39, '(':40, ')':41, '*':42, '+':43, ',':44, '-':45, '.':46, '/':47,
@@ -20,7 +20,7 @@ class MySpriteText {
             'ð':240, 'ñ':241, 'ò':242, 'ó':243, 'ô':244, 'õ':245, 'ö':246, '÷':247, 'ø':248, 'ù':249, 'ú':250, 'û':251, 'ü':252, 'ý':253, 'þ':254, 'ÿ':255
         };
 
-        this.centerX = -this.text.length/2;
+        this.centerX = -this.text.length/2 + 0.5;
     }
 
     getCharacterPosition(character){
@@ -37,7 +37,7 @@ class MySpriteText {
         this.scene.gl.blendFunc(this.scene.gl.SRC_ALPHA, this.scene.gl.ONE_MINUS_SRC_ALPHA);
 
         this.scene.pushMatrix();
-        this.scene.translate(this.centerX, -0.5, 0);
+        this.scene.translate(this.centerX, 0, 0);
         for(let c of this.text){
             this.spritesheet.activateCellP(this.getCharacterPosition(c));
             this.rectangle.display();
