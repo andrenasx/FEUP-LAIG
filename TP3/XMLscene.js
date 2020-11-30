@@ -43,7 +43,10 @@ class XMLscene extends CGFscene {
 
         this.currentTime = 0;
 
-        this.piece = new MyPiece(this, 'red');
+        // enable picking
+		this.setPickEnabled(true);
+
+        this.board = new MyBoard(this, 8);
     }
 
     /**
@@ -192,7 +195,7 @@ class XMLscene extends CGFscene {
             this.defaultAppearance.apply();
 
             // Displays the scene (MySceneGraph function).
-            this.piece.display();
+            this.board.display();
             //this.graph.displayScene();
         }
         else
