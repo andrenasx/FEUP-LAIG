@@ -46,7 +46,7 @@ class XMLscene extends CGFscene {
         // enable picking
 		this.setPickEnabled(true);
 
-        this.board = new MyGameBoard(this, 8);
+        this.gameOrchestrator = new MyGameOrchestrator(this);
     }
 
     /**
@@ -163,16 +163,6 @@ class XMLscene extends CGFscene {
         this.setUpdatePeriod(50);
     }
 
-    logPicking() {
-		if (this.pickMode == false) {
-			if (this.pickResults != null && this.pickResults.length > 0) {
-                let pickResult = this.pickResults[0][1];
-                this.pickResults.splice(0, this.pickResults.length);
-                return pickResult;
-			}
-		}
-	}
-
     /**
      * Displays the scene.
      */
@@ -190,6 +180,9 @@ class XMLscene extends CGFscene {
         // Apply transformations corresponding to the camera position relative to the origin
         this.applyViewMatrix();
 
+        this.gameOrchestrator.managePick(this.pickMode, this.pickResults);
+        this.clearPickRegistration();
+
         this.pushMatrix();
 
         for (var i = 0; i < this.lights.length; i++) {
@@ -204,8 +197,9 @@ class XMLscene extends CGFscene {
  
             this.defaultAppearance.apply();
 
+            this.gameOrchestrator.display();
+
             // Displays the scene (MySceneGraph function).
-            this.board.display();
             //this.graph.displayScene();
         }
         else

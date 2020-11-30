@@ -3,56 +3,46 @@ class MyGameBoard extends CGFobject {
         super(scene);
         this.size = size;
         this.tiles = [];
+
         for(let row=0; row<this.size; row++){
             for(let column=0; column<this.size; column++){
-                this.current_tile = new MyTile(scene);
+                let color;
                 if((row+column)%2 == 0){
-                    this.current_tile.setPiece(new MyPiece(this.scene, 'red'));
+                    color = 'red'
                 }
                 else{
-                    this.current_tile.setPiece(new MyPiece(this.scene, 'blue'));
+                    color = 'blue'
                 }
-                this.tiles.push(this.current_tile);
+
+                let current_tile = new MyTile(scene);
+                let current_piece = new MyPiece(this.scene, color);
+                current_tile.setPiece(current_piece);
+
+                this.tiles.push(current_tile);
             }
         }
 
         this.selectedTile = null;
-        this.moveTile = null;
     }
 
     display(){
-        this.handlePicking();
 		this.scene.clearPickRegistration();
         for(let row=0; row<this.size; row++){
             for(let column=0; column<this.size; column++){
                 this.scene.pushMatrix();
                 this.scene.translate((column*1.1), 0, (row*1.1));
-                this.scene.registerForPick(row*this.size+column, this.tiles[row*this.size+column]);
+                this.scene.registerForPick(row*this.size+column+1, this.tiles[row*this.size+column]);
                 this.tiles[row*this.size+column].display();
+                this.scene.clearPickRegistration();
                 this.scene.popMatrix();
             }
         }
     }
 
-    handlePicking(){
-        let pickedID = this.scene.logPicking();
-
-        if(pickedID!=null){
-            if(this.selectedTile==null){
-                this.selectedTile = pickedID;
-            }
-            else {
-                if(this.selectedTile!=pickedID){
-                    this.movePiece(this.selectedTile, pickedID);
-                    this.selectedTile=null;
-                }
-            }
-        }
-    }
-
     movePiece(selectedID, moveID){
-        let piece = this.tiles[selectedID].getPiece();
-        this.tiles[selectedID].removePiece();
-        this.tiles[moveID].setPiece(piece);
+        let piece = this.tiles[selectedID-1].getPiece();
+        
+        this.tiles[selectedID-1].removePiece();
+        this.tiles[moveID-1].setPiece(piece);
     }
 }
