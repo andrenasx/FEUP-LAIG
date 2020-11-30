@@ -46,7 +46,7 @@ class XMLscene extends CGFscene {
         // enable picking
 		this.setPickEnabled(true);
 
-        this.board = new MyBoard(this, 8);
+        this.board = new MyGameBoard(this, 8);
     }
 
     /**
@@ -162,6 +162,16 @@ class XMLscene extends CGFscene {
 
         this.setUpdatePeriod(50);
     }
+
+    logPicking() {
+		if (this.pickMode == false) {
+			if (this.pickResults != null && this.pickResults.length > 0) {
+                let pickResult = this.pickResults[0][1];
+                this.pickResults.splice(0, this.pickResults.length);
+                return pickResult;
+			}
+		}
+	}
 
     /**
      * Displays the scene.

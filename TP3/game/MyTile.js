@@ -1,4 +1,4 @@
-class MyBoardTile extends CGFobject {
+class MyTile extends CGFobject {
     constructor(scene){
         super(scene);
         this.tile = new MyPlane(scene, 5, 5);
@@ -22,6 +22,10 @@ class MyBoardTile extends CGFobject {
 
     setPiece(piece){
         this.piece = piece;
+    }
+
+    getPiece(){
+        return this.piece;
     }
 
     removePiece(){
