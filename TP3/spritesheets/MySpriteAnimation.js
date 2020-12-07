@@ -16,7 +16,7 @@ class MySpriteAnimation extends CGFobject {
     update(deltaTime){
         this.elapsedTime += deltaTime;
         
-        if(this.elapsedTime > this.duration) this.elapsedTime=0;
+        this.elapsedTime%=this.duration;
 
         this.cell = Math.floor(this.elapsedTime / this.cellTime) + this.startCell;
     }
