@@ -135,6 +135,9 @@ class XMLscene extends CGFscene {
 
         let deltaTime = time - this.currentTime;
         this.currentTime = time;
+
+        this.gameOrchestrator.update(deltaTime);
+
         for(let [id, animation] of Object.entries(this.graph.animations)){
             animation.update(deltaTime);
         }

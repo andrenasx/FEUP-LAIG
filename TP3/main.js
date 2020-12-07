@@ -11,7 +11,11 @@ function getUrlVars() {
     return vars;
 }	 
 //Include additional files here
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', 'MySceneGraphNode.js', './primitives/MyRectangle.js', './primitives/MyTriangle.js', './primitives/MySphere.js', './primitives/MyCylinder.js', './primitives/MyTorus.js', './primitives/MyCircle.js', './primitives/MyCylinderSide.js', './keyframes/MyAnimation.js', './keyframes/MyKeyframeAnimation.js', './spritesheets/MySpritesheet.js', './spritesheets/MySpriteText.js', './spritesheets/MySpriteAnimation.js', './primitives/MyPlane.js', './primitives/MyPatch.js', './primitives/MyDefbarrel.js', './game/MyPiece.js', './game/MyTile.js', './game/MyGameBoard.js', './game/MyGameOrchestrator.js',
+serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', 'MySceneGraphNode.js', 
+                './primitives/MyRectangle.js', './primitives/MyTriangle.js', './primitives/MySphere.js', './primitives/MyCylinder.js', './primitives/MyTorus.js', './primitives/MyCircle.js', './primitives/MyCylinderSide.js', './primitives/MyPlane.js', './primitives/MyPatch.js', './primitives/MyDefbarrel.js', 
+                './keyframes/MyAnimation.js', './keyframes/MyKeyframeAnimation.js', 
+                './spritesheets/MySpritesheet.js', './spritesheets/MySpriteText.js', './spritesheets/MySpriteAnimation.js', 
+                './game/MyPiece.js', './game/MyTile.js', './game/MyGameBoard.js', './game/MyGameOrchestrator.js', './game/MyGameSequence.js', './game/MyAnimator.js', './game/MyGameMove.js', 
 
 main=function()
 {

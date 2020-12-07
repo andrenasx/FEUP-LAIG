@@ -1,14 +1,21 @@
-class MyGameOrchestrator extends CGFobject {
+class MyGameOrchestrator {
     constructor(scene){
-        super(scene);
+        this.scene = scene;
 
+        this.gameSequence = new MyGameSequence();
+        this.animator = new MyAnimator(this, this.gameSequence);
         this.gameboard = new MyGameBoard(scene, 8);
 
         this.lastPickedID = null;
     }
 
+    update(delta){
+        this.animator.update(delta);
+    }
+
     display(){
         this.gameboard.display();
+        this.animator.display();
     }
 
     managePick(mode, pickResults) {
@@ -35,7 +42,9 @@ class MyGameOrchestrator extends CGFobject {
             else{
                 if(this.lastPickedID==null) this.lastPickedID = id-1;
                 else {
-                    this.gameboard.movePiece(this.lastPickedID, id-1);
+                    this.selectedTile = this.gameboard.getTileByID(this.lastPickedID);
+                    this.moveTile = this.gameboard.getTileByID(id-1);
+                    this.gameSequence.addGameMove(new MyGameMove(this.selectedTile, this.moveTile, this.gameboard));
                     this.lastPickedID = null;
                 }
             }

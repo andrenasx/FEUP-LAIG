@@ -1,6 +1,9 @@
 class MyTile extends CGFobject {
-    constructor(scene){
+    constructor(scene, row, column){
         super(scene);
+        this.row = row;
+        this.column = column;
+
         this.tile = new MyPlane(scene, 5, 5);
         this.piece = null;
 
@@ -30,5 +33,13 @@ class MyTile extends CGFobject {
 
     removePiece(){
         this.piece = null;
+    }
+
+    getRow(){
+        return this.row;
+    }
+
+    getColumn(){
+        return this.column;
     }
 }

@@ -14,7 +14,7 @@ class MyGameBoard extends CGFobject {
         for(let row=0; row<this.size; row++){
             let rowtiles=[];
             for(let column=0; column<this.size; column++){
-                let current_tile = new MyTile(this.scene);
+                let current_tile = new MyTile(this.scene, row, column);
                 let current_piece = new MyPiece(this.scene, player);
                 current_tile.setPiece(current_piece);
 
@@ -33,7 +33,7 @@ class MyGameBoard extends CGFobject {
         for(let row=0; row<this.size; row++){
             for(let column=0; column<this.size; column++){
                 this.scene.pushMatrix();
-                this.scene.translate((column*1.1), 0, (row*1.1));
+                this.scene.translate((column+0.5), 0, (row+0.5));
                 this.scene.registerForPick(row*this.size+column+1, this.board[row][column]);
                 this.board[row][column].display();
                 this.scene.clearPickRegistration();
@@ -52,5 +52,12 @@ class MyGameBoard extends CGFobject {
         
         this.board[selectedRow][selectedCol].removePiece();
         this.board[moveRow][moveCol].setPiece(piece);
+    }
+
+    getTileByID(id){
+        let row = Math.floor(id/this.size);
+        let column = id%this.size;
+
+        return this.board[row][column];
     }
 }
