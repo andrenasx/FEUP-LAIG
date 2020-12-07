@@ -2,27 +2,30 @@ class MyGameBoard extends CGFobject {
     constructor(scene, size){
         super(scene);
         this.size = size;
-        this.tiles = [];
+        this.board = [];
 
-        for(let row=0; row<this.size; row++){
-            for(let column=0; column<this.size; column++){
-                let color;
-                if((row+column)%2 == 0){
-                    color = 'red'
-                }
-                else{
-                    color = 'blue'
-                }
-
-                let current_tile = new MyTile(scene);
-                let current_piece = new MyPiece(this.scene, color);
-                current_tile.setPiece(current_piece);
-
-                this.tiles.push(current_tile);
-            }
-        }
+        this.createBoard();
 
         this.selectedTile = null;
+    }
+
+    createBoard(){
+        let player=1;
+        for(let row=0; row<this.size; row++){
+            let rowtiles=[];
+            for(let column=0; column<this.size; column++){
+                let current_tile = new MyTile(this.scene);
+                let current_piece = new MyPiece(this.scene, player);
+                current_tile.setPiece(current_piece);
+
+                rowtiles.push(current_tile);
+                player = -player;
+            }
+            this.board.push(rowtiles);
+            if(this.size%2===0) player = -player;
+        }
+
+        console.log(this.board);
     }
 
     display(){
@@ -31,8 +34,8 @@ class MyGameBoard extends CGFobject {
             for(let column=0; column<this.size; column++){
                 this.scene.pushMatrix();
                 this.scene.translate((column*1.1), 0, (row*1.1));
-                this.scene.registerForPick(row*this.size+column+1, this.tiles[row*this.size+column]);
-                this.tiles[row*this.size+column].display();
+                this.scene.registerForPick(row*this.size+column+1, this.board[row][column]);
+                this.board[row][column].display();
                 this.scene.clearPickRegistration();
                 this.scene.popMatrix();
             }
@@ -40,9 +43,14 @@ class MyGameBoard extends CGFobject {
     }
 
     movePiece(selectedID, moveID){
-        let piece = this.tiles[selectedID-1].getPiece();
+        let selectedRow = Math.floor(selectedID/this.size);
+        let selectedCol = selectedID%this.size;
+        let moveRow = Math.floor(moveID/this.size);
+        let moveCol = moveID%this.size;
+
+        let piece = this.board[selectedRow][selectedCol].getPiece();
         
-        this.tiles[selectedID-1].removePiece();
-        this.tiles[moveID-1].setPiece(piece);
+        this.board[selectedRow][selectedCol].removePiece();
+        this.board[moveRow][moveCol].setPiece(piece);
     }
 }

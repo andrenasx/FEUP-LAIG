@@ -5,14 +5,14 @@ class MyPiece extends CGFobject {
         this.piece = new MyCylinder(scene, 0.2, 0.45, 0.45, 5, 30);
 
         this.material= new CGFappearance(scene);
-        if(player=='red'){
+        if(player==1){
             this.material.setShininess(5);
             this.material.setEmission(0, 0, 0, 1);
             this.material.setAmbient(0.1, 0, 0, 1);
             this.material.setDiffuse(1, 0, 0, 1),
             this.material.setSpecular(0, 0, 0, 1);
         }
-        else if(player=='blue'){
+        else if(player==-1){
             this.material.setShininess(1);
             this.material.setEmission(0, 0, 0, 1);
             this.material.setAmbient(0, 0, 0.1, 1);

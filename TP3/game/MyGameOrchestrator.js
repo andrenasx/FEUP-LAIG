@@ -29,10 +29,15 @@ class MyGameOrchestrator extends CGFobject {
 
     onObjectSelected(obj, id) {
         if(obj instanceof MyTile){
-            if(this.lastPickedID==null) this.lastPickedID = id;
-            else {
-                this.gameboard.movePiece(this.lastPickedID, id);
+            if(obj.getPiece()==null){
                 this.lastPickedID = null;
+            }
+            else{
+                if(this.lastPickedID==null) this.lastPickedID = id-1;
+                else {
+                    this.gameboard.movePiece(this.lastPickedID, id-1);
+                    this.lastPickedID = null;
+                }
             }
         }
         else {
