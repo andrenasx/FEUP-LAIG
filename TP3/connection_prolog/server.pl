@@ -108,9 +108,10 @@ parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(len(List), Res) :- length(List, Res).
 
 parse_input(game_over(GameState,Size,Player),Winner) :- game_over(GameState,Size,Player,Winner).
-parse_input(move(GameState,Player,Move),NewGameState) :- move(GameState,Player,Move,NewGameState).
 parse_input(validateContent(Board, Size, SelectedRow-SelectedColumn, Player), Res) :- (validateContent(Board, Size, SelectedRow-SelectedColumn, Player), Res is 1); Res is 0.
-
+parse_input(verifyOrtMove(SelBoard, Player, SelRow-SelColumn, MoveRow-MoveColumn), Res) :- (verifyOrtMove(SelBoard, Player, SelRow-SelColumn, MoveRow-MoveColumn), Res is 1); Res is 0.
+parse_input(valid_moves(GameState, Size, Player), ListOfMoves) :- valid_moves(GameState, Size, Player, ListOfMoves).
+parse_input(checkMove(GameState, Size, SelRow, SelColumn, Player) ListOfMoves) :- checkMove(GameState, Size, SelRow, SelColumn, Player, ListOfMoves).
 
 parse_input(quit, goodbye).
 
