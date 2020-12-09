@@ -1,6 +1,7 @@
 :-use_module(library(sockets)).
 :-use_module(library(lists)).
 :-use_module(library(codesio)).
+:-include('requests.pl').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%                                        Server                                                   %%%%
@@ -111,7 +112,7 @@ parse_input(game_over(GameState,Size,Player),Winner) :- game_over(GameState,Size
 parse_input(validateContent(Board, Size, SelectedRow-SelectedColumn, Player), Res) :- (validateContent(Board, Size, SelectedRow-SelectedColumn, Player), Res is 1); Res is 0.
 parse_input(verifyOrtMove(SelBoard, Player, SelRow-SelColumn, MoveRow-MoveColumn), Res) :- (verifyOrtMove(SelBoard, Player, SelRow-SelColumn, MoveRow-MoveColumn), Res is 1); Res is 0.
 parse_input(valid_moves(GameState, Size, Player), ListOfMoves) :- valid_moves(GameState, Size, Player, ListOfMoves).
-parse_input(checkMove(GameState, Size, SelRow, SelColumn, Player) ListOfMoves) :- checkMove(GameState, Size, SelRow, SelColumn, Player, ListOfMoves).
+parse_input(checkMove(GameState, Size, SelRow, SelColumn, Player), ListOfMoves) :- checkMove(GameState, Size, SelRow, SelColumn, Player, ListOfMoves).
 
 parse_input(quit, goodbye).
 
