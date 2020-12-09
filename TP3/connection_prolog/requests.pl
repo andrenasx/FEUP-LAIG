@@ -12,6 +12,9 @@ game_over(GameState, Size, Player, Enemy):-
     Enemy is -Player,
     checkWinner(Enemy, GameState, Size, 0, 0).
 
+
+game_over(_,_,_,0).
+
 %checkWinner(+Player, +GameState, +Size, +Row, +Column)
 /*
 Check if red player (1) won (there is a path linking left side to right side),
@@ -119,17 +122,11 @@ choose_move(GameState, Size, Player, 'Player', SelectedPosition):-
 /*
 Gets all the possible moves for all the current pieces of the given player
 Returns a list with all the possible moves for the player (as [[SelectedRow-SelectedColumn, MoveRow-MoveColumn], ...])
+If there aren't any possible moves, returns an empty list
 */
 valid_moves(GameState, Size, Player, ListOfMoves):-
     getPlayerInMatrix(GameState, Size, Player, Positions),
-    getAllPossibleMoves(GameState, Size, Player, Positions, ListOfMoves),
-    \+isEmpty(ListOfMoves).
-
-/*
-If list is empty, write proper message error and fail predicate
-*/
-valid_moves(_, _, _, _):-
-    write('\nNo moves available, remove your own piece\n'), fail.
+    getAllPossibleMoves(GameState, Size, Player, Positions, ListOfMoves).
 
 %getPlayerInMatrix(+GameState,+Size,+Player,-ListOfPositions)
 /*
