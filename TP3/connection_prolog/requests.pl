@@ -102,6 +102,23 @@ replaceInList(Index, List, Element, NewList) :-
 	nth0(Index, List, _, Rest),
 	nth0(Index, NewList, Element, Rest).
 
+
+%checkHorizontalPath(+GameState, +Row, +FinalCol)
+/*
+Check if there is a floodfill replaced char in the final column, meaning a path for the red player
+*/
+checkHorizontalPath(GameState, Row, FinalCol):-
+    Row =< FinalCol,
+    getValueFromMatrix(GameState, Row, FinalCol, 2).
+
+/*
+If failed, check for a path in the next row and final column
+*/
+checkHorizontalPath(GameState, Row, FinalCol):-
+    Row =< FinalCol,
+    NextRow is Row + 1,
+    checkHorizontalPath(GameState, NextRow, FinalCol).
+    
 %choose_move(+GameState, +Size, +Player, +PlayerType, -Move)
 /*
 Selects a piece and a position to move if there are available moves for the player,
