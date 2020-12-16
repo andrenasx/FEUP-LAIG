@@ -1,6 +1,5 @@
 class MyAnimator {
-    constructor(gameOrchestrator, gameSequence){
-        this.gameOrchestrator = gameOrchestrator;
+    constructor(gameSequence){
         this.gameSequence = gameSequence;
         this.frame = 0;
     }
@@ -11,6 +10,8 @@ class MyAnimator {
 
     display(){
         let current_move = this.gameSequence.getCurrentMove();
-        if(current_move) current_move.animate();
+        if(current_move){
+            current_move.animate();
+        }
     }
 }

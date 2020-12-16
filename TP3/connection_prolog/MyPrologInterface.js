@@ -4,23 +4,23 @@ class MyPrologInterface {
     }
 
     gameOver() {
-        this.getRequest('game_over(${this.orchestrator.gameboard.toString()},8,${this.orchestrator.currentPlayer})');
+        this.getRequest(`game_over(${this.orchestrator.gameboard.toString()},8,${this.orchestrator.currentPlayer})`);
     }
 
     getPossibleMoves(tile) {
-        this.getRequest('checkMove(${this.orchestrator.gameboard.toString()},8,${tile.row},${tile.column},${this.orchestrator.currentPlayer})');
+        this.getRequest(`checkMove(${this.orchestrator.gameboard.toString()},8,${tile.row},${tile.column},${this.orchestrator.currentPlayer})`);
     }
 
     canChooseTile(tile) {
-        this.getRequest('validateContent(${this.orchestrator.gameboard.toString()},8,${tile.row}-${tile.column},${this.orchestrator.currentPlayer})');
+        this.getRequest(`validateContent(${this.orchestrator.gameboard.toString()},8,${tile.row}-${tile.column},${this.orchestrator.currentPlayer})`);
     }
 
     canMoveToTile(tile) {
-        this.getRequest('verifyOrtMove(${this.orchestrator.gameboard.toString()},${this.orchestrator.currentPlayer},${this.orchestrator.selectedTile.row}-${this.orchestrator.selectedTile.column},${tile.row}-${tile.column})');
+        this.getRequest(`verifyOrtMove(${this.orchestrator.gameboard.toString()},${this.orchestrator.currentPlayer},${this.orchestrator.selectedTile.row}-${this.orchestrator.selectedTile.column},${tile.row}-${tile.column})`);
     }
 
     hasAnyPossibleMoves() {
-        this.getRequest('valid_moves(${this.orchestrator.gameboard.toString()},8,${this.orchestrator.currentPlayer})');
+        this.getRequest(`valid_moves(${this.orchestrator.gameboard.toString()},8,${this.orchestrator.currentPlayer})`);
     }
 
     getRequest(command) {
@@ -32,7 +32,7 @@ class MyPrologInterface {
         const request = new XMLHttpRequest();
         request.open('GET', 'http://localhost:' + port + '/handshake', false);
 
-        request.setRequestHeader('Content-Type', 'application/x-wwww-form-urlencoded; charset-UTF-8');
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset-UTF-8');
         request.send();
         if (JSON.parse(request.responseText) === 'handshake')
             console.log('Handshake successfully');
@@ -43,21 +43,12 @@ class MyPrologInterface {
     quit() {
         const request = new XMLHttpRequest();
         request.open('GET', 'http://localhost:8081/quit', false);
-        request.setRequestHeader('Content-Type', 'application/x-wwww-form-urlencoded; charset-UTF-8');
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset-UTF-8');
         request.send();
         if(JSON.parse(request.responseText) === "goodbye")
             console.log("Quit successfully");
         else
             console.log('Quit failed');
-    }
-
-    getPrologRequest(stringRequest) {
-        const port = 8081;
-        const request = new XMLHttpRequest();
-        request.open('GET', 'http://localhost:' + port + '/' + stringRequest, false);
-        request.setRequestHeader('Content-Type', 'application/x-wwww-form-urlencoded; charset-UTF-8');
-        request.send();
-        this.orchestrator.receivedReply(request.responseText);
     }
 }
 
@@ -79,7 +70,7 @@ function getPrologRequest(stringRequest, callback, orchestrator) {
     request.onload = success;
     request.onerror = error;
 
-    request.setRequestHeader('Content-Type', 'application/x-wwww-form-urlencoded; charset-UTF-8');
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset-UTF-8');
     request.timeout=5000;
     request.send();
 }

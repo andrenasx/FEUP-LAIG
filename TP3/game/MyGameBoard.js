@@ -5,8 +5,6 @@ class MyGameBoard extends CGFobject {
         this.board = [];
 
         this.createBoard();
-
-        this.selectedTile = null;
     }
 
     createBoard(){
@@ -24,8 +22,6 @@ class MyGameBoard extends CGFobject {
             this.board.push(rowtiles);
             if(this.size%2===0) player = -player;
         }
-
-        console.log(this.board);
     }
 
     display(){
@@ -42,7 +38,23 @@ class MyGameBoard extends CGFobject {
         }
     }
 
-    movePiece(selectedID, moveID){
+    toString() {
+        let board = [];
+        for (let row = 0; row < this.size; row++) {
+            let rowlist = []
+            for (let column = 0; column < this.size; column++) {
+                if (this.board[row][column].piece) {
+                    rowlist.push(this.board[row][column].piece.player)
+                } else {
+                    rowlist.push(0)
+                }
+            }
+            board.push(rowlist)
+        }
+        return JSON.stringify(board)
+    }
+
+    /*movePiece(selectedID, moveID){
         let selectedRow = Math.floor(selectedID/this.size);
         let selectedCol = selectedID%this.size;
         let moveRow = Math.floor(moveID/this.size);
@@ -52,12 +64,12 @@ class MyGameBoard extends CGFobject {
         
         this.board[selectedRow][selectedCol].removePiece();
         this.board[moveRow][moveCol].setPiece(piece);
-    }
+    }*/
 
-    getTileByID(id){
+    /*getTileByID(id){
         let row = Math.floor(id/this.size);
         let column = id%this.size;
 
         return this.board[row][column];
-    }
+    }*/
 }

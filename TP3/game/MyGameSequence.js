@@ -1,5 +1,6 @@
 class MyGameSequence {
-    constructor(){
+    constructor(gameOrchestrator){
+        this.gameOrchestrator = gameOrchestrator;
         this.sequence = [];
         this.current_move = null;
     }
@@ -13,7 +14,10 @@ class MyGameSequence {
         this.current_move=0;
         for(let move of this.sequence){
             move.update(delta);
-            if(move.finished) this.current_move++;
+            if(move.finished){
+                this.gameOrchestrator.state.animationEnd();
+                this.current_move++;
+            }
         }
     }
 

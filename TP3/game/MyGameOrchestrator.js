@@ -2,11 +2,15 @@ class MyGameOrchestrator {
     constructor(scene){
         this.scene = scene;
 
-        this.gameSequence = new MyGameSequence();
-        this.animator = new MyAnimator(this, this.gameSequence);
+        this.gameSequence = new MyGameSequence(this);
+        this.animator = new MyAnimator(this.gameSequence);
+        this.prolog = new MyPrologInterface(this);
         this.gameboard = new MyGameBoard(scene, 8);
 
-        this.lastPickedID = null;
+        this.state = new ReadyState(this);
+
+        this.currentPlayer = 1;
+        this.selectedTile = null;
     }
 
     update(delta){
@@ -14,6 +18,7 @@ class MyGameOrchestrator {
     }
 
     display(){
+        this.managePick(this.scene.pickMode, this.scene.pickResults);
         this.gameboard.display();
         this.animator.display();
     }
@@ -21,11 +26,12 @@ class MyGameOrchestrator {
     managePick(mode, pickResults) {
         if (mode == false){
             if (pickResults != null && pickResults.length > 0) {
-                for (var i=0; i< pickResults.length; i++) {
-                    var obj = pickResults[i][0]; // get object from result
-                    if (obj) {
-                        var uniqueId = pickResults[i][1] // get id
-                        this.onObjectSelected(obj, uniqueId);
+                for (let i=0; i< pickResults.length; i++) {
+                    let obj = pickResults[i][0]; // get object from result
+                    if (obj instanceof MyTile) {
+                        this.state.pickTile(obj);
+
+                        //var uniqueId = pickResults[i][1] // get id
                     }
                 }
                 // clear results
@@ -34,23 +40,16 @@ class MyGameOrchestrator {
         }
     }
 
-    onObjectSelected(obj, id) {
-        if(obj instanceof MyTile){
-            if(obj.getPiece()==null){
-                this.lastPickedID = null;
-            }
-            else{
-                if(this.lastPickedID==null) this.lastPickedID = id-1;
-                else {
-                    this.selectedTile = this.gameboard.getTileByID(this.lastPickedID);
-                    this.moveTile = this.gameboard.getTileByID(id-1);
-                    this.gameSequence.addGameMove(new MyGameMove(this.selectedTile, this.moveTile, this.gameboard));
-                    this.lastPickedID = null;
-                }
-            }
-        }
-        else {
-            console.log('What you doin?')
-        }
+    performeMove(moveTile){
+        this.gameSequence.addGameMove(new MyGameMove(this.selectedTile, moveTile, this.gameboard));
+        this.currentPlayer = -this.currentPlayer;
+    }
+
+    changeState(state){
+        this.state = state;
+    }
+
+    receivedReply(msg){
+        this.state.receivedReply(msg);
     }
 }
