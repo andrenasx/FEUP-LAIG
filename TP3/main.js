@@ -12,10 +12,10 @@ function getUrlVars() {
 }	 
 //Include additional files here
 serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.js', 'MySceneGraphNode.js', 
-                './primitives/MyRectangle.js', './primitives/MyTriangle.js', './primitives/MySphere.js', './primitives/MyCylinder.js', './primitives/MyTorus.js', './primitives/MyCircle.js', './primitives/MyCylinderSide.js', './primitives/MyPlane.js', './primitives/MyPatch.js', './primitives/MyDefbarrel.js', 
+                './primitives/MyRectangle.js', './primitives/MyTriangle.js', './primitives/MySphere.js', './primitives/MyCylinder.js', './primitives/MyTorus.js', './primitives/MyCircle.js', './primitives/MyCylinderSide.js', './primitives/MyPlane.js', './primitives/MyPatch.js', './primitives/MyDefbarrel.js', './primitives/MyCube.js', './primitives/MyTrapeze.js',
                 './keyframes/MyAnimation.js', './keyframes/MyKeyframeAnimation.js', 
                 './spritesheets/MySpritesheet.js', './spritesheets/MySpriteText.js', './spritesheets/MySpriteAnimation.js', 
-                './game/MyPiece.js', './game/MyTile.js', './game/MyGameBoard.js', './game/MyGameOrchestrator.js', './game/MyGameSequence.js', './game/MyAnimator.js', './game/MyGameMove.js', 
+                './game/MyPiece.js', './game/MyTile.js', './game/MyGameBoard.js', './game/MyGameOrchestrator.js', './game/MyGameSequence.js', './game/MyAnimator.js', './game/MyGameMove.js', './game/MyMenu.js',
                 './game/GameStates/GameState.js', './game/GameStates/ReadyState.js', './game/GameStates/MoveState.js', './game/GameStates/CheckGameOverState.js', './game/GameStates/GameOverState.js', 
                 './connection_prolog/MyPrologInterface.js',
 
