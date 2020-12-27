@@ -23,7 +23,7 @@ class CheckGameOverState extends GameState {
         }
         else if(message == 0) {
             console.log("No winners yet");
-            this.gameOrchestrator.changeState(new ReadyState(this.gameOrchestrator));
+            this.gameOrchestrator.changeState(new CheckMovesState(this.gameOrchestrator));
         }
     }
 }

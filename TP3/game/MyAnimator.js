@@ -9,9 +9,11 @@ class MyAnimator {
     }
 
     display(){
-        let current_move = this.gameSequence.getCurrentMove();
-        if(current_move){
-            current_move.animate();
+        let moves = this.gameSequence.getCurrentMoves();
+        if(moves.length>0){
+            for(let move of moves){
+                move.animate();
+            }
         }
     }
 }

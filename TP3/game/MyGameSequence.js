@@ -2,26 +2,36 @@ class MyGameSequence {
     constructor(gameOrchestrator){
         this.gameOrchestrator = gameOrchestrator;
         this.sequence = [];
-        this.current_move = null;
+        this.current_move = 0;
     }
 
     addGameMove(gameMove){
         this.sequence.push(gameMove);
-        this.current_move = this.sequence.length-1;
     }
 
     update(delta){
-        this.current_move=0;
-        for(let move of this.sequence){
+        if(this.current_move==this.sequence.length || this.sequence.length==0) return;
+
+        for (let i = this.current_move; i < this.sequence.length; i++) {
+            let move = this.sequence[i];
             move.update(delta);
-            if(move.finished){
-                this.gameOrchestrator.state.animationEnd();
-                this.current_move++;
-            }
+        }
+
+        if(this.getLastMove().finished){
+            this.current_move = this.sequence.length;
+            this.gameOrchestrator.state.animationEnd();
         }
     }
 
     getCurrentMove(){
         if(this.sequence.length!==0) return this.sequence[this.current_move];
+    }
+
+    getCurrentMoves(){
+        return this.sequence.slice(this.current_move, this.sequence.length);
+    }
+
+    getLastMove(){
+        if(this.sequence.length!==0) return this.sequence[this.sequence.length-1];
     }
 }

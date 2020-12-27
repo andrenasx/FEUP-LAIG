@@ -16,7 +16,7 @@ class MyGameMove {
                     ]
                 },
                 {
-                    instant:2,
+                    instant:0.5,
                     transformations:[
                         [this.moveTile.getColumn()+0.5,0,this.moveTile.getRow()+0.5],
                         0,0,0,

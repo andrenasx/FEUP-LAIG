@@ -1,14 +1,15 @@
 class MyGameBoard extends CGFobject {
-    constructor(scene, size){
+    constructor(scene){
         super(scene);
-        this.size = size;
         this.board = [];
 
-        this.createBoard();
+        this.createBoard(8);
     }
 
-    createBoard(){
+    createBoard(size){
+        this.size = size;
         let player=1;
+        
         for(let row=0; row<this.size; row++){
             let rowtiles=[];
             for(let column=0; column<this.size; column++){
@@ -53,23 +54,4 @@ class MyGameBoard extends CGFobject {
         }
         return JSON.stringify(board)
     }
-
-    /*movePiece(selectedID, moveID){
-        let selectedRow = Math.floor(selectedID/this.size);
-        let selectedCol = selectedID%this.size;
-        let moveRow = Math.floor(moveID/this.size);
-        let moveCol = moveID%this.size;
-
-        let piece = this.board[selectedRow][selectedCol].getPiece();
-        
-        this.board[selectedRow][selectedCol].removePiece();
-        this.board[moveRow][moveCol].setPiece(piece);
-    }*/
-
-    /*getTileByID(id){
-        let row = Math.floor(id/this.size);
-        let column = id%this.size;
-
-        return this.board[row][column];
-    }*/
 }

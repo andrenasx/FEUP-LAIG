@@ -5,12 +5,13 @@ class MyGameOrchestrator {
         this.gameSequence = new MyGameSequence(this);
         this.animator = new MyAnimator(this.gameSequence);
         this.prolog = new MyPrologInterface(this);
-        this.gameboard = new MyGameBoard(scene, 8);
-
-        this.state = new ReadyState(this);
+        this.gameboard = new MyGameBoard(scene);
+        this.auxiliarboard = new MyAuxiliarBoard(scene);
 
         this.currentPlayer = 1;
         this.selectedTile = null;
+
+        this.state = new CheckMovesState(this);
     }
 
     update(delta){
@@ -20,6 +21,7 @@ class MyGameOrchestrator {
     display(){
         this.managePick(this.scene.pickMode, this.scene.pickResults);
         this.gameboard.display();
+        this.auxiliarboard.display();
         this.animator.display();
     }
 
@@ -40,8 +42,14 @@ class MyGameOrchestrator {
         }
     }
 
-    performeMove(moveTile){
+    performMove(moveTile){
+        this.gameSequence.addGameMove(new MyGameMove(moveTile, this.auxiliarboard.getTile(), this.gameboard));
         this.gameSequence.addGameMove(new MyGameMove(this.selectedTile, moveTile, this.gameboard));
+        this.currentPlayer = -this.currentPlayer;
+    }
+
+    performRemove(selectedTile){
+        this.gameSequence.addGameMove(new MyGameMove(selectedTile, this.auxiliarboard.getTile(), this.gameboard));
         this.currentPlayer = -this.currentPlayer;
     }
 
