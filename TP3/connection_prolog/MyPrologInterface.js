@@ -4,23 +4,27 @@ class MyPrologInterface {
     }
 
     gameOver() {
-        this.getRequest(`game_over(${this.orchestrator.gameboard.toString()},8,${this.orchestrator.currentPlayer})`);
+        this.getRequest(`game_over(${this.orchestrator.gameboard.toString()},${this.orchestrator.gameboard.size},${this.orchestrator.currentPlayer})`);
     }
 
     getPossibleMoves(tile) {
-        this.getRequest(`checkMove(${this.orchestrator.gameboard.toString()},8,${tile.row},${tile.column},${this.orchestrator.currentPlayer})`);
+        this.getRequest(`checkMove(${this.orchestrator.gameboard.toString()},${this.orchestrator.gameboard.size},${tile.row},${tile.column},${this.orchestrator.currentPlayer})`);
     }
 
     canChooseTile(tile) {
-        this.getRequest(`validateContent(${this.orchestrator.gameboard.toString()},8,${tile.row}-${tile.column},${this.orchestrator.currentPlayer})`);
+        this.getRequest(`validateContent(${this.orchestrator.gameboard.toString()},${this.orchestrator.gameboard.size},${tile.row}-${tile.column},${this.orchestrator.currentPlayer})`);
     }
 
     canMoveToTile(tile) {
         this.getRequest(`verifyOrtMove(${this.orchestrator.gameboard.toString()},${this.orchestrator.currentPlayer},${this.orchestrator.selectedTile.row}-${this.orchestrator.selectedTile.column},${tile.row}-${tile.column})`);
     }
 
+    canRemovePiece(tile) {
+        this.getRequest(`verifyPlayer(${this.orchestrator.gameboard.toString()},${tile.row}-${tile.column},${this.orchestrator.currentPlayer})`);
+    }
+
     hasAnyPossibleMoves() {
-        this.getRequest(`valid_moves(${this.orchestrator.gameboard.toString()},8,${this.orchestrator.currentPlayer})`);
+        this.getRequest(`valid_moves(${this.orchestrator.gameboard.toString()},${this.orchestrator.gameboard.size},${this.orchestrator.currentPlayer})`);
     }
 
     getRequest(command) {
