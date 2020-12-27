@@ -8,10 +8,12 @@ class MyGameOrchestrator {
         this.gameboard = new MyGameBoard(scene);
         this.auxiliarboard = new MyAuxiliarBoard(scene);
 
+        this.playerType = "Player";
+        this.enemyType = "Easy";
         this.currentPlayer = 1;
         this.selectedTile = null;
 
-        this.state = new CheckMovesState(this);
+        this.state = new InitialState(this);
     }
 
     update(delta){
@@ -45,12 +47,19 @@ class MyGameOrchestrator {
     performMove(moveTile){
         this.gameSequence.addGameMove(new MyGameMove(moveTile, this.auxiliarboard.getTile(), this.gameboard));
         this.gameSequence.addGameMove(new MyGameMove(this.selectedTile, moveTile, this.gameboard));
-        this.currentPlayer = -this.currentPlayer;
     }
 
     performRemove(selectedTile){
         this.gameSequence.addGameMove(new MyGameMove(selectedTile, this.auxiliarboard.getTile(), this.gameboard));
-        this.currentPlayer = -this.currentPlayer;
+    }
+
+    performBotMove(selRow,selCol,movRow,movCol){
+        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(movRow,movCol), this.auxiliarboard.getTile(), this.gameboard));
+        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.gameboard.getTile(movRow,movCol), this.gameboard));
+    }
+
+    performBotRemove(selRow,selCol){
+        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.auxiliarboard.getTile(), this.gameboard));
     }
 
     changeState(state){

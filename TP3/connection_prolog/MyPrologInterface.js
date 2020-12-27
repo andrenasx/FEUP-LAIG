@@ -27,6 +27,10 @@ class MyPrologInterface {
         this.getRequest(`valid_moves(${this.orchestrator.gameboard.toString()},${this.orchestrator.gameboard.size},${this.orchestrator.currentPlayer})`);
     }
 
+    botPlay(difficulty) {
+        this.getRequest(`choose_move(${this.orchestrator.gameboard.toString()},${this.orchestrator.gameboard.size},${this.orchestrator.currentPlayer},'${difficulty}')`);
+    }
+
     getRequest(command) {
         getPrologRequest(command, this.orchestrator.receivedReply, this.orchestrator);
     }

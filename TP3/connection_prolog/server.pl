@@ -1,5 +1,8 @@
 :-use_module(library(sockets)).
 :-use_module(library(lists)).
+:-use_module(library(between)).
+:-use_module(library(random)).
+:-use_module(library(system)).
 :-use_module(library(codesio)).
 :-include('requests.pl').
 
@@ -114,9 +117,9 @@ parse_input(verifyOrtMove(SelBoard, Player, SelRow-SelColumn, MoveRow-MoveColumn
 parse_input(valid_moves(GameState, Size, Player), Res) :- valid_moves(GameState, Size, Player, ListOfMoves), length(ListOfMoves, Res).
 parse_input(checkMove(GameState, Size, SelRow, SelColumn, Player), ListOfMoves) :- checkMove(GameState, Size, SelRow, SelColumn, Player, ListOfMoves).
 parse_input(verifyPlayer(GameState, SelRow-SelColumn, Player), Res) :- (verifyPlayer(GameState, SelRow-SelColumn, Player), Res=1); Res=0.
+parse_input(choose_move(GameState, Size, Player, Level), Res) :- choose_move(GameState, Size, Player, Level, Move), ((length(Move, 2), Move=[SelRow-SelCol,MovRow-MovCol], Res=[SelRow,SelCol,MovRow,MovCol]) ; (Move=SelRow-SelCol, Res=[SelRow,SelCol])).
 
 parse_input(quit, goodbye).
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
-	

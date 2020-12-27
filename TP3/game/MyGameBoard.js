@@ -3,6 +3,20 @@ class MyGameBoard extends CGFobject {
         super(scene);
         this.board = [];
 
+        this.redMaterial = new CGFappearance(this.scene);
+        this.redMaterial.setShininess(5);
+        this.redMaterial.setEmission(0, 0, 0, 1);
+        this.redMaterial.setAmbient(0.1, 0, 0, 1);
+        this.redMaterial.setDiffuse(1, 0, 0, 1),
+        this.redMaterial.setSpecular(0, 0, 0, 1);
+
+        this.blueMaterial = new CGFappearance(this.scene);
+        this.blueMaterial.setShininess(1);
+        this.blueMaterial.setEmission(0, 0, 0, 1);
+        this.blueMaterial.setAmbient(0, 0, 0.1, 1);
+        this.blueMaterial.setDiffuse(0, 0, 1, 1),
+        this.blueMaterial.setSpecular(0, 0, 0, 1);
+
         this.createBoard(8);
     }
 
@@ -37,19 +51,6 @@ class MyGameBoard extends CGFobject {
                 this.scene.popMatrix();
             }
         }
-        this.redMaterial = new CGFappearance(this.scene);
-        this.redMaterial.setShininess(5);
-        this.redMaterial.setEmission(0, 0, 0, 1);
-        this.redMaterial.setAmbient(0.1, 0, 0, 1);
-        this.redMaterial.setDiffuse(1, 0, 0, 1),
-        this.redMaterial.setSpecular(0, 0, 0, 1);
-
-        this.blueMaterial = new CGFappearance(this.scene);
-        this.blueMaterial.setShininess(1);
-        this.blueMaterial.setEmission(0, 0, 0, 1);
-        this.blueMaterial.setAmbient(0, 0, 0.1, 1);
-        this.blueMaterial.setDiffuse(0, 0, 1, 1),
-        this.blueMaterial.setSpecular(0, 0, 0, 1);
 
         if(this.size == 8){
             let side = new MyTrapeze(this.scene, 8, 9, 0.5);
@@ -134,5 +135,9 @@ class MyGameBoard extends CGFobject {
             board.push(rowlist)
         }
         return JSON.stringify(board)
+    }
+    
+    getTile(row, column){
+        return this.board[row][column];
     }
 }
