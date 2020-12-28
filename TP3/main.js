@@ -21,29 +21,70 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.j
 
 main=function()
 {
-	// Standard application, scene and interface setup
-    var app = new CGFapplication(document.body);
-    var myInterface = new MyInterface();
-    var myScene = new XMLscene(myInterface);
+    const size = document.querySelector('#board-size');
+    size.addEventListener('click', () => {
+      selected = size.querySelector('input[value="6"]').checked ? "6" 
+      : size.querySelector('input[value="8"]').checked ? "8" 
+      : null
+    });
 
-    app.init();
+    document.querySelectorAll('article').forEach((player) => addDropdown(player));
+    document.querySelector('div > input').addEventListener('click', () => {
+        let error = false;
+        const values = ['player-1', 'player-2'].map((player) => {
+          const playerArticle = document.querySelector(`#${player}`);
+          let playerType = playerArticle.querySelector('input[value="human"]').checked ? "Player" 
+          : playerArticle.querySelector('input[value="robot"]').checked ? playerArticle.querySelector('select').value
+          : null;
+          if(!playerType){
+            error = true;
+            return null;
+          }
+          return {
+            type: playerType
+          }
+        });
 
-    app.setScene(myScene);
-    app.setInterface(myInterface);
+        if(!error && selected){
+          document.querySelector('.wrapper').style.display = "none";
+          document.querySelector('#panel').style.display = "block";
+            // Standard application, scene and interface setup
+            var app = new CGFapplication(document.body);
+            var myInterface = new MyInterface();
+            var myScene = new XMLscene(myInterface, values[0].type, values[1].type, selected);
 
-    myInterface.setActiveCamera(myScene.camera);
+            app.init();
 
-	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
-	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
+            app.setScene(myScene);
+            app.setInterface(myInterface);
+
+            myInterface.setActiveCamera(myScene.camera);
+
+            // get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
+            // or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
+
+            var filename=getUrlVars()['file'] || "LAIG_TP2_T2_G01.xml";
+
+            // create and load graph, and associate it to scene. 
+            // Check console for loading errors
+            var myGraph = new MySceneGraph(filename, myScene);
+
+            // start
+            app.run();        
+          }
+      });
 	
-    var filename=getUrlVars()['file'] || "LAIG_TP2_T2_G01.xml";
-
-	// create and load graph, and associate it to scene. 
-	// Check console for loading errors
-	var myGraph = new MySceneGraph(filename, myScene);
-	
-	// start
-    app.run();
 }
 
 ]);
+
+function addDropdown(player){
+  
+    player.querySelector('input[value="robot"]').addEventListener('change', () => {
+      player.querySelector('select').style.display="block";
+    });
+  
+    player.querySelector('input[value="human"]').addEventListener('change', () => {
+      player.querySelector('select').style.display="none";
+    });
+  }

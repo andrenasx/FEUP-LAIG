@@ -4,24 +4,73 @@
     <meta charset="UTF-8">
     <title>LAIG - Parser Example</title>
     <link rel="icon" href="data:,">
-
-<style>
-body, html {
-    border: 0;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-}
-
-canvas {
-    width: 100%;
-    height: 100%;
-}
-</style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap">
 </head>
+
 <body>
-
-<script src="main.js"></script>
-
+  <script src="main.js"></script>
+  <div id="panel">
+    <h1>TALPA</h1>
+    <div>Current Player: <span id="player">None</span></div>
+    <div>Red Player Score: <span id="white-score">0</span></div>
+    <div>Blue Player Score: <span id="black-score">0</span></div>
+    <div id="time">Time:  <span></span></div>
+  </div>
+  <div class="wrapper">
+    <div id="menu">
+      <h1>TALPA</h1>
+      <h2>Welcome!</h2>
+      <article id="player-1">
+        <h3>Player's Type</h3>
+        <div>
+          <label>
+            Player
+            <input type="radio" name="player-1" value="human" checked/>
+          </label>
+          <label>
+            Computer
+            <input type="radio" name="player-1" value="robot" />
+          </label>
+        </div>
+        <div class="select-diff">
+          <select name="difficulty">
+            <option value="Easy">Easy</option>
+            <option value="Normal">Normal</option>
+          </select>
+        </div>
+      </article>
+      <h4>VS</h4>
+      <article id="player-2">
+        <div>
+          <label>
+            Player
+            <input type="radio" name="player-2" value="human" checked>
+          </label>
+          <label>
+            Computer
+            <input type="radio" name="player-2" value="robot" >
+          </label>
+        </div>
+        <div class="select-diff">
+          <select name="difficulty">
+            <option value="Easy">Easy</option>
+            <option value="Normal">Normal</option>
+          </select>
+        </div>
+      </article>
+      <section id="board-size">
+        <h3>Board Size</h3>
+        <input type="radio" id="size-1" name="size" value="6" >
+        <label for="male">6 x 6</label><br>
+        <input type="radio" id="size-2" name="size" value="8">
+        <label for="female">8 x 8</label><br>
+      </section>
+      <div>
+        <input type="submit" value="Play" >
+      </div> 
+    </div>
+  </div>
 </body>
 </html>
