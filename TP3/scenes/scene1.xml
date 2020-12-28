@@ -3,22 +3,11 @@
         <reference length="2" />
         <root id="root" />
     </initials>
-    <views default="perspectiveFront">
-        <perspective id="perspectiveFront" near="0.1" far="300" angle="25">
-            <from x="7" y="10" z="25" />
-            <to x="7" y="1" z="5" />
+    <views default="Top">
+        <perspective id="Top" near="0.1" far="300" angle="25">
+            <from x="5" y="20" z="5" />
+            <to x="4" y="1" z="4" />
         </perspective>
-
-        <perspective id="perspectiveSide" near="0.1" far="300" angle="30">
-            <from x="-10" y="7" z="5" />
-            <to x="8" y="0" z="5" />
-        </perspective>
-
-        <ortho id="orthoTop" near="0.1" far="300" left="-10" right="10" top="10" bottom="-10">
-            <from x="7" y="10" z="5" />
-            <to x="6" y="5" z="5" />
-            <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
-        </ortho>
     </views>
 
     <illumination>

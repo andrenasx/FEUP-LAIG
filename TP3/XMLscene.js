@@ -14,7 +14,7 @@ class XMLscene extends CGFscene {
         this.selectedTheme = "Theme1";
         this.filenames = new Map();
         this.themesGraphs = new Map();
-        this.filenames.set("Theme1", "scene1.xml").set("Theme2", "LAIG_TP2_T2_G01.xml")
+        this.filenames.set("Theme1", "scene1.xml").set("Theme2", "LAIG_TP2_T2_G01.xml");
         for(let [key, value] of this.filenames.entries()){
             this.themesGraphs[key] = new MySceneGraph(value, this);
         }
@@ -136,9 +136,7 @@ class XMLscene extends CGFscene {
     }
 
     updateTheme() {
-        this.interface.gui.destroy();
-        this.interface.gui = new dat.GUI();
-        this.interface.createGUI();
+        this.interface.changeTheme();
         this.updateCamera();
         this.initLights();
     }

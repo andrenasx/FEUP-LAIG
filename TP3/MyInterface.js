@@ -80,6 +80,7 @@ class MyInterface extends CGFinterface {
      */
     createCamerasDropdown() {
         const group = this.gui.addFolder("Views");
+        this.cameras = group;
         group.open();
 
         this.scene.selectedCamera = this.scene.themesGraphs[this.scene.selectedTheme].viewsDefaultID;
@@ -92,14 +93,23 @@ class MyInterface extends CGFinterface {
      */
     createLightsCheckbox(){
         const group = this.gui.addFolder("Lights");
+        this.lights = group;
         group.open();
 
         const lights = this.scene.themesGraphs[this.scene.selectedTheme].lights;
+        this.scene.lightsAux = [];
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
                 this.scene.lightsAux[key] = lights[key][0];
                 group.add(this.scene.lightsAux, key).onChange(this.scene.updateLights.bind(this.scene));
             }
         }
+    }
+
+    changeTheme(){
+        this.gui.removeFolder(this.cameras);
+        this.gui.removeFolder(this.lights);
+        this.createCamerasDropdown();
+        this.createLightsCheckbox();
     }
 }
