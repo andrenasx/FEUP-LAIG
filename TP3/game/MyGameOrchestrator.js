@@ -1,15 +1,21 @@
 class MyGameOrchestrator {
-    constructor(scene){
+    constructor(scene, player1, player2, size){
         this.scene = scene;
-
+        this.player1 = player1;
+        this.player2 = player2;
+        this.size = size;
         this.gameSequence = new MyGameSequence(this);
         this.animator = new MyAnimator(this.gameSequence);
         this.prolog = new MyPrologInterface(this);
-        this.gameboard = new MyGameBoard(scene);
+        this.gameboard = new MyGameBoard(scene, this.size);
         this.auxiliarboard = new MyAuxiliarBoard(scene);
 
-        this.playerType = "Player";
-        this.enemyType = "Easy";
+        console.log("Red Player: ", this.player1);
+        console.log("Blue Player: ", this.player2);
+        console.log("Board Size: ", this.size);
+        this.playerType = this.player1;
+        this.enemyType = this.player2;
+
         this.currentPlayer = 1;
         this.selectedTile = null;
 
