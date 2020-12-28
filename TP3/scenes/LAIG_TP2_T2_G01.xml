@@ -367,7 +367,6 @@
                 <noderef id="swing" />
                 <noderef id="flower_pot" />
                 <noderef id="slide" />
-                <noderef id="tablet" />
             </descendants>
         </node>
 
@@ -1973,78 +1972,6 @@
 
             <descendants>
                 <noderef id="step_4" />
-            </descendants>
-        </node>
-
-        <node id="tablet">
-            <material id="null" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="5.5" y="0.82" z="2.7" />
-                <rotation axis="y" angle="-50" />
-            </transformations>
-
-            <descendants>
-                <noderef id="tablet_structure" />
-                <noderef id="tablet_screen" />
-                <noderef id="tablet_spritesheet" />
-            </descendants>
-        </node>
-
-        <node id="tablet_structure">
-            <material id="black_material" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-
-                <scale sx="0.7" sy="0.02" sz="0.6" />
-            </transformations>
-
-            <descendants>
-                <noderef id="cube" />
-            </descendants>
-        </node>
-
-        <node id="tablet_screen">
-            <material id="screen_material" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0" y="0.011" z="0" />
-                <rotation axis="x" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="rectangle" x1="-0.3" y1="-0.25" x2="0.3" y2="0.25" />
-            </descendants>
-        </node>
-
-        <node id="tablet_spritesheet">
-            <material id="white_diffuse_material" />
-
-            <texture id="null">
-                <amplification afs="1.0" aft="1.0" />
-            </texture>
-
-            <transformations>
-                <translation x="0" y="0.012" z="0" />
-                <scale sx="0.4" sy="1" sz="0.4" />
-                <rotation axis="y" angle="90" />
-                <rotation axis="x" angle="-90" />
-            </transformations>
-
-            <descendants>
-                <leaf type="spriteanim" ssid="game_anim" startCell="0" endCell="26" duration="2" />
             </descendants>
         </node>
     </nodes>
