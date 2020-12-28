@@ -72,7 +72,18 @@ class XMLscene extends CGFscene {
      */
     updateCamera() {
         this.camera = this.themesGraphs[this.selectedTheme].views[this.selectedCamera]; //changes camera to selected one
-        this.interface.setActiveCamera(this.camera); //enable to control with mouse
+        if(this.selectedCamera != this.themesGraphs[this.selectedTheme].viewsDefaultID){
+            this.interface.setActiveCamera(this.camera); //enable to control with mouse
+        }
+    }
+
+    animateCamera(){
+        if(this.selectedCamera == this.themesGraphs[this.selectedTheme].viewsDefaultID){
+            this.camera.activate();
+        }
+        else {
+            this.gameOrchestrator.state.animationEnd();
+        }
     }
 
     /**
@@ -140,6 +151,8 @@ class XMLscene extends CGFscene {
 
     updateTheme() {
         this.interface.changeTheme();
+        let default_camera = this.themesGraphs[this.selectedTheme].views[this.themesGraphs[this.selectedTheme].viewsDefaultID];
+        this.themesGraphs[this.selectedTheme].views[this.themesGraphs[this.selectedTheme].viewsDefaultID] = new MyAnimatedCamera(this.gameOrchestrator, default_camera.fov, default_camera.near, default_camera.far, default_camera.position, default_camera.target);
         this.updateCamera();
         this.initLights();
     }
@@ -154,6 +167,10 @@ class XMLscene extends CGFscene {
         this.currentTime = time;
 
         this.gameOrchestrator.update(deltaTime);
+
+        if(this.selectedCamera == this.themesGraphs[this.selectedTheme].viewsDefaultID){
+            this.camera.update(deltaTime);
+        }
 
         if(this.themesGraphs[this.selectedTheme].animations != undefined){
             for(let [id, animation] of Object.entries(this.themesGraphs[this.selectedTheme].animations)){
@@ -181,6 +198,8 @@ class XMLscene extends CGFscene {
     
             this.interface.createGUI();
     
+            let default_camera = this.themesGraphs[this.selectedTheme].views[this.themesGraphs[this.selectedTheme].viewsDefaultID];
+            this.themesGraphs[this.selectedTheme].views[this.themesGraphs[this.selectedTheme].viewsDefaultID] = new MyAnimatedCamera(this.gameOrchestrator, default_camera.fov, default_camera.near, default_camera.far, default_camera.position, default_camera.target);
             this.initLights();
             this.updateCamera();
     

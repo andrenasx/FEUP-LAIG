@@ -23,12 +23,8 @@ class CheckGameOverState extends GameState {
         }
         else if(message == 0) {
             console.log("No winners yet");
-            this.gameOrchestrator.currentPlayer = -this.gameOrchestrator.currentPlayer;
-            [this.gameOrchestrator.playerType, this.gameOrchestrator.enemyType] = [this.gameOrchestrator.enemyType, this.gameOrchestrator.playerType];
-            if(this.gameOrchestrator.playerType=="Player")
-                this.gameOrchestrator.changeState(new CheckMovesState(this.gameOrchestrator));
-            else
-                this.gameOrchestrator.changeState(new BotState(this.gameOrchestrator));
+            this.gameOrchestrator.changeState(new ChangePlayerState(this.gameOrchestrator));
+            this.gameOrchestrator.state.animateCamera();
         }
     }
 }
