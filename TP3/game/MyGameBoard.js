@@ -1,6 +1,7 @@
 class MyGameBoard extends CGFobject {
-    constructor(scene){
+    constructor(scene, size){
         super(scene);
+        this.size = size;
         this.board = [];
 
         this.redMaterial = new CGFappearance(this.scene);
@@ -17,7 +18,7 @@ class MyGameBoard extends CGFobject {
         this.blueMaterial.setDiffuse(0, 0, 1, 1),
         this.blueMaterial.setSpecular(0, 0, 0, 1);
 
-        this.createBoard(8);
+        this.createBoard(this.size);
     }
 
     createBoard(size){
