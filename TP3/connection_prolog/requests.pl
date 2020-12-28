@@ -498,7 +498,37 @@ getSelAndMovePosition(Move, SelPosition, MovPosition):-
 	nth0(0, Move, SelPosition),
 	nth0(1, Move, MovPosition).
 
+%countElement(+Element, +List, -Count)
+%Counts ocurrences of an element in a list
+/*
+Base case, empty list, Count of anything is 0. 
+*/
+countElement(_, [], 0).
 
+/*
+The Element in the head of the list is the same as what we want to count,
+add 1 to the recursive Count.
+*/
+countElement(Element, [Element|T], Count):-
+    countElement(Element, T, Count1),
+    Count is Count1 + 1.
+
+/*
+The element in the head of the list is different, keep old Count
+*/
+countElement(Element, [H|T], Count):-
+    Element \== H,
+    countElement(Element, T, Count).
+
+
+%sequenceOfNon0(+List, -Sequence)
+/*
+Returns in Sequence the length of the sequence of non 0 numbers in List
+*/
+sequenceOfNon0(List, Sequence):-
+    delete(List, 0, SequenceList),
+    length(SequenceList, Sequence).
+    
 /* --- BOT --- */
 
 %choose_move(GameState, Size, Player, Level, Move)*/
