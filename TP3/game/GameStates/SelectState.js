@@ -16,6 +16,7 @@ class SelectState extends GameState {
         console.log(message)
         if(message == 1){
             //seleciona peça e dá highlight de tiles inimigos à volta
+            this.tile.piece.highlightPiece();
             this.gameOrchestrator.selectedTile = this.tile;
             this.gameOrchestrator.changeState(new MoveState(this.gameOrchestrator));
         }

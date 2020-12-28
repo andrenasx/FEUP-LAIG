@@ -16,6 +16,7 @@ class MoveState extends GameState {
         console.log(message);
         if(message == 1){
             //selecionou uma peça de destino correta, faz o movimento
+            this.gameOrchestrator.selectedTile.piece.unlightPiece();
             this.gameOrchestrator.performMove(this.tile);
             this.gameOrchestrator.changeState(new CheckGameOverState(this.gameOrchestrator));
         }
