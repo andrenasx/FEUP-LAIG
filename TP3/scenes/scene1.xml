@@ -5,7 +5,7 @@
     </initials>
     <views default="Top">
         <perspective id="Top" near="0.1" far="300" angle="30">
-            <from x="4" y="20" z="20" />
+            <from x="4" y="10" z="16" />
             <to x="4" y="0" z="4" />
         </perspective>
     </views>
