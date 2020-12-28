@@ -9,6 +9,7 @@ class MyGameOrchestrator {
         this.prolog = new MyPrologInterface(this);
         this.gameboard = new MyGameBoard(scene, this.size);
         this.auxiliarboard = new MyAuxiliarBoard(scene);
+        this.menu = new MyMenu(this.scene);
 
         console.log("Red Player: ", this.player1);
         console.log("Blue Player: ", this.player2);
@@ -31,6 +32,13 @@ class MyGameOrchestrator {
         this.gameboard.display();
         this.auxiliarboard.display();
         this.animator.display();
+
+        this.scene.pushMatrix();
+        this.scene.translate(this.size + 1.5, 1.5, (this.size-4)/2+2);
+        this.scene.rotate(-Math.PI/2, 0, 1, 0);
+        this.scene.scale(5, 3, 0.2);
+        this.menu.display();
+        this.scene.popMatrix();
     }
 
     managePick(mode, pickResults) {

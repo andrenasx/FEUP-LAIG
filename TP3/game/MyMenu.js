@@ -41,6 +41,7 @@ class MyMenu extends CGFobject {
         //Undo Button
         this.scene.pushMatrix();
         this.scene.translate(0, 0, 0.8);
+        this.scene.scale(1.5,1,1);
         this.lightgreyMaterial.apply();
         this.undoButton.display();
         this.scene.popMatrix();
@@ -48,6 +49,7 @@ class MyMenu extends CGFobject {
         //Pause Button
          this.scene.pushMatrix();
          this.scene.translate(0, -0.2, 0.8);
+         this.scene.scale(1.5,1,1);
          this.lightgreyMaterial.apply();
          this.pauseButton.display();
          this.scene.popMatrix();

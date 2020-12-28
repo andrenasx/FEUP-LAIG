@@ -19,7 +19,6 @@ class MyGameBoard extends CGFobject {
         this.blueMaterial.setSpecular(0, 0, 0, 1);
 
         this.createBoard(this.size);
-        this.menu = new MyMenu(this.scene);
     }
 
     createBoard(size){
@@ -120,14 +119,6 @@ class MyGameBoard extends CGFobject {
             side.display();
             this.scene.popMatrix();
         }
-
-        //Menu
-        this.scene.pushMatrix();
-        this.scene.translate(-0.6, 1.5, (this.size-4)/2+2);
-        this.scene.rotate(Math.PI/2, 0, 1, 0);
-        this.scene.scale(4, 3, 0.2);
-        this.menu.display();
-        this.scene.popMatrix();
 
     }
 
