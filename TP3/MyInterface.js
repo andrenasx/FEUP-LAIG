@@ -53,6 +53,7 @@ class MyInterface extends CGFinterface {
      */
     createGUI() {
         this.createAxisCheckbox();
+        this.createThemeDropdown();
         this.createCamerasDropdown();
         this.createLightsCheckbox();
     }
@@ -65,15 +66,26 @@ class MyInterface extends CGFinterface {
     }
 
     /**
+     * Create theme dropdown.
+     */
+    createThemeDropdown(){
+        const group = this.gui.addFolder("Themes");
+        group.open();
+
+        console.log(this.scene.filenames)
+        group.add(this.scene, 'selectedTheme', Array.from(this.scene.filenames.keys())).name('Themes').onChange(this.scene.updateTheme.bind(this.scene));
+    }
+
+    /**
      * Create camera dropdown and set selectedCamera with views defaultID.
      */
     createCamerasDropdown() {
         const group = this.gui.addFolder("Views");
         group.open();
 
-        this.scene.selectedCamera = this.scene.graph.viewsDefaultID;
+        this.scene.selectedCamera = this.scene.themesGraphs[this.scene.selectedTheme].viewsDefaultID;
 
-        group.add(this.scene, 'selectedCamera', Object.keys(this.scene.graph.views)).name('Cameras').onChange(this.scene.updateCamera.bind(this.scene));
+        group.add(this.scene, 'selectedCamera', Object.keys(this.scene.themesGraphs[this.scene.selectedTheme].views)).name('Cameras').onChange(this.scene.updateCamera.bind(this.scene));
     }
 
     /**
@@ -83,7 +95,7 @@ class MyInterface extends CGFinterface {
         const group = this.gui.addFolder("Lights");
         group.open();
 
-        const lights = this.scene.graph.lights;
+        const lights = this.scene.themesGraphs[this.scene.selectedTheme].lights;
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
                 this.scene.lightsAux[key] = lights[key][0];
