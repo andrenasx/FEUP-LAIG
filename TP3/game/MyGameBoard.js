@@ -18,7 +18,16 @@ class MyGameBoard extends CGFobject {
         this.blueMaterial.setDiffuse(0, 0, 1, 1),
         this.blueMaterial.setSpecular(0, 0, 0, 1);
 
+        this.greyMaterial = new CGFappearance(this.scene);
+        this.greyMaterial.setShininess(5);
+        this.greyMaterial.setEmission(0, 0, 0, 1);
+        this.greyMaterial.setAmbient(0.34, 0.35, 0.36, 1);
+        this.greyMaterial.setDiffuse(0.34, 0.35, 0.36, 1),
+        this.greyMaterial.setSpecular(0, 0, 0, 1);
+
         this.createBoard(this.size);
+
+        this.base = new MyCube(this.scene);
     }
 
     createBoard(size){
@@ -119,6 +128,13 @@ class MyGameBoard extends CGFobject {
             side.display();
             this.scene.popMatrix();
         }
+
+        this.scene.pushMatrix();
+        this.scene.translate(this.size/2, -0.155, this.size/2);
+        this.scene.scale(this.size + 1.5, 0.3, this.size + 1.5);
+        this.greyMaterial.apply();
+        this.base.display();
+        this.scene.popMatrix();
 
     }
 
