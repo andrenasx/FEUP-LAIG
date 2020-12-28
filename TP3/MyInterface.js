@@ -72,7 +72,6 @@ class MyInterface extends CGFinterface {
         const group = this.gui.addFolder("Themes");
         group.open();
 
-        console.log(this.scene.filenames)
         group.add(this.scene, 'selectedTheme', Array.from(this.scene.filenames.keys())).name('Themes').onChange(this.scene.updateTheme.bind(this.scene));
     }
 
