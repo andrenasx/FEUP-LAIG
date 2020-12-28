@@ -29,14 +29,31 @@ class MyGameOrchestrator {
 
     display(){
         this.managePick(this.scene.pickMode, this.scene.pickResults);
-        this.gameboard.display();
+        //board
+        if(this.size == 8){
+            this.scene.pushMatrix();
+            this.scene.translate(5.1, 0.86, 2.13);
+            this.scene.scale(0.1, 0.1, 0.1);
+            this.gameboard.display();
+            this.scene.popMatrix();
+        }
+        else if(this.size == 6) {
+            this.scene.pushMatrix();
+            this.scene.translate(5.2, 0.86, 2.2);
+            this.scene.scale(0.1, 0.1, 0.1);
+            this.gameboard.display();
+            this.scene.popMatrix();
+        }
+        
+        //auxiliar board
         this.auxiliarboard.display();
+
         this.animator.display();
 
         this.scene.pushMatrix();
-        this.scene.translate(this.size + 1.5, 1.5, (this.size-4)/2+2);
+        this.scene.translate(6.05, 1, 2.48)
         this.scene.rotate(-Math.PI/2, 0, 1, 0);
-        this.scene.scale(5, 3, 0.2);
+        this.scene.scale(0.7, 0.5, 0.03);
         this.menu.display();
         this.scene.popMatrix();
     }
