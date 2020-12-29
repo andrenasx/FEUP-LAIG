@@ -16,7 +16,7 @@
     <div>Current Player: <span id="player"> Red</span></div>
     <div>Red Player Score: <span id="red-score">0</span></div>
     <div>Blue Player Score: <span id="blue-score">0</span></div>
-    <div id="time">Time:  <span></span></div>
+    <div id="time"><span>Time: </span></div>
   </div>
   <div class="wrapper">
     <div id="menu">
@@ -67,6 +67,20 @@
         <input type="radio" id="size-2" name="size" value="8">
         <label for="female">8 x 8</label><br>
       </section>
+      <section id="time-play">
+        <h3>Time for each move</h3>
+        <input type="range" min="15" max="30" value="15" class="slider" id="myRange">
+        <p>Value: <span id="demo"></span></p>
+      </section>
+      <script>
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value;
+        
+        slider.oninput = function() {
+          output.innerHTML = this.value;
+        }
+      </script>
       <div>
         <input type="submit" value="Play" >
       </div> 
