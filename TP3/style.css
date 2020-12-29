@@ -64,6 +64,7 @@ canvas {
 
 #menu input[type="submit"]:hover {
   color: #3cb043;
+  border: 2px solid #3cb043;
 }
 
 #menu select {
