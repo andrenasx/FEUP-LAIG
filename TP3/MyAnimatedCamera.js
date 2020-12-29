@@ -21,7 +21,7 @@ class MyAnimatedCamera extends CGFcamera {
 
             if(this.elapsedTime >= this.animationTime) {
                 this.orbit(CGFcameraAxis.Y, Math.PI-this.angle);
-                this.gameOrchestrator.state.animationEnd();
+                this.gameOrchestrator.state.cameraEnd();
                 this.active = false;
                 return;
             }

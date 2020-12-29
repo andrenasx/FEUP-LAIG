@@ -3,10 +3,6 @@ class CheckGameOverState extends GameState {
         super(gameOrchestrator);
     }
 
-    pickTile(tile) {
-        //no picking, game is animating
-    }
-
     animationEnd() {
         this.gameOrchestrator.prolog.gameOver();
     }

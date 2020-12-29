@@ -8,8 +8,9 @@ class MoveState extends GameState {
         this.gameOrchestrator.prolog.canMoveToTile(tile);
     }
 
-    animationEnd() {
-        //no game animations
+    pickObj(id) {
+        this.gameOrchestrator.selectedTile.piece.unlightPiece();
+        if(id==100) this.gameOrchestrator.undo()
     }
 
     receivedReply(message) {

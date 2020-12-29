@@ -4,13 +4,6 @@ class CheckMovesState extends GameState {
         this.gameOrchestrator.prolog.hasAnyPossibleMoves();
     }
 
-    pickTile(tile) {
-    }
-
-    animationEnd() {
-        //no game animations
-    }
-
     receivedReply(message) {
         console.log(message);
         if(message>0){

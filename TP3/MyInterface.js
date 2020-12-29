@@ -79,29 +79,27 @@ class MyInterface extends CGFinterface {
      * Create camera dropdown and set selectedCamera with views defaultID.
      */
     createCamerasDropdown() {
-        const group = this.gui.addFolder("Views");
-        this.cameras = group;
-        group.open();
+        this.cameras = this.gui.addFolder("Views");
+        this.cameras.open();
 
-        this.scene.selectedCamera = this.scene.themesGraphs[this.scene.selectedTheme].viewsDefaultID;
+        this.scene.selectedCamera = this.scene.getCurrentTheme().viewsDefaultID;
 
-        group.add(this.scene, 'selectedCamera', Object.keys(this.scene.themesGraphs[this.scene.selectedTheme].views)).name('Cameras').onChange(this.scene.updateCamera.bind(this.scene));
+        this.cameras.add(this.scene, 'selectedCamera', Object.keys(this.scene.getCurrentTheme().views)).name('Cameras').onChange(this.scene.updateCamera.bind(this.scene));
     }
 
     /**
      * Create lights checkbox and add lights enable values to lightsAux map.
      */
     createLightsCheckbox(){
-        const group = this.gui.addFolder("Lights");
-        this.lights = group;
-        group.open();
+        this.lights = this.gui.addFolder("Lights");
+        this.lights.open();
 
-        const lights = this.scene.themesGraphs[this.scene.selectedTheme].lights;
+        const lights = this.scene.getCurrentTheme().lights;
         this.scene.lightsAux = [];
         for (var key in lights) {
             if (lights.hasOwnProperty(key)) {
                 this.scene.lightsAux[key] = lights[key][0];
-                group.add(this.scene.lightsAux, key).onChange(this.scene.updateLights.bind(this.scene));
+                this.lights.add(this.scene.lightsAux, key).onChange(this.scene.updateLights.bind(this.scene));
             }
         }
     }

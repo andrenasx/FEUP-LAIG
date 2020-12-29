@@ -8,10 +8,6 @@ class RemoveState extends GameState {
         this.gameOrchestrator.prolog.canRemovePiece(tile);
     }
 
-    animationEnd() {
-        //no game animations
-    }
-
     receivedReply(message) {
         console.log(message);
         if(message == 1){
