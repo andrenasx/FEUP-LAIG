@@ -28,69 +28,65 @@ class MyGameOrchestrator {
     }
 
     display(){
-        this.managePick(this.scene.pickMode, this.scene.pickResults);
-        //board
-        if(this.size == 8){
-            this.scene.pushMatrix();
-            this.scene.translate(5.1, 0.86, 2.13);
-            this.scene.scale(0.1, 0.1, 0.1);
-            this.gameboard.display();
-            this.scene.popMatrix();
-        }
-        else if(this.size == 6) {
-            this.scene.pushMatrix();
-            this.scene.translate(5.2, 0.86, 2.2);
-            this.scene.scale(0.1, 0.1, 0.1);
-            this.gameboard.display();
-            this.scene.popMatrix();
-        }
-        
-        //auxiliar board
-        this.auxiliarboard.display();
-
-        this.animator.display();
-
         this.scene.pushMatrix();
-        this.scene.translate(6.05, 1, 2.48)
-        this.scene.rotate(-Math.PI/2, 0, 1, 0);
+        this.scene.translate(5.5, 1.05, 1.9)
+        this.scene.rotate(-Math.PI/8, 1, 0, 0);
         this.scene.scale(0.7, 0.5, 0.03);
         this.menu.display();
         this.scene.popMatrix();
-    }
 
-    managePick(mode, pickResults) {
-        if (mode == false){
-            if (pickResults != null && pickResults.length > 0) {
-                for (let i=0; i< pickResults.length; i++) {
-                    let obj = pickResults[i][0]; // get object from result
-                    if (obj instanceof MyTile) {
-                        this.state.pickTile(obj);
-
-                        //var uniqueId = pickResults[i][1] // get id
-                    }
-                }
-                // clear results
-                pickResults.splice(0, pickResults.length);
-            }
+        this.scene.pushMatrix();
+        if(this.size == 8){
+            this.scene.translate(5.1, 0.86, 2.13);
+            this.scene.scale(0.1, 0.1, 0.1);
         }
+        else if(this.size == 6) {
+            this.scene.translate(5.2, 0.86, 2.2);
+            this.scene.scale(0.1, 0.1, 0.1);
+            
+        }
+        //Game Board
+        this.gameboard.display();
+        
+        //Auxiliar board
+        this.auxiliarboard.display();
+
+        //Animator
+        this.animator.display();
+
+        this.scene.popMatrix();
     }
 
     performMove(moveTile){
-        this.gameSequence.addGameMove(new MyGameMove(moveTile, this.auxiliarboard.getTile(), this.gameboard));
-        this.gameSequence.addGameMove(new MyGameMove(this.selectedTile, moveTile, this.gameboard));
+        this.gameSequence.addGameMove(new MyGameMove(moveTile, this.auxiliarboard.getTile(), this.scene));
+        this.gameSequence.addGameMove(new MyGameMove(this.selectedTile, moveTile, this.scene));
+        this.gameSequence.lastmoveType = 2;
     }
 
     performRemove(selectedTile){
-        this.gameSequence.addGameMove(new MyGameMove(selectedTile, this.auxiliarboard.getTile(), this.gameboard));
+        this.gameSequence.addGameMove(new MyGameMove(selectedTile, this.auxiliarboard.getTile(), this.scene));
+        this.gameSequence.lastmoveType = 1;
     }
 
     performBotMove(selRow,selCol,movRow,movCol){
-        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(movRow,movCol), this.auxiliarboard.getTile(), this.gameboard));
-        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.gameboard.getTile(movRow,movCol), this.gameboard));
+        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(movRow,movCol), this.auxiliarboard.getTile(), this.scene));
+        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.gameboard.getTile(movRow,movCol), this.scene));
+        this.gameSequence.lastmoveType = 2;
     }
 
     performBotRemove(selRow,selCol){
-        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.auxiliarboard.getTile(), this.gameboard));
+        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.auxiliarboard.getTile(), this.scene));
+        this.gameSequence.lastmoveType = 1;
+    }
+
+    undo(){
+        if(this.gameSequence.sequence.length==0) return;
+        this.gameSequence.undo()
+        this.state = new CheckGameOverState(this)
+    }
+
+    replay(){
+        this.gameSequence.replay();
     }
 
     changeState(state){

@@ -208,6 +208,25 @@ class XMLscene extends CGFscene {
         }
     }
 
+    managePick(mode, pickResults) {
+        if (mode == false){
+            if (pickResults != null && pickResults.length > 0) {
+                for (let i=0; i< pickResults.length; i++) {
+                    let obj = pickResults[i][0]; // get object from result
+                    if (obj instanceof MyTile) {
+                        this.gameOrchestrator.state.pickTile(obj);
+                    }
+                    else if (obj) {
+                        const customID = pickResults[i][1];
+                        this.gameOrchestrator.state.pickObj(customID);
+                    }
+                }
+                // clear results
+                pickResults.splice(0, pickResults.length);
+            }
+        }
+    }
+
     /**
      * Displays the scene.
      */
@@ -241,6 +260,7 @@ class XMLscene extends CGFscene {
  
             this.defaultAppearance.apply();
 
+            this.managePick(this.pickMode, this.pickResults);
             this.gameOrchestrator.display();
 
             // Displays the scene (MySceneGraph function).

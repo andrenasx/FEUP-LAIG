@@ -43,6 +43,7 @@ class MyMenu extends CGFobject {
         this.scene.translate(0, 0, 0.8);
         this.scene.scale(1.5,1,1);
         this.lightgreyMaterial.apply();
+        this.scene.registerForPick(100, this.undoButton);
         this.undoButton.display();
         this.scene.popMatrix();
 

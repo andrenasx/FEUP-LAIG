@@ -4,6 +4,10 @@ class MyKeyframeAnimation {
         this.frame = 1;
         this.elapsedTime = 0;
         this.finished = false;
+        this.initialAnimation()
+    }
+
+    initialAnimation(){
         if(this.keyframes.length === 1)
             this.activeAnimation = new MyAnimation(this.keyframes[0].instant, this.keyframes[0].instant, this.keyframes[0].transformations, this.keyframes[0].transformations);
         else
@@ -35,6 +39,13 @@ class MyKeyframeAnimation {
         }
 
         this.activeAnimation.update(deltaTime);
+    }
+
+    reset(){
+        this.frame = 1;
+        this.elapsedTime = 0;
+        this.finished = false;
+        this.initialAnimation()
     }
 }
 

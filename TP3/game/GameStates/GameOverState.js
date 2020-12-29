@@ -1,6 +1,7 @@
 class GameOverState extends GameState {
     constructor(gameOrchestrator){
         super(gameOrchestrator);
+        gameOrchestrator.replay();
     }
 
     pickTile(tile) {
@@ -8,7 +9,7 @@ class GameOverState extends GameState {
     }
 
     animationEnd() {
-        //no game animations
+        console.log("End of replay")
     }
 
     receivedReply(message) {

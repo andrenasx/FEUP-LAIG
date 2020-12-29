@@ -8,6 +8,10 @@ class SelectState extends GameState {
         this.gameOrchestrator.prolog.canChooseTile(tile);
     }
 
+    pickObj(id) {
+        if(id==100) this.gameOrchestrator.undo()
+    }
+
     animationEnd() {
         //no game animations
     }

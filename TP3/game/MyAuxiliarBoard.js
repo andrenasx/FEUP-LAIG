@@ -8,7 +8,7 @@ class MyAuxiliarBoard extends CGFobject {
 
     createBoard(size){
         this.size = size;
-        this.board.push(new MyTile(this.scene, 0, -2))
+        this.board.push(new MyAuxiliarTile(this.scene, 0, -2))
     }
 
     display(){

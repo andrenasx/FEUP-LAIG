@@ -1,9 +1,9 @@
 class MyGameMove {
-    constructor(selectedTile, moveTile, board){
+    constructor(selectedTile, moveTile, scene){
         this.piece = selectedTile.getPiece();
         this.selectedTile = selectedTile;
         this.moveTile = moveTile;
-        this.board = board;
+        this.scene = scene;
 
         this.animation = new MyKeyframeAnimation(
             [
@@ -42,11 +42,15 @@ class MyGameMove {
             ]
         )
 
-        this.selectedTile.removePiece();
+        this.init = false;
         this.finished = false;
     }
 
     update(delta){
+        if(!this.init){
+            this.init = true;
+            this.selectedTile.removePiece();
+        }
         this.animation.update(delta);
         if(this.animation.finished && !this.finished){
             this.finished = true;
@@ -55,9 +59,15 @@ class MyGameMove {
     }
 
     animate(){
-        this.board.scene.pushMatrix();
-        this.animation.apply(this.board.scene);
+        this.scene.pushMatrix();
+        this.animation.apply(this.scene);
         this.piece.display();
-        this.board.scene.popMatrix();
+        this.scene.popMatrix();
+    }
+
+    resetAnimation(){
+        this.animation.reset();
+        this.init = false;
+        this.finished = false;
     }
 }

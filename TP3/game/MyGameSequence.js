@@ -3,23 +3,29 @@ class MyGameSequence {
         this.gameOrchestrator = gameOrchestrator;
         this.sequence = [];
         this.current_move = 0;
+        this.lastmoveType = 2;
+        this.undoflag = false;
     }
 
     addGameMove(gameMove){
         this.sequence.push(gameMove);
     }
 
-    update(delta){
+    update(deltaTime){
         if(this.current_move==this.sequence.length || this.sequence.length==0) return;
 
-        for (let i = this.current_move; i < this.sequence.length; i++) {
-            let move = this.sequence[i];
-            move.update(delta);
-        }
+        let move = this.getCurrentMove();
+        move.update(deltaTime);
+        if(move.finished) this.current_move++;
 
-        if(this.getLastMove().finished){
-            this.current_move = this.sequence.length;
+        if(this.sequence[this.sequence.length-1].finished){
             this.gameOrchestrator.state.animationEnd();
+            if(this.undoflag){
+                for(let i=0; i<this.lastmoveType; i++){
+                    this.sequence.pop();
+                    this.current_move--;
+                }
+            }
         }
     }
 
@@ -33,5 +39,32 @@ class MyGameSequence {
 
     getLastMove(){
         if(this.sequence.length!==0) return this.sequence[this.sequence.length-1];
+    }
+
+    undo(){
+        let moves;
+        if(this.sequence.length!==0){
+            if(this.lastmoveType == 1){
+                moves = [this.sequence.pop()];
+                this.current_move--;
+            } 
+            else{
+                moves = [this.sequence.pop(), this.sequence.pop()];
+                this.current_move-=2;
+            }
+
+            this.undoflag = true;
+
+            for(let move of moves){
+                this.addGameMove(new MyGameMove(move.moveTile, move.selectedTile, this.gameOrchestrator.scene));
+            }
+        }
+    }
+
+    replay(){
+        for(let move of this.sequence){
+            move.resetAnimation()
+        }
+        this.current_move=0;
     }
 }
