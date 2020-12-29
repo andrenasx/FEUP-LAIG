@@ -15,7 +15,7 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.j
                 './primitives/MyRectangle.js', './primitives/MyTriangle.js', './primitives/MySphere.js', './primitives/MyCylinder.js', './primitives/MyTorus.js', './primitives/MyCircle.js', './primitives/MyCylinderSide.js', './primitives/MyPlane.js', './primitives/MyPatch.js', './primitives/MyDefbarrel.js', './primitives/MyCube.js', './primitives/MyTrapeze.js',
                 './keyframes/MyAnimation.js', './keyframes/MyKeyframeAnimation.js', 
                 './spritesheets/MySpritesheet.js', './spritesheets/MySpriteText.js', './spritesheets/MySpriteAnimation.js', 
-                './game/MyPiece.js', './game/MyTile.js', './game/MyGameBoard.js', './game/MyAuxiliarTile.js', './game/MyAuxiliarBoard.js', './game/MyGameOrchestrator.js', './game/MyGameSequence.js', './game/MyAnimator.js', './game/MyGameMove.js', './game/MyMenu.js', './game/MyButton.js',
+                './game/MyPiece.js', './game/MyTile.js', './game/MyGameBoard.js', './game/MyAuxiliarBoard.js', './game/MyGameOrchestrator.js', './game/MyGameSequence.js', './game/MyAnimator.js', './game/MyGameMove.js', './game/MyMenu.js', './game/MyButton.js',
                 './game/GameStates/GameState.js', './game/GameStates/InitialState.js', './game/GameStates/CheckMovesState.js', './game/GameStates/SelectState.js', './game/GameStates/MoveState.js', './game/GameStates/RemoveState.js', './game/GameStates/CheckGameOverState.js', './game/GameStates/ChangePlayerState.js', './game/GameStates/GameOverState.js', './game/GameStates/BotState.js',
                 './connection_prolog/MyPrologInterface.js',
 

@@ -1,27 +1,65 @@
 class MyAuxiliarBoard extends CGFobject {
-    constructor(scene){
+    constructor(scene, size){
         super(scene);
-        this.board = [];
-
-        this.createBoard(1);
-    }
-
-    createBoard(size){
         this.size = size;
-        this.board.push(new MyAuxiliarTile(this.scene, 0, -2))
+        this.x = -2;
+        this.y = 0; 
+        this.z = 0.5;
+
+        this.pieces = [];
+
+        this.tile = new MyPlane(scene, 5, 5);
     }
 
     display(){
-        for(let row=0; row<this.size; row++){
+        for(let i=0; i<this.size; i++) {
             this.scene.pushMatrix();
-            this.scene.translate((-2+0.5), 0, (row+0.5));
-            this.board[row].display();
-            this.scene.clearPickRegistration();
+            this.scene.translate(this.x,0,this.z+i)
+            this.tile.display();
             this.scene.popMatrix();
+        }
+
+        this.displayPieces()
+    }
+
+    displayPieces(){
+        let y=0, z=0;
+        for(let p=0; p<this.pieces.length; p++){
+            this.scene.pushMatrix();
+            this.scene.translate(this.x,y,this.z+z)
+            this.pieces[p].display();
+            this.scene.popMatrix();
+
+            z+=1
+            if(z==this.size){
+                z=0;
+                y+=0.21;
+            }
         }
     }
 
-    getTile(){
-        return this.board[0];
+    setPiece(piece){
+        this.pieces.push(piece);
+    }
+
+    getPiece(){
+        return this.pieces[this.pieces.length-1];
+    }
+
+    removePiece(){
+        this.pieces.pop();
+    }
+
+    getPosition(){
+        let y=0, z=0;
+        for(let p=0; p<this.pieces.length; p++){
+            z+=1
+            if(z==this.size){
+                z=0;
+                y+=0.21;
+            }
+        }
+
+        return this.nextposition = {x:this.x, y:y, z:this.z+z}
     }
 }

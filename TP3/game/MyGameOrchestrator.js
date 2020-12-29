@@ -8,7 +8,7 @@ class MyGameOrchestrator {
         this.animator = new MyAnimator(this.gameSequence);
         this.prolog = new MyPrologInterface(this);
         this.gameboard = new MyGameBoard(scene, this.size);
-        this.auxiliarboard = new MyAuxiliarBoard(scene);
+        this.auxiliarboard = new MyAuxiliarBoard(scene, this.size);
         this.menu = new MyMenu(this.scene);
 
         console.log("Red Player: ", this.player1);
@@ -29,7 +29,7 @@ class MyGameOrchestrator {
 
     display(){
         this.scene.pushMatrix();
-        this.scene.translate(5.5, 1.05, 1.9)
+        this.scene.translate(5.5, 1.05, 1.85)
         this.scene.rotate(-Math.PI/8, 1, 0, 0);
         this.scene.scale(0.7, 0.5, 0.03);
         this.menu.display();
@@ -37,12 +37,14 @@ class MyGameOrchestrator {
 
         this.scene.pushMatrix();
         if(this.size == 8){
-            this.scene.translate(5.1, 0.86, 2.13);
+            this.scene.translate(5.1, 0.86, 2.9);
             this.scene.scale(0.1, 0.1, 0.1);
+            this.scene.rotate(Math.PI/2, 0, 1, 0);
         }
         else if(this.size == 6) {
-            this.scene.translate(5.2, 0.86, 2.2);
+            this.scene.translate(5.2, 0.86, 2.8);
             this.scene.scale(0.1, 0.1, 0.1);
+            this.scene.rotate(Math.PI/2, 0, 1, 0);
             
         }
         //Game Board
@@ -58,24 +60,24 @@ class MyGameOrchestrator {
     }
 
     performMove(moveTile){
-        this.gameSequence.addGameMove(new MyGameMove(moveTile, this.auxiliarboard.getTile(), this.scene));
+        this.gameSequence.addGameMove(new MyGameMove(moveTile, this.auxiliarboard, this.scene));
         this.gameSequence.addGameMove(new MyGameMove(this.selectedTile, moveTile, this.scene));
         this.gameSequence.lastmoveType = 2;
     }
 
     performRemove(selectedTile){
-        this.gameSequence.addGameMove(new MyGameMove(selectedTile, this.auxiliarboard.getTile(), this.scene));
+        this.gameSequence.addGameMove(new MyGameMove(selectedTile, this.auxiliarboard, this.scene));
         this.gameSequence.lastmoveType = 1;
     }
 
     performBotMove(selRow,selCol,movRow,movCol){
-        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(movRow,movCol), this.auxiliarboard.getTile(), this.scene));
+        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(movRow,movCol), this.auxiliarboard, this.scene));
         this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.gameboard.getTile(movRow,movCol), this.scene));
         this.gameSequence.lastmoveType = 2;
     }
 
     performBotRemove(selRow,selCol){
-        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.auxiliarboard.getTile(), this.scene));
+        this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.auxiliarboard, this.scene));
         this.gameSequence.lastmoveType = 1;
     }
 

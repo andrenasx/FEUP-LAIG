@@ -35,11 +35,7 @@ class MyTile extends CGFobject {
         this.piece = null;
     }
 
-    getRow(){
-        return this.row;
-    }
-
-    getColumn(){
-        return this.column;
+    getPosition(){
+        return {x:this.column+0.5, y:0, z:this.row+0.5}
     }
 }

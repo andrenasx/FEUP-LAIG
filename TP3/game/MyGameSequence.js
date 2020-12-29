@@ -21,6 +21,7 @@ class MyGameSequence {
         if(this.sequence[this.sequence.length-1].finished){
             this.gameOrchestrator.state.animationEnd();
             if(this.undoflag){
+                this.undoflag = false;
                 for(let i=0; i<this.lastmoveType; i++){
                     this.sequence.pop();
                     this.current_move--;

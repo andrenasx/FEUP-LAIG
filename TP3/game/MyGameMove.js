@@ -10,7 +10,7 @@ class MyGameMove {
                 {
                     instant:0,
                     transformations:[
-                        [this.selectedTile.getColumn()+0.5,0,this.selectedTile.getRow()+0.5],
+                        [this.selectedTile.getPosition().x,this.selectedTile.getPosition().y,this.selectedTile.getPosition().z],
                         0,0,0,
                         [1,1,1]
                     ]
@@ -18,7 +18,7 @@ class MyGameMove {
                 {
                     instant:0.2,
                     transformations:[
-                        [this.selectedTile.getColumn()+0.5,1,this.selectedTile.getRow()+0.5],
+                        [this.selectedTile.getPosition().x,this.selectedTile.getPosition().y+1,this.selectedTile.getPosition().z],
                         0,0,0,
                         [1,1,1]
                     ]
@@ -26,7 +26,7 @@ class MyGameMove {
                 {
                     instant:0.4,
                     transformations:[
-                        [this.moveTile.getColumn()+0.5,1,this.moveTile.getRow()+0.5],
+                        [this.moveTile.getPosition().x,this.moveTile.getPosition().y+1,this.moveTile.getPosition().z],
                         0,0,0,
                         [1,1,1]
                     ]
@@ -34,7 +34,7 @@ class MyGameMove {
                 {
                     instant:0.5,
                     transformations:[
-                        [this.moveTile.getColumn()+0.5,0,this.moveTile.getRow()+0.5],
+                        [this.moveTile.getPosition().x,this.moveTile.getPosition().y,this.moveTile.getPosition().z],
                         0,0,0,
                         [1,1,1]
                     ]
