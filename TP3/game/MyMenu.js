@@ -6,7 +6,7 @@ class MyMenu extends CGFobject {
 
         //buttons
         this.undoButton = new MyButton(this.scene, "UNDO");
-        this.pauseButton = new MyButton(this.scene, "PAUSE");
+        this.pauseButton = new MyButton(this.scene, "PLAY");
 
         //Materials
         this.greyMaterial = new CGFappearance(this.scene);
@@ -33,15 +33,14 @@ class MyMenu extends CGFobject {
 
         //Title
         this.scene.pushMatrix();
-        this.scene.translate(0, 0.3, 0.7);
+        this.scene.translate(0, 0.3, 0.51);
         this.scene.scale(0.1, 0.4, 1);
         this.title.display();
         this.scene.popMatrix(); 
 
         //Undo Button
         this.scene.pushMatrix();
-        this.scene.translate(0, 0, 0.8);
-        this.scene.scale(1.5,1,1);
+        this.scene.translate(0, 0, 0.65);
         this.lightgreyMaterial.apply();
         this.scene.registerForPick(100, this.undoButton);
         this.undoButton.display();
@@ -49,9 +48,9 @@ class MyMenu extends CGFobject {
 
         //Pause Button
          this.scene.pushMatrix();
-         this.scene.translate(0, -0.2, 0.8);
-         this.scene.scale(1.5,1,1);
+         this.scene.translate(0, -0.2, 0.65);
          this.lightgreyMaterial.apply();
+         this.scene.registerForPick(101, this.pauseButton);
          this.pauseButton.display();
          this.scene.popMatrix();
     }

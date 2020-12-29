@@ -62,7 +62,7 @@ class MyGameSequence {
         }
     }
 
-    replay(){
+    movie(){
         for(let move of this.sequence){
             move.resetAnimation()
         }

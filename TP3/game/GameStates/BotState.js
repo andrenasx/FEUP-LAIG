@@ -2,7 +2,6 @@ class BotState extends GameState {
     constructor(gameOrchestrator){
         super(gameOrchestrator);
         this.gameOrchestrator.prolog.botPlay(gameOrchestrator.playerType);
-        console.log("Bot STate")
     }
 
     receivedReply(message) {

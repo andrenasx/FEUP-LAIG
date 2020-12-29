@@ -84,14 +84,33 @@ class MyGameOrchestrator {
         this.gameSequence.lastmoveType = 1;
     }
 
+    replay(){
+        this.gameSequence = new MyGameSequence(this);
+        this.animator = new MyAnimator(this.gameSequence);
+        this.prolog = new MyPrologInterface(this);
+        this.gameboard = new MyGameBoard(this.scene, this.size);
+        this.auxiliarboard = new MyAuxiliarBoard(this.scene, this.size);
+
+        this.playerType = this.player1;
+        this.enemyType = this.player2;
+
+        this.currentPlayer = 1;
+        this.selectedTile = null;
+
+        if(this.playerType=="Player")
+            this.state = new CheckMovesState(this);
+        else
+            this.state = new BotState(this);
+    }
+
     undo(){
         if(this.gameSequence.sequence.length==0) return;
         this.gameSequence.undo()
         this.state = new CheckGameOverState(this)
     }
 
-    replay(){
-        this.gameSequence.replay();
+    movie(){
+        this.gameSequence.movie();
     }
 
     changeState(state){

@@ -1,7 +1,6 @@
 class ChangePlayerState extends GameState {
     constructor(gameOrchestrator){
         super(gameOrchestrator);
-        console.log("CHange STate")
     }
 
     animateCamera(){
