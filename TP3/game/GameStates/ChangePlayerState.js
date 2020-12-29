@@ -13,6 +13,7 @@ class ChangePlayerState extends GameState {
 
     animationEnd() {
         this.gameOrchestrator.currentPlayer = -this.gameOrchestrator.currentPlayer;
+        this.updateCurrentPlayer();
         [this.gameOrchestrator.playerType, this.gameOrchestrator.enemyType] = [this.gameOrchestrator.enemyType, this.gameOrchestrator.playerType];
         if(this.gameOrchestrator.playerType=="Player")
             this.gameOrchestrator.changeState(new CheckMovesState(this.gameOrchestrator));
@@ -21,5 +22,10 @@ class ChangePlayerState extends GameState {
     }
 
     receivedReply(message) {
+    }
+
+    updateCurrentPlayer() {
+        let p = this.gameOrchestrator.currentPlayer==1 ? 'Red' : 'Blue';
+        document.getElementById('player').innerText = p;
     }
 }
