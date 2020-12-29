@@ -6,13 +6,14 @@ class XMLscene extends CGFscene {
      * @constructor
      * @param {MyInterface} myinterface 
      */
-    constructor(myinterface, player1, player2, size) {
+    constructor(myinterface, player1, player2, size, time) {
         super();
 
         this.interface = myinterface;
         this.player1 = player1;
         this.player2 = player2;
         this.size = size;
+        this.time = time;
         this.themes = ["Theme1", "Theme2", "Theme3"];
         this.selectedTheme = "Theme1";
         this.filenames = new Map();
@@ -57,7 +58,7 @@ class XMLscene extends CGFscene {
         // enable picking
 		this.setPickEnabled(true);
 
-        this.gameOrchestrator = new MyGameOrchestrator(this, this.player1, this.player2, this.size);
+        this.gameOrchestrator = new MyGameOrchestrator(this, this.player1, this.player2, this.size, this.time);
     }
 
     /**
@@ -72,9 +73,9 @@ class XMLscene extends CGFscene {
      */
     updateCamera() {
         this.camera = this.themesGraphs[this.selectedTheme].views[this.selectedCamera]; //changes camera to selected one
-        if(this.selectedCamera != this.themesGraphs[this.selectedTheme].viewsDefaultID){
+        //if(this.selectedCamera != this.themesGraphs[this.selectedTheme].viewsDefaultID){
             this.interface.setActiveCamera(this.camera); //enable to control with mouse
-        }
+        //}
     }
 
     animateCamera(){

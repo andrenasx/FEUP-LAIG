@@ -1,9 +1,10 @@
 class MyGameOrchestrator {
-    constructor(scene, player1, player2, size){
+    constructor(scene, player1, player2, size, time){
         this.scene = scene;
         this.player1 = player1;
         this.player2 = player2;
         this.size = size;
+        this.time = time;
         this.gameSequence = new MyGameSequence(this);
         this.animator = new MyAnimator(this.gameSequence);
         this.prolog = new MyPrologInterface(this);
@@ -14,13 +15,34 @@ class MyGameOrchestrator {
         console.log("Red Player: ", this.player1);
         console.log("Blue Player: ", this.player2);
         console.log("Board Size: ", this.size);
+        console.log("Time for play: ", this.time);
         this.playerType = this.player1;
         this.enemyType = this.player2;
 
         this.currentPlayer = 1;
         this.selectedTile = null;
-
+        
+        this.updateTime();
         this.state = new InitialState(this);
+        
+    }
+
+    updateTime() {
+        var timeleft = this.time;
+        this.downloadTimer = setInterval(function(){
+          if(timeleft <= 0){
+            clearInterval(this.downloadTimer);
+            //document.getElementById("time").innerHTML = "Finished";
+          } else {
+            document.getElementById("time").innerHTML = "Time: " + timeleft + " seconds remaining";
+            this.left = timeleft;
+          }
+          timeleft -= 1;
+      }, 1000);
+    }
+
+    stopTime() {
+        clearInterval(this.downloadTimer);
     }
 
     update(delta){

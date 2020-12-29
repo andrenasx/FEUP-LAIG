@@ -20,7 +20,11 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.j
                 './connection_prolog/MyPrologInterface.js',
 
 main=function()
-{
+{   
+
+    timeSelected = document.getElementById("myRange").value;
+  
+  
     const size = document.querySelector('#board-size');
     size.addEventListener('click', () => {
       selected = size.querySelector('input[value="6"]').checked ? "6" 
@@ -51,7 +55,7 @@ main=function()
             // Standard application, scene and interface setup
             var app = new CGFapplication(document.body);
             var myInterface = new MyInterface();
-            var myScene = new XMLscene(myInterface, values[0].type, values[1].type, parseInt(selected));
+            var myScene = new XMLscene(myInterface, values[0].type, values[1].type, parseInt(selected), parseInt(timeSelected));
 
             app.init();
 
