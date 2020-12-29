@@ -4,15 +4,7 @@ class GameOverState extends GameState {
         gameOrchestrator.replay();
     }
 
-    pickTile(tile) {
-        // no picking
-    }
-
     animationEnd() {
         console.log("End of replay")
-    }
-
-    receivedReply(message) {
-        // no replies
     }
 }

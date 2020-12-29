@@ -1,17 +1,14 @@
 class ChangePlayerState extends GameState {
     constructor(gameOrchestrator){
         super(gameOrchestrator);
+        console.log("CHange STate")
     }
 
     animateCamera(){
         this.gameOrchestrator.scene.animateCamera();
     }
 
-    pickTile(tile) {
-        //no picking, game is animating
-    }
-
-    animationEnd() {
+    cameraEnd() {
         this.gameOrchestrator.currentPlayer = -this.gameOrchestrator.currentPlayer;
         this.updateCurrentPlayer();
         [this.gameOrchestrator.playerType, this.gameOrchestrator.enemyType] = [this.gameOrchestrator.enemyType, this.gameOrchestrator.playerType];
@@ -19,9 +16,6 @@ class ChangePlayerState extends GameState {
             this.gameOrchestrator.changeState(new CheckMovesState(this.gameOrchestrator));
         else
             this.gameOrchestrator.changeState(new BotState(this.gameOrchestrator));
-    }
-
-    receivedReply(message) {
     }
 
     updateCurrentPlayer() {

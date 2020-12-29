@@ -71,6 +71,7 @@ class XMLscene extends CGFscene {
      * Changes active camera.
      */
     updateCamera() {
+        this.gameOrchestrator.state.cameraEnd()
         this.camera = this.themesGraphs[this.selectedTheme].views[this.selectedCamera]; //changes camera to selected one
         if(this.selectedCamera != this.themesGraphs[this.selectedTheme].viewsDefaultID){
             this.interface.setActiveCamera(this.camera); //enable to control with mouse
@@ -82,7 +83,7 @@ class XMLscene extends CGFscene {
             this.camera.activate();
         }
         else {
-            this.gameOrchestrator.state.animationEnd();
+            this.gameOrchestrator.state.cameraEnd();
         }
     }
 

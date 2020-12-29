@@ -20,7 +20,10 @@ class MyGameOrchestrator {
         this.currentPlayer = 1;
         this.selectedTile = null;
 
-        this.state = new InitialState(this);
+        if(this.playerType=="Player")
+            this.state = new CheckMovesState(this);
+        else
+            this.state = new BotState(this);
     }
 
     update(delta){

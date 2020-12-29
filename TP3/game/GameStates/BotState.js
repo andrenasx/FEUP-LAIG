@@ -2,13 +2,7 @@ class BotState extends GameState {
     constructor(gameOrchestrator){
         super(gameOrchestrator);
         this.gameOrchestrator.prolog.botPlay(gameOrchestrator.playerType);
-    }
-
-    pickTile(tile) {
-    }
-
-    animationEnd() {
-        //no game animations
+        console.log("Bot STate")
     }
 
     receivedReply(message) {

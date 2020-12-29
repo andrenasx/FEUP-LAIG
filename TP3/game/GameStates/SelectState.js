@@ -12,10 +12,6 @@ class SelectState extends GameState {
         if(id==100) this.gameOrchestrator.undo()
     }
 
-    animationEnd() {
-        //no game animations
-    }
-
     receivedReply(message) {
         console.log(message)
         if(message == 1){

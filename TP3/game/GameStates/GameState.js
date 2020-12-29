@@ -8,24 +8,13 @@ class GameState {
         this.gameOrchestrator = gameOrchestrator;
     }
 
-    /**
-     * @abstract
-    */
-    pickTile(tile) {
-        throw new Error("Abstract GameState method pickTile()");
-    }
+    pickTile(tile) {}
 
-    /**
-     * @abstract
-    */
-    animationEnd() {
-        throw new Error("Abstract GameState method animationEnd()");
-    }
+    pickObj(id) {}
 
-    /**
-     * @abstract
-    */
-    receivedReply(message) {
-        throw new Error("Abstract GameState method receivedReply()");
-    }
+    animationEnd() {}
+
+    cameraEnd(){}
+
+    receivedReply(message) {}
 }
