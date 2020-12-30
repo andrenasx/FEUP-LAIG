@@ -6,7 +6,16 @@ class MyAuxiliarBoard extends CGFobject {
         this.y = 0; 
         this.z = 0.5;
 
-        this.tile = new MyPlane(scene, 5, 5);
+        this.cube = new MyCube(scene);
+
+        this.box = new CGFappearance(this.scene);
+        this.box.setShininess(1);
+        this.box.setEmission(0, 0, 0, 1);
+        this.box.setAmbient(1, 1, 1, 1);
+        this.box.setDiffuse(0.8, 0.8, 0.8, 1),
+        this.box.setSpecular(0.3, 0.3, 0.3, 1);
+        this.box.loadTexture("./scenes/images/white_wood.jpg");
+        this.box.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
         this.init()
     }
@@ -16,12 +25,39 @@ class MyAuxiliarBoard extends CGFobject {
     }
 
     display(){
-        for(let i=0; i<this.size; i++) {
-            this.scene.pushMatrix();
-            this.scene.translate(this.x,0,this.z+i)
-            this.tile.display();
-            this.scene.popMatrix();
-        }
+        this.box.apply();
+        this.scene.pushMatrix();
+        this.scene.translate(-2, -0.15, this.size/2);
+        this.scene.scale(1, 0.3, this.size);
+        this.cube.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(-2, -0.15, -0.05)
+        this.scene.scale(1.2, 0.6, 0.1);
+        this.cube.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(-2, -0.15, this.size)
+        this.scene.scale(1.2, 0.6, 0.1);
+        this.cube.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(-1.45, -0.15, this.size/2);
+        this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.scene.scale(0.6, 0.1, this.size);
+        this.cube.display();
+        this.scene.popMatrix();
+
+        this.scene.pushMatrix();
+        this.scene.translate(-2.55, -0.15, this.size/2);
+        this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.scene.scale(0.6, 0.1, this.size);
+        this.cube.display();
+        this.scene.popMatrix();
+
 
         this.displayPieces()
     }

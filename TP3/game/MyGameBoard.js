@@ -4,7 +4,7 @@ class MyGameBoard extends CGFobject {
         this.size = size;
 
         this.redMaterial = new CGFappearance(this.scene);
-        this.redMaterial.setShininess(5);
+        this.redMaterial.setShininess(1);
         this.redMaterial.setEmission(0, 0, 0, 1);
         this.redMaterial.setAmbient(0.1, 0, 0, 1);
         this.redMaterial.setDiffuse(1, 0, 0, 1),
@@ -17,12 +17,14 @@ class MyGameBoard extends CGFobject {
         this.blueMaterial.setDiffuse(0, 0, 1, 1),
         this.blueMaterial.setSpecular(0, 0, 0, 1);
 
-        this.greyMaterial = new CGFappearance(this.scene);
-        this.greyMaterial.setShininess(5);
-        this.greyMaterial.setEmission(0, 0, 0, 1);
-        this.greyMaterial.setAmbient(0.34, 0.35, 0.36, 1);
-        this.greyMaterial.setDiffuse(0.34, 0.35, 0.36, 1),
-        this.greyMaterial.setSpecular(0, 0, 0, 1);
+        this.wood = new CGFappearance(this.scene);
+        this.wood.setShininess(1);
+        this.wood.setEmission(0, 0, 0, 1);
+        this.wood.setAmbient(1, 1, 1, 1);
+        this.wood.setDiffuse(0.8, 0.8, 0.8, 1),
+        this.wood.setSpecular(0.3, 0.3, 0.3, 1);
+        this.wood.loadTexture("./scenes/images/white_wood.jpg");
+        this.wood.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
         this.base = new MyCube(this.scene);
 
@@ -134,9 +136,9 @@ class MyGameBoard extends CGFobject {
         }
 
         this.scene.pushMatrix();
+        this.wood.apply();
         this.scene.translate(this.size/2, -0.155, this.size/2);
         this.scene.scale(this.size + 1.5, 0.3, this.size + 1.5);
-        this.greyMaterial.apply();
         this.base.display();
         this.scene.popMatrix();
 
