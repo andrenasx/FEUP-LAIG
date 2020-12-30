@@ -1,6 +1,10 @@
 class MyGameSequence {
     constructor(gameOrchestrator){
         this.gameOrchestrator = gameOrchestrator;
+        this.init();
+    }
+
+    init(){
         this.sequence = [];
         this.current_move = 0;
         this.lastmoveType = 2;

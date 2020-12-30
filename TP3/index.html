@@ -13,10 +13,10 @@
   <script src="main.js"></script>
   <div id="panel">
     <h1>TALPA</h1>
-    <div>Current Player: <span id="player"> Red</span></div>
+    <div>Current Player: <span id="player">Red</span></div>
     <div>Red Player Score: <span id="red-score">0</span></div>
     <div>Blue Player Score: <span id="blue-score">0</span></div>
-    <div id="time"><span>Time: </span></div>
+    <div><span id="time"></span></div>
   </div>
   <div class="wrapper">
     <div id="menu">
@@ -64,12 +64,12 @@
         <h3>Board Size</h3>
         <input type="radio" id="size-1" name="size" value="6" >
         <label for="male">6 x 6</label><br>
-        <input type="radio" id="size-2" name="size" value="8">
+        <input type="radio" id="size-2" name="size" value="8" checked="">
         <label for="female">8 x 8</label><br>
       </section>
       <section id="time-play">
         <h3>Time for each move</h3>
-        <input type="range" min="15" max="30" value="15" class="slider" id="myRange">
+        <input type="range" min="15" max="60" value="30" class="slider" id="myRange">
         <p>Value: <span id="demo"></span></p>
       </section>
       <script>
@@ -79,6 +79,7 @@
         
         slider.oninput = function() {
           output.innerHTML = this.value;
+          slider.value = this.value;
         }
       </script>
       <div>

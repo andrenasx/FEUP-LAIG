@@ -20,6 +20,7 @@ class MoveState extends GameState {
             //selecionou uma peça de destino correta, faz o movimento
             this.gameOrchestrator.performMove(this.tile);
             this.gameOrchestrator.changeState(new CheckGameOverState(this.gameOrchestrator));
+            this.gameOrchestrator.resetTimer();
         }
         else if(message == 0) {
             //treme peça porque não a pode jogar

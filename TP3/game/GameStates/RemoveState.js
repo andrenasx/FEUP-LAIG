@@ -1,6 +1,7 @@
 class RemoveState extends GameState {
     constructor(gameOrchestrator){
         super(gameOrchestrator);
+        gameOrchestrator.startTimer();
     }
 
     pickTile(tile) {
@@ -14,6 +15,7 @@ class RemoveState extends GameState {
             //seleciona peça e remove
             this.gameOrchestrator.performRemove(this.tile);
             this.gameOrchestrator.changeState(new CheckGameOverState(this.gameOrchestrator));
+            this.gameOrchestrator.resetTimer();
         }
         else if(message == 0) {
             //treme peça porque não a pode jogar

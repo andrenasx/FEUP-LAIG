@@ -6,9 +6,13 @@ class MyAuxiliarBoard extends CGFobject {
         this.y = 0; 
         this.z = 0.5;
 
-        this.pieces = [];
-
         this.tile = new MyPlane(scene, 5, 5);
+
+        this.init()
+    }
+
+    init(){
+        this.pieces = [];
     }
 
     display(){

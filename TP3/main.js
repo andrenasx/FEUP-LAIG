@@ -16,58 +16,62 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.j
                 './keyframes/MyAnimation.js', './keyframes/MyKeyframeAnimation.js', 
                 './spritesheets/MySpritesheet.js', './spritesheets/MySpriteText.js', './spritesheets/MySpriteAnimation.js', 
                 './game/MyPiece.js', './game/MyTile.js', './game/MyGameBoard.js', './game/MyAuxiliarBoard.js', './game/MyGameOrchestrator.js', './game/MyGameSequence.js', './game/MyAnimator.js', './game/MyGameMove.js', './game/MyMenu.js', './game/MyButton.js',
-                './game/GameStates/GameState.js', './game/GameStates/CheckMovesState.js', './game/GameStates/SelectState.js', './game/GameStates/MoveState.js', './game/GameStates/RemoveState.js', './game/GameStates/CheckGameOverState.js', './game/GameStates/ChangePlayerState.js', './game/GameStates/GameOverState.js', './game/GameStates/BotState.js',
+                './game/GameStates/GameState.js', './game/GameStates/CheckMovesState.js', './game/GameStates/SelectState.js', './game/GameStates/MoveState.js', './game/GameStates/RemoveState.js', './game/GameStates/CheckGameOverState.js', './game/GameStates/ChangePlayerState.js', './game/GameStates/InitialState.js', './game/GameStates/BotState.js',
                 './connection_prolog/MyPrologInterface.js',
 
 main=function()
 {   
 
-    timeSelected = document.getElementById("myRange").value;
-  
-  
-    const size = document.querySelector('#board-size');
-    size.addEventListener('click', () => {
-      selected = size.querySelector('input[value="6"]').checked ? "6" 
-      : size.querySelector('input[value="8"]').checked ? "8" 
-      : null
+  let timeSelected = 30;
+  const time = document.getElementById('myRange');
+  time.addEventListener('change', function(e)  {
+    timeSelected = e.target.value
+  });
+
+  let selected = 8;
+  const size = document.querySelector('#board-size');
+  size.addEventListener('click', () => {
+    selected = size.querySelector('input[value="6"]').checked ? "6" 
+    : size.querySelector('input[value="8"]').checked ? "8" 
+    : null
+  });
+
+  document.querySelectorAll('article').forEach((player) => addDropdown(player));
+  document.querySelector('div > input').addEventListener('click', () => {
+    let error = false;
+    const values = ['player-1', 'player-2'].map((player) => {
+      const playerArticle = document.querySelector(`#${player}`);
+      let playerType = playerArticle.querySelector('input[value="human"]').checked ? "Player" 
+      : playerArticle.querySelector('input[value="robot"]').checked ? playerArticle.querySelector('select').value
+      : null;
+      if(!playerType){
+        error = true;
+        return null;
+      }
+      return {
+        type: playerType
+      }
     });
 
-    document.querySelectorAll('article').forEach((player) => addDropdown(player));
-    document.querySelector('div > input').addEventListener('click', () => {
-        let error = false;
-        const values = ['player-1', 'player-2'].map((player) => {
-          const playerArticle = document.querySelector(`#${player}`);
-          let playerType = playerArticle.querySelector('input[value="human"]').checked ? "Player" 
-          : playerArticle.querySelector('input[value="robot"]').checked ? playerArticle.querySelector('select').value
-          : null;
-          if(!playerType){
-            error = true;
-            return null;
-          }
-          return {
-            type: playerType
-          }
-        });
+    if(!error && selected){
+      document.querySelector('.wrapper').style.display = "none";
+      document.querySelector('#panel').style.display = "block";
+      // Standard application, scene and interface setup
+      var app = new CGFapplication(document.body);
+      var myInterface = new MyInterface();
+      var myScene = new XMLscene(myInterface, values[0].type, values[1].type, parseInt(selected), parseInt(timeSelected));
 
-        if(!error && selected){
-          document.querySelector('.wrapper').style.display = "none";
-          document.querySelector('#panel').style.display = "block";
-            // Standard application, scene and interface setup
-            var app = new CGFapplication(document.body);
-            var myInterface = new MyInterface();
-            var myScene = new XMLscene(myInterface, values[0].type, values[1].type, parseInt(selected), parseInt(timeSelected));
+      app.init();
 
-            app.init();
+      app.setScene(myScene);
+      app.setInterface(myInterface);
 
-            app.setScene(myScene);
-            app.setInterface(myInterface);
+      myInterface.setActiveCamera(myScene.camera);
 
-            myInterface.setActiveCamera(myScene.camera);
-
-            // start
-            app.run();        
-          }
-      });
+      // start
+      app.run();
+    }
+  });
 }
 
 ]);

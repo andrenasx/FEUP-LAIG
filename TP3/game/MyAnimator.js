@@ -1,6 +1,10 @@
 class MyAnimator {
     constructor(gameSequence){
         this.gameSequence = gameSequence;
+        this.init();
+    }
+
+    init(){
         this.frame = 0;
     }
 

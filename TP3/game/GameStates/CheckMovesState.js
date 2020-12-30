@@ -1,7 +1,7 @@
 class CheckMovesState extends GameState {
     constructor(gameOrchestrator){
         super(gameOrchestrator);
-        this.gameOrchestrator.prolog.hasAnyPossibleMoves();
+        gameOrchestrator.prolog.hasAnyPossibleMoves();
     }
 
     receivedReply(message) {
@@ -14,5 +14,7 @@ class CheckMovesState extends GameState {
             console.log("No moves");
             this.gameOrchestrator.changeState(new RemoveState(this.gameOrchestrator));
         }
+        
+        this.gameOrchestrator.startTimer();
     }
 }
