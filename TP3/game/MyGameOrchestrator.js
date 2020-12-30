@@ -56,12 +56,12 @@ class MyGameOrchestrator {
 
         this.scene.pushMatrix();
         if(this.size == 8){
-            this.scene.translate(5.1, 0.86, 2.9);
+            this.scene.translate(5.1, 0.857, 2.9);
             this.scene.scale(0.1, 0.1, 0.1);
             this.scene.rotate(Math.PI/2, 0, 1, 0);
         }
         else if(this.size == 6) {
-            this.scene.translate(5.2, 0.86, 2.8);
+            this.scene.translate(5.2, 0.857, 2.8);
             this.scene.scale(0.1, 0.1, 0.1);
             this.scene.rotate(Math.PI/2, 0, 1, 0);
             
