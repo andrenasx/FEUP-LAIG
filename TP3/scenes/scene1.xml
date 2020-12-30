@@ -3,10 +3,15 @@
         <reference length="2" />
         <root id="root" />
     </initials>
-    <views default="Top">
-        <perspective id="Top" near="0.1" far="300" angle="30">
-            <from x="4" y="10" z="16" />
-            <to x="4" y="0" z="4" />
+    <views default="Animated">
+        <perspective id="Animated" near="0.1" far="100" angle="45">
+            <from x="3.8" y="1.9" z="2.6" />
+            <to x="5.5" y="0.89" z="2.5" />
+        </perspective>
+        
+        <perspective id="Front" near="0.1" far="150" angle="25">
+            <from x="5.5" y="2.5" z="6" />
+            <to x="5.5" y="1" z="3" />
         </perspective>
     </views>
 
@@ -45,6 +50,9 @@
     <textures>
         <texture id="carpet_texture" path="./scenes/images/carpet.jpg" />
         <texture id="table_wood_texture" path="./scenes/images/table_wood.jpg" />
+        <texture id="floor_texture" path="./scenes/images/floor.jpg" />
+        <texture id="blue_pillow_texture" path="./scenes/images/blue_pillow.jpg" />
+        <texture id="metal_texture" path="./scenes/images/metal.jpg" />
     </textures>
 
     <spritesheets>
@@ -75,6 +83,22 @@
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
+        <material id="wall_material">
+            <shininess value="1" />
+            <ambient r="0.03" g="0.3" b="0.43" a="1.0" />
+            <diffuse r="0.03" g="0.3" b="0.43" a="1.0" />
+            <specular r="0" g="0" b="0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="black_material">
+            <shininess value="1" />
+            <ambient r="0.04" g="0.04" b="0.04" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <specular r="0.04" g="0.04" b="0.04" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
         
     </materials>
 
@@ -94,7 +118,7 @@
 
             <descendants>
                 <noderef id="table" />
-                <noderef id="floor" />
+                <noderef id="walls" />
                 <noderef id="bench_left" />
                 <noderef id="bench_right" />
             </descendants>
@@ -241,7 +265,7 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0.8" z="0" />
+                <translation x="0" y="0.775" z="0" />
                 <scale sx="1.5" sy="0.1" sz="2" />
             </transformations>
 
@@ -277,7 +301,7 @@
 
             <transformations>
                 <translation x="0.45" y="0.4" z="0.8" />
-                <scale sx="0.2" sy="0.75" sz="0.2" />
+                <scale sx="0.2" sy="0.655" sz="0.2" />
             </transformations>
 
             <descendants>
@@ -349,9 +373,62 @@
                 <noderef id="cube" />
             </descendants>
         </node>
+        
+        <!--Walls-->
+        <node id="walls">
+            <material id="null" />
 
-        <!--Floor-->
+            <texture id="null">
+                <amplification afs="1.0" aft="1.0" />
+            </texture>
+
+            <transformations>
+            </transformations>
+
+            <descendants>
+                <noderef id="floor" />
+                <noderef id="wall_back" />
+                <noderef id="wall_left" />
+                <noderef id="wall_right" />
+            </descendants>
+        </node>
+
         <node id="floor">
+            <material id="null" />
+
+            <texture id="floor_texture">
+                <amplification afs="2" aft="3" />
+            </texture>
+
+            <transformations>
+               <translation x="0" y="0" z="6" />
+                <rotation axis="x" angle="-90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="rectangle" x1="0.0" y1="0.0" x2="8" y2="6"/>
+            </descendants>
+        </node>
+
+        <node id="wall_back">
+            <material id="wall_material" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="4" y="1.5" z="0" />
+                <scale sx="8" sy="3" sz="1" />
+                <rotation axis="x" angle="90" />
+            </transformations>
+
+            <descendants>
+                <leaf type="plane" npartsU="10" npartsV="10" />
+            </descendants>
+        </node>
+
+        <node id="wall_left">
             <material id="null" />
 
             <texture id="null">
@@ -360,11 +437,29 @@
 
             <transformations>
                 <translation x="0" y="0" z="6" />
-                <rotation axis="x" angle="-90" />
+                <scale sx="1" sy="1" sz="0.75" />
+                <rotation axis="y" angle="90" />
             </transformations>
 
             <descendants>
-                <leaf type="rectangle" x1="0.0" y1="0.0" x2="8" y2="6"/>
+                <noderef id="wall_back" />
+            </descendants>
+        </node>
+
+        <node id="wall_right">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="8" y="3" z="0" />
+                <rotation axis="z" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="wall_left" />
             </descendants>
         </node>
 
@@ -377,7 +472,7 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0.7" z="0" />
+                <translation x="0" y="0.645" z="0" />
             </transformations>
 
             <descendants>
@@ -391,7 +486,7 @@
         <node id="bench_seat">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="blue_pillow_texture">
                 <amplification afs="1" aft="1" />
             </texture>
 
@@ -405,7 +500,7 @@
         </node>
 
         <node id="bench_support">
-            <material id="null" />
+            <material id="black_material" />
 
             <texture id="null">
                 <amplification afs="1" aft="1" />
@@ -416,19 +511,19 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="0.6" topRadius="0.04" bottomRadius="0.04" stacks="20" slices="20" />
+                <leaf type="cylinder" height="0.55" topRadius="0.03" bottomRadius="0.03" stacks="20" slices="20" />
             </descendants>
         </node>
 
         <node id="bench_feet_support">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="metal_texture">
                 <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
-                <translation x="0.075" y="-0.4" z="0" />
+                <translation x="0.079" y="-0.4" z="0" />
                 <rotation axis="x" angle="90" />
             </transformations>
 
@@ -440,12 +535,12 @@
         <node id="bench_base">
             <material id="null" />
 
-            <texture id="null">
+            <texture id="metal_texture">
                 <amplification afs="1" aft="1" />
             </texture>
 
             <transformations>
-                <translation x="0" y="-0.6" z="0" />
+                <translation x="0" y="-0.55" z="0" />
                 <rotation axis="x" angle="90" />
             </transformations>
 

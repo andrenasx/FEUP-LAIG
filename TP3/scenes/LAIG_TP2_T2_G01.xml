@@ -3,32 +3,16 @@
         <reference length="2" />
         <root id="root" />
     </initials>
-    <views default="perspectiveFront">
-        <perspective id="perspectiveFront" near="0.1" far="300" angle="25">
-            <from x="7" y="10" z="25" />
-            <to x="7" y="1" z="5" />
+    <views default="Animated">
+        <perspective id="Animated" near="0.1" far="100" angle="45">
+            <from x="3.8" y="1.9" z="2.6" />
+            <to x="5.5" y="0.89" z="2.5" />
         </perspective>
-
-        <perspective id="perspectiveSide" near="0.1" far="300" angle="30">
-            <from x="-10" y="7" z="5" />
-            <to x="8" y="0" z="5" />
+        
+        <perspective id="Front" near="0.1" far="150" angle="25">
+            <from x="5.5" y="2.5" z="6" />
+            <to x="5.5" y="1" z="3" />
         </perspective>
-
-        <perspective id="perspectiveBack" near="0.1" far="300" angle="20">
-            <from x="7" y="5" z="-15" />
-            <to x="7" y="1" z="2" />
-        </perspective>
-
-        <perspective id="perspectiveTablet" near="0.1" far="300" angle="20">
-            <from x="8" y="7" z="8" />
-            <to x="5" y="1" z="2" />
-        </perspective>
-
-        <ortho id="orthoTop" near="0.1" far="300" left="-10" right="10" top="10" bottom="-10">
-            <from x="7" y="10" z="5" />
-            <to x="6" y="5" z="5" />
-            <up x="0" y="1" z="0" /><!-- optional, default 0,1,0 -->
-        </ortho>
     </views>
 
     <illumination>
