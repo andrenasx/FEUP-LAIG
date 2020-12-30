@@ -5,7 +5,7 @@
     </initials>
     <views default="Animated">
         <perspective id="Animated" near="0.1" far="100" angle="45">
-            <from x="3.8" y="1.9" z="2.6" />
+            <from x="3.8" y="1.9" z="2.5" />
             <to x="5.5" y="0.89" z="2.5" />
         </perspective>
         
@@ -45,14 +45,6 @@
             <diffuse r="0.4" g="0.4" b="0.4" a="1.0" />
             <specular r="0.8" g="0.8" b="0.8" a="1.0" />
         </light>
-
-        <light id="sunset">
-            <enable value="0" />
-            <position x="17" y="3" z="5" w="1.0" />
-            <ambient r="0.4" g="0.3" b="0.0" a="1.0" />
-            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
-            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
-        </light>
     </lights>
 
 
@@ -74,10 +66,25 @@
     </textures>
 
     <spritesheets>
-        <spritesheet id="game_anim" path="./spritesheets/images/game.png" sizeM="9" sizeN="6" />
     </spritesheets>
 
     <materials>
+        <material id="red_material">
+            <shininess value="1" />
+            <ambient r="0.3" g="0" b="0" a="1.0" />
+            <diffuse r="1" g="0" b="0" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="blue_material">
+            <shininess value="1" />
+            <ambient r="0" g="0" b="0.3" a="1.0" />
+            <diffuse r="0" g="0" b="1" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
         <material id="white_diffuse_material">
             <shininess value="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
@@ -144,189 +151,6 @@
     </materials>
 
     <animations>
-        <animation id="swing_animation">
-            <keyframe instant = "0" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "3" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="18" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "9" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="-30" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "12" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "14" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="15" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "16" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "18" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="-10" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "20" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-        </animation>
-
-        <animation id="floater_animation">
-            <keyframe instant = "0" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="12" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "5" >
-                <translation x="-0.08" y="0" z="0.025" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="15" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "6.5" >
-                <translation x="-0.3" y="0" z="0.115" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="28" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "7" >
-                <translation x="-0.55" y="0" z="0.3" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="45" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "7.5" >
-                <translation x="-0.8" y="0" z="0.6" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="50" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "8" >
-                <translation x="-1.2" y="0" z="1.09" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="45" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "8.5" >
-                <translation x="-2" y="0" z="1.55" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="15" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "9" >
-                <translation x="-3" y="0" z="1.75" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "10" >
-                <translation x="-4.65" y="0" z="1.75" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="60" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "11" >
-                <translation x="-6" y="0" z="1.75" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="130" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "12" >
-                <translation x="-7" y="0" z="1.75" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="175" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "13" >
-                <translation x="-7.5" y="0" z="1.75" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="195" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-        </animation>
-
-        <animation id="parasol_sides_animation">
-            <keyframe instant = "0" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="30" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="0.58" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "1" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="30" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="0.58" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "2" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="20" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="0.75" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "3" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="10" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="0.90" sy="1.0" sz="1.0" />
-            </keyframe>
-            <keyframe instant = "4" >
-                <translation x="0" y="0" z="0" />
-                <rotation axis="x" angle="0" />
-                <rotation axis="y" angle="0" />
-                <rotation axis="z" angle="0" />
-                <scale sx="1.0" sy="1.0" sz="1.0" />
-            </keyframe>
-        </animation>
     </animations>
 
     <nodes>     
@@ -677,8 +501,6 @@
                 <rotation axis="x" angle="90"/>
             </transformations>
 
-            <animationref id="floater_animation" />
-
             <descendants>
                 <leaf type="torus" inner="0.08" outer="0.3" slices="20" loops="50"/>
             </descendants>
@@ -1027,8 +849,6 @@
                 <rotation axis="x" angle="30" />
             </transformations>
 
-            <animationref id="parasol_sides_animation" />
-
             <descendants>
                 <leaf type="triangle" x1="-0.575" y1="-1.6" x2="0.575" y2="-1.6" x3="0" y3="0"/>         
             </descendants>
@@ -1322,8 +1142,6 @@
             <transformations>
                 <translation x="1.25" y="2.30" z="0" />
             </transformations>
-
-            <animationref id="swing_animation" />
 
             <descendants>
                 <noderef id="swing_seat_tire" />
@@ -1959,4 +1777,9 @@
             </descendants>
         </node>
     </nodes>
+
+    <game>
+        <piecetype id="player1" geometry="cylinder" material="red_material" />
+        <piecetype id="player-1" geometry="cylinder" material="blue_material" />
+    </game>
 </lsf>

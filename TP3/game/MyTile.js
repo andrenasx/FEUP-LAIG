@@ -40,4 +40,8 @@ class MyTile extends CGFobject {
     getPosition(){
         return {x:this.column+0.5, y:0, z:this.row+0.5}
     }
+
+    updateTheme(game){
+        if(this.piece) this.piece.updateTheme(game)
+    }
 }
