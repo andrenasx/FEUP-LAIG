@@ -68,72 +68,41 @@ class MyGameBoard extends CGFobject {
             }
         }
 
-        if(this.size == 8){
-            let side = new MyTrapeze(this.scene, 8, 9, 0.5);
-            //top
-            this.scene.pushMatrix();
-            this.scene.translate(-0.5,0,-0.5);
-            this.scene.rotate(Math.PI/2, 1, 0, 0);
-            this.blueMaterial.apply();
-            side.display();
-            this.scene.popMatrix();
-            //right
-            this.scene.pushMatrix();
-            this.scene.translate(8.5,0,-0.5);
-            this.scene.rotate(Math.PI/2, 0, 0, 1);
-            this.scene.rotate(-Math.PI/2, 0, 1, 0);
-            this.redMaterial.apply();
-            side.display();
-            this.scene.popMatrix();
-            //bottom
-            this.scene.pushMatrix();
-            this.scene.translate(-0.5,0,8.5);
-            this.scene.rotate(-Math.PI/2, 1, 0, 0);
-            this.blueMaterial.apply();
-            side.display();
-            this.scene.popMatrix();
-            //left
-            this.scene.pushMatrix();
-            this.scene.translate(-0.5,0,-0.5);
-            this.scene.rotate(-Math.PI/2, 0, 1, 0);
-            this.scene.rotate(-Math.PI/2, 1, 0, 0);
-            this.redMaterial.apply();
-            side.display();
-            this.scene.popMatrix();
-            }
-        else if (this.size == 6) {
-            let side = new MyTrapeze(this.scene, 6, 7, 0.5);
-            //top
-            this.scene.pushMatrix();
-            this.scene.translate(-0.5,0,-0.5);
-            this.scene.rotate(Math.PI/2, 1, 0, 0);
-            this.blueMaterial.apply();
-            side.display();
-            this.scene.popMatrix();
-            //right
-            this.scene.pushMatrix();
-            this.scene.translate(6.5, 0, -0.5);
-            this.scene.rotate(Math.PI/2, 0, 0, 1);
-            this.scene.rotate(-Math.PI/2, 0, 1, 0);
-            this.redMaterial.apply();
-            side.display();
-            this.scene.popMatrix();
-            //bottom
-            this.scene.pushMatrix();
-            this.scene.translate(-0.5, 0, 6.5);
-            this.scene.rotate(-Math.PI/2, 1, 0, 0);
-            this.blueMaterial.apply();
-            side.display();
-            this.scene.popMatrix();
-            //left
-            this.scene.pushMatrix();
-            this.scene.translate(-0.5,0,-0.5);
-            this.scene.rotate(-Math.PI/2, 0, 1, 0);
-            this.scene.rotate(-Math.PI/2, 1, 0, 0);
-            this.redMaterial.apply();
-            side.display();
-            this.scene.popMatrix();
-        }
+        let side = new MyTrapeze(this.scene, this.size, this.size + 1, 0.5);
+        
+        //top
+        this.scene.pushMatrix();
+        this.scene.translate(-0.5,0,-0.5);
+        this.scene.rotate(Math.PI/2, 1, 0, 0);
+        this.blueMaterial.apply();
+        side.display();
+        this.scene.popMatrix();
+        
+        //right
+        this.scene.pushMatrix();
+        this.scene.translate(this.size+0.5,0,-0.5);
+        this.scene.rotate(Math.PI/2, 0, 0, 1);
+        this.scene.rotate(-Math.PI/2, 0, 1, 0);
+        this.redMaterial.apply();
+        side.display();
+        this.scene.popMatrix();
+        
+        //bottom
+        this.scene.pushMatrix();
+        this.scene.translate(-0.5,0,this.size+0.5);
+        this.scene.rotate(-Math.PI/2, 1, 0, 0);
+        this.blueMaterial.apply();
+        side.display();
+        this.scene.popMatrix();
+        
+        //left
+        this.scene.pushMatrix();
+        this.scene.translate(-0.5,0,-0.5);
+        this.scene.rotate(-Math.PI/2, 0, 1, 0);
+        this.scene.rotate(-Math.PI/2, 1, 0, 0);
+        this.redMaterial.apply();
+        side.display();
+        this.scene.popMatrix();
 
         this.scene.pushMatrix();
         this.wood.apply();
