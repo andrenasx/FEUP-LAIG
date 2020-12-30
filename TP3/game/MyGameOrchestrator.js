@@ -142,4 +142,8 @@ class MyGameOrchestrator {
     receivedReply(msg){
         this.state.receivedReply(msg);
     }
+
+    updateTheme(game){
+        this.gameboard.updateTheme(game);
+    }
 }

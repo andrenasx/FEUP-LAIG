@@ -5,7 +5,7 @@
     </initials>
     <views default="Animated">
         <perspective id="Animated" near="0.1" far="100" angle="45">
-            <from x="3.8" y="1.9" z="2.6" />
+            <from x="3.8" y="1.9" z="2.5" />
             <to x="5.5" y="0.89" z="2.5" />
         </perspective>
         
@@ -71,7 +71,7 @@
             <shininess value="1" />
             <ambient r="0.3" g="0" b="0" a="1.0" />
             <diffuse r="1" g="0" b="0" a="1.0" />
-            <specular r="0" g="0" b="0" a="1.0" />
+            <specular r="0.4" g="0.1" b="0.1" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
@@ -79,7 +79,7 @@
             <shininess value="1" />
             <ambient r="0" g="0" b="0.3" a="1.0" />
             <diffuse r="0" g="0" b="1" a="1.0" />
-            <specular r="0" g="0" b="0" a="1.0" />
+            <specular r="0.1" g="0.1" b="0.4" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
@@ -581,6 +581,10 @@
                 <noderef id="bench_left" />
             </descendants>
         </node>
-
     </nodes>
+
+    <game>
+        <piecetype id="player1" geometry="pyramid" material="red_material" />
+        <piecetype id="player-1" geometry="cone" material="blue_material" />
+    </game>
 </lsf>

@@ -157,4 +157,12 @@ class MyGameBoard extends CGFobject {
     getTile(row, column){
         return this.board[row][column];
     }
+
+    updateTheme(game){
+        for(let row=0; row<this.size; row++){
+            for(let column=0; column<this.size; column++){
+                this.board[row][column].updateTheme(game);
+            }
+        }
+    }
 }

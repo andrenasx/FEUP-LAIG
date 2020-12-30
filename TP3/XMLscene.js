@@ -161,6 +161,7 @@ class XMLscene extends CGFscene {
         this.getCurrentTheme().views[this.getCurrentTheme().viewsDefaultID] = new MyAnimatedCamera(this.gameOrchestrator, default_camera.fov, default_camera.near, default_camera.far, default_camera.position, default_camera.target);
         this.updateCamera();
         this.initLights();
+        this.gameOrchestrator.updateTheme(this.getCurrentTheme().game);
     }
 
     update(t){
@@ -208,6 +209,7 @@ class XMLscene extends CGFscene {
             this.getCurrentTheme().views[this.getCurrentTheme().viewsDefaultID] = new MyAnimatedCamera(this.gameOrchestrator, default_camera.fov, default_camera.near, default_camera.far, default_camera.position, default_camera.target);
             this.initLights();
             this.updateCamera();
+            this.gameOrchestrator.updateTheme(this.getCurrentTheme().game);
     
             this.setUpdatePeriod(50);
             this.sceneInited = true;

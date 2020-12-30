@@ -225,6 +225,16 @@ class MySceneGraph {
             if ((error = this.parseNodes(nodes[index])) != null)
                 return error;
         }
+
+        // <game>
+        if ((index = nodeNames.indexOf("game")) == -1)
+            return "tag <game> missing";
+        else {
+            //Parse game block
+            if ((error = this.parseGame(nodes[index])) != null)
+                return error;
+        }
+
         this.log("all parsed");
     }
 
@@ -1415,6 +1425,65 @@ class MySceneGraph {
         }
 
         this.log("Parsed Nodes.");
+        return null;
+    }
+
+    parseGame(gameNode){
+        const children = gameNode.children;
+        this.game = [];
+
+        // Checks if there are child nodes declared
+        if(children.length === 0) {
+            this.onXMLMinorError("No game related defined!");
+            return null;
+        }
+
+        for (let grandChildren of children) {
+            if (grandChildren.nodeName == "piecetype") {
+                const id = this.reader.getString(grandChildren, "id");
+
+                const geometry = this.reader.getString(grandChildren, "geometry");
+                let obj = null;
+                switch (geometry){
+                    case ("cylinder"):
+                        obj = new MyCylinder(this.scene, 0.2, 0.45, 0.45, 5, 30);
+                        break;
+                    case ("pyramid"):
+                        obj = new MyPyramid(this.scene, 0.6, 0.4, 0.6, 4, 10);
+                        break;
+                    case ("cone"):
+                        obj = new MyCone(this.scene, 0.45, 0.4, 0.45, 30, 10);
+                        break;
+                    default:
+                        break;
+                }
+
+                // Get index on XML
+                let materialID = null;
+                // Parse material if defined
+                materialID = this.reader.getString(grandChildren, "material");
+
+                if (materialID == null) {
+                    materialID = "error";
+                }
+
+                // Check if parsed materialID is in materials map
+                if (materialID !== "null") {
+                    if (this.materials[materialID] == null) {
+                        materialID= "error";
+                    }
+                }
+
+                let piece = {
+                    geometry: obj,
+                    material: this.materials[materialID]
+                }
+
+                this.game[id] = piece;
+            }
+        }
+
+        this.log("Parsed Game.");
         return null;
     }
 
