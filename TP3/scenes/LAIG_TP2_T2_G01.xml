@@ -547,12 +547,12 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0.8" z="0" />
+                <translation x="0" y="0.83" z="0" />
                 <rotation axis="x" angle="90"/>
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="0.1" topRadius="0.8" bottomRadius="0.8" stacks="10" slices="70"/>
+                <leaf type="cylinder" height="0.1" topRadius="0.85" bottomRadius="0.85" stacks="10" slices="70"/>
             </descendants>
 
         </node>
@@ -565,12 +565,12 @@
             </texture>
 
             <transformations>
-                <translation x="0" y="0.75" z="0" />
+                <translation x="0" y="0.76" z="0" />
                 <rotation axis="x" angle="90"/>
             </transformations>
 
             <descendants>
-                <leaf type="torus" inner="0.08" outer="0.75" slices="20" loops="50"/>
+                <leaf type="torus" inner="0.08" outer="0.89" slices="20" loops="50"/>
             </descendants>
 
         </node>
@@ -606,7 +606,7 @@
             </transformations>
 
             <descendants>
-                <leaf type="cylinder" height="0.7" topRadius="0.1" bottomRadius="0.08" stacks="10" slices="20"/>
+                <leaf type="cylinder" height="0.75" topRadius="0.1" bottomRadius="0.08" stacks="10" slices="20"/>
             </descendants>
         </node>
 
@@ -769,7 +769,7 @@
             </texture>
 
             <transformations>
-                <translation x="4" y="0.2" z="2" />
+                <translation x="4" y="0.23" z="2" />
                 <rotation axis="y" angle="50" />
             </transformations>
 
@@ -786,7 +786,7 @@
             </texture>
 
             <transformations>
-                <translation x="7" y="0.2" z="2" />
+                <translation x="7" y="0.23" z="2" />
                 <rotation axis="y" angle="-50" />
             </transformations>
 
@@ -1503,6 +1503,7 @@
             </texture>
 
             <transformations>
+                <translation x="0" y="0.02" z="0" />
                 <rotation axis="x" angle="-90" />
             </transformations>
 
