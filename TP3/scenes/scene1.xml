@@ -390,6 +390,7 @@
                 <noderef id="wall_back" />
                 <noderef id="wall_left" />
                 <noderef id="wall_right" />
+                <noderef id="wall_front" />
             </descendants>
         </node>
 
@@ -460,6 +461,23 @@
 
             <descendants>
                 <noderef id="wall_left" />
+            </descendants>
+        </node>
+
+        <node id="wall_front">
+            <material id="null" />
+
+            <texture id="null">
+                <amplification afs="1" aft="1" />
+            </texture>
+
+            <transformations>
+                <translation x="0" y="3" z="6" />
+                <rotation axis="x" angle="180" />
+            </transformations>
+
+            <descendants>
+                <noderef id="wall_back" />
             </descendants>
         </node>
 
