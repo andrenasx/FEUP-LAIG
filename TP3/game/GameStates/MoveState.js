@@ -9,6 +9,7 @@ class MoveState extends GameState {
     }
 
     pickObj(id) {
+        // Unlight selected piece when choosing another obj
         this.gameOrchestrator.selectedTile.piece.unlightPiece();
         if(id==100) this.gameOrchestrator.undo()
     }
@@ -17,13 +18,13 @@ class MoveState extends GameState {
         console.log(message);
         this.gameOrchestrator.selectedTile.piece.unlightPiece();
         if(message == 1){
-            //selecionou uma peça de destino correta, faz o movimento
+            // Valid destination piece, performe move and reset timer
             this.gameOrchestrator.performMove(this.tile);
             this.gameOrchestrator.changeState(new CheckGameOverState(this.gameOrchestrator));
             this.gameOrchestrator.resetTimer();
         }
         else if(message == 0) {
-            //treme peça porque não a pode jogar
+            // Not valid, select piece again
             this.gameOrchestrator.changeState(new SelectState(this.gameOrchestrator));
         }
     }

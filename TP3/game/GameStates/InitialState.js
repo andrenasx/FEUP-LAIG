@@ -5,9 +5,9 @@ class InitialState extends GameState {
 
     pickObj(id) {
         if(id==101){
-            console.log("here");
             this.gameOrchestrator.menu.available = false;
             this.gameOrchestrator.menu.toggleAvailability();
+            // Start game when play button is pressed
             this.gameOrchestrator.play();
             document.getElementById("time").innerHTML = "";
         }

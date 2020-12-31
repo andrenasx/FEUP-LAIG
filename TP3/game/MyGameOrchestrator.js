@@ -138,6 +138,8 @@ class MyGameOrchestrator {
             if(this.timer <= 0) {
                 this.updateScore(-this.currentPlayer);
                 this.countdown = false;
+                this.menu.available = true;
+                this.menu.toggleAvailability();
             }
             else {
                 document.getElementById("time").innerHTML = "Time: " + this.timer.toFixed(1);

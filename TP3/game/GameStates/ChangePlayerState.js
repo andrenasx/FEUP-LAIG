@@ -8,15 +8,20 @@ class ChangePlayerState extends GameState {
     }
 
     cameraEnd() {
-        this.gameOrchestrator.currentPlayer = -this.gameOrchestrator.currentPlayer;
+        this.gameOrchestrator.currentPlayer = -this.gameOrchestrator.currentPlayer; // Change current player
         this.updateCurrentPlayer();
+
+        // Switch player and enemy type
         [this.gameOrchestrator.playerType, this.gameOrchestrator.enemyType] = [this.gameOrchestrator.enemyType, this.gameOrchestrator.playerType];
+
+        // Change state according to current type
         if(this.gameOrchestrator.playerType=="Player")
             this.gameOrchestrator.changeState(new CheckMovesState(this.gameOrchestrator));
         else
             this.gameOrchestrator.changeState(new BotState(this.gameOrchestrator));
     }
 
+    // Change current player in html
     updateCurrentPlayer() {
         let p = this.gameOrchestrator.currentPlayer==1 ? 'Red' : 'Blue';
         document.getElementById('player').innerText = p;

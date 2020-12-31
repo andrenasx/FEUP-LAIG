@@ -4,6 +4,7 @@ class CheckGameOverState extends GameState {
     }
 
     animationEnd() {
+        // When piece animation is over check for gameover
         this.gameOrchestrator.prolog.gameOver();
     }
 
