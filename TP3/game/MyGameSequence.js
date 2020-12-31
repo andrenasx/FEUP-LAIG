@@ -75,4 +75,10 @@ class MyGameSequence {
         }
         this.current_move=0;
     }
+
+    updateTheme(gameProperties) {
+        for(let move of this.sequence){
+            move.piece.updateTheme(gameProperties);
+        }
+    }
 }

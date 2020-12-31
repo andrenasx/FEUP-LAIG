@@ -139,6 +139,7 @@ class MyGameOrchestrator {
     updateTheme(gameProperties){
         this.gameboard.updateTheme(gameProperties);
         this.auxiliarboard.updateTheme(gameProperties);
+        this.gameSequence.updateTheme(gameProperties);
     }
 
     startTimer() {
