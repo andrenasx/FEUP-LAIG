@@ -39,13 +39,11 @@ class MyButton extends CGFobject {
         this.scene.popMatrix();
     }
 
-    toggleAvailability() {
-        this.available = !this.available;
-        if(this.available) {
-            this.selectedMaterial = this.greenMaterial;
-        }
-        else {
-            this.selectedMaterial = this.lightgreyMaterial;
-        }
+    makeAvailable() {
+        this.selectedMaterial = this.greenMaterial;
+    }
+
+    makeUnavailable() {
+        this.selectedMaterial = this.lightgreyMaterial;
     }
 }

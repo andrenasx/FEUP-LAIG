@@ -10,11 +10,6 @@ class CheckGameOverState extends GameState {
 
     receivedReply(message) {
         if(message == 1 || message == -1) {
-            this.gameOrchestrator.menu.playButton.toggleAvailability();
-            this.gameOrchestrator.menu.movieButton.toggleAvailability();
-            if(this.gameOrchestrator.menu.undoButton.available){
-                this.gameOrchestrator.menu.undoButton.toggleAvailability();
-            }
             this.gameOrchestrator.updateScore(message);
         }
         else if(message == 0) {

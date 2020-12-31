@@ -34,14 +34,10 @@ class MyGameOrchestrator {
         this.scene.interface.hideGameConf();
 
         if(this.playerType=="Human"){
-            this.menu.undoButton.toggleAvailability();
             this.state = new CheckMovesState(this);
         }
             
         else{
-            if(this.enemyType=="Human"){
-                this.menu.undoButton.toggleAvailability();
-            }
             this.state = new BotState(this);
         }
             
@@ -148,10 +144,6 @@ class MyGameOrchestrator {
             if(this.timer <= 0) {
                 this.updateScore(-this.currentPlayer);
                 this.resetTimer();
-                this.menu.playButton.toggleAvailability();
-                this.menu.movieButton.toggleAvailability();
-                if(this.menu.undoButton.available)
-                    this.menu.undoButton.toggleAvailability();
             }
             else {
                 document.getElementById("time").innerHTML = "Time: " + this.timer.toFixed(1);
@@ -160,6 +152,10 @@ class MyGameOrchestrator {
     }
 
     updateScore(player) {
+        this.menu.playButton.makeAvailable();
+        this.menu.undoButton.makeUnavailable();
+        this.menu.movieButton.makeAvailable();
+
         if(player == 1) {
             document.getElementById('red-score').innerHTML = parseInt(document.getElementById('red-score').innerHTML) + 1;
             document.getElementById("time").innerHTML = "Red player won!";

@@ -16,15 +16,13 @@ class ChangePlayerState extends GameState {
 
         // Change state according to current type
         if(this.gameOrchestrator.playerType=="Human"){
-            if(!this.gameOrchestrator.menu.undoButton.available){
-                this.gameOrchestrator.menu.undoButton.toggleAvailability();
-            }
+            this.gameOrchestrator.menu.undoButton.makeAvailable();
             this.gameOrchestrator.changeState(new CheckMovesState(this.gameOrchestrator));
-        }   
+        }
         else{
+            if(this.gameOrchestrator.enemyType=="Human") this.gameOrchestrator.menu.undoButton.makeAvailable();
             this.gameOrchestrator.changeState(new BotState(this.gameOrchestrator));
         }
-            
     }
 
     // Change current player in html
