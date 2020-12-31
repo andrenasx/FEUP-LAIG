@@ -13,6 +13,11 @@
             <from x="5.5" y="2.5" z="6" />
             <to x="5.5" y="1" z="3" />
         </perspective>
+
+        <perspective id="Top" near="0.1" far="150" angle="30">
+            <from x="5.5" y="5" z="4.5" />
+            <to x="5.5" y="0.89" z="2.5" />
+        </perspective>
     </views>
 
     <illumination>
@@ -22,7 +27,7 @@
 
 
     <lights>
-        <light id="topBoard">
+        <light id="Top">
             <enable value="1" />    <!-- enable/disable -->
             <position x="5.5" y="7" z="3" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />   <!-- ambient component -->
@@ -30,7 +35,7 @@
             <specular r="0.7" g="0.7" b="0.7" a="0.8" />    <!-- specular component -->
         </light>
 
-        <light id="frontMenu">
+        <light id="Front">
             <enable value="0" />
             <position x="5.5" y="4" z="8" w="1.0" />
             <ambient r="0" g="0" b="0" a="1.0" />
@@ -51,19 +56,11 @@
     </spritesheets>
 
     <materials>
-        <material id="white_diffuse_material">
-            <shininess value="1" />
-            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
-            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
-            <specular r="0.3" g="0.3" b="0.3" a="1.0" />
-            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
-        </material>
-
         <material id="red_material">
             <shininess value="1" />
             <ambient r="0.3" g="0" b="0" a="1.0" />
             <diffuse r="1" g="0" b="0" a="1.0" />
-            <specular r="0.4" g="0.1" b="0.1" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
@@ -71,7 +68,15 @@
             <shininess value="1" />
             <ambient r="0" g="0" b="0.3" a="1.0" />
             <diffuse r="0" g="0" b="1" a="1.0" />
-            <specular r="0.1" g="0.1" b="0.4" a="1.0" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
+        </material>
+
+        <material id="white_diffuse_material">
+            <shininess value="1" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <diffuse r="0.7" g="0.7" b="0.7" a="1.0" />
+            <specular r="0.3" g="0.3" b="0.3" a="1.0" />
             <emissive r="0.0" g="0.0" b="0.0" a="1.0" />
         </material>
 
@@ -594,7 +599,7 @@
     </nodes>
 
     <game>
-        <piecetype id="player1" geometry="pyramid" material="red_material" />
-        <piecetype id="player-1" geometry="cone" material="blue_material" />
+        <piecetype id="player1" geometry="cylinder" material="red_material" />
+        <piecetype id="player-1" geometry="cylinder" material="blue_material" />
     </game>
 </lsf>

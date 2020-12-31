@@ -1446,7 +1446,7 @@ class MySceneGraph {
                 let obj = null;
                 switch (geometry){
                     case ("cylinder"):
-                        obj = new MyCylinder(this.scene, 0.2, 0.45, 0.45, 5, 30);
+                        obj = new MyCylinder(this.scene, 0.2, 0.4, 0.4, 5, 30);
                         break;
                     case ("pyramid"):
                         obj = new MyPyramid(this.scene, 0.6, 0.4, 0.6, 4, 10);
