@@ -36,10 +36,15 @@ class MyGameOrchestrator {
         this.currentPlayer = 1;
         this.selectedTile = null;
 
-        if(this.playerType=="Player")
+        if(this.playerType=="Player"){
+            this.menu.undoButton.toggleAvailability();
             this.state = new CheckMovesState(this);
-        else
+        }
+            
+        else{
             this.state = new BotState(this);
+        }
+            
 
         this.inited = false;
         this.countdown = false;
@@ -149,7 +154,10 @@ class MyGameOrchestrator {
             if(this.timer <= 0) {
                 this.updateScore(-this.currentPlayer);
                 this.countdown = false;
-                this.menu.toggleAvailability();
+                this.menu.playButton.toggleAvailability();
+                this.menu.movieButton.toggleAvailability();
+                if(this.menu.undoButton.available)
+                    this.menu.undoButton.toggleAvailability();
             }
             else {
                 document.getElementById("time").innerHTML = "Time: " + this.timer.toFixed(1);

@@ -5,6 +5,7 @@ class MovieState extends GameState {
 
     animationEnd() {
         // When movie is finished change to initial State again
+        this.gameOrchestrator.menu.playButton.toggleAvailability();
         this.gameOrchestrator.changeState(new InitialState(this.gameOrchestrator));
     }
 }

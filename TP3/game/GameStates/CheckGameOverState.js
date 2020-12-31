@@ -12,12 +12,17 @@ class CheckGameOverState extends GameState {
         console.log(message);
         if(message == 1) {
             console.log("Red player won");
-            this.gameOrchestrator.menu.toggleAvailability();
+            this.gameOrchestrator.menu.playButton.toggleAvailability();
+            this.gameOrchestrator.menu.movieButton.toggleAvailability();
+            if(this.gameOrchestrator.menu.undoButton.available){
+                this.gameOrchestrator.menu.undoButton.toggleAvailability();
+            }
             this.gameOrchestrator.updateScore(message);
         }
         else if(message == -1) {
             console.log("Blue player won");
-            this.gameOrchestrator.menu.toggleAvailability();
+            this.gameOrchestrator.menu.playButton.toggleAvailability();
+            this.gameOrchestrator.menu.movieButton.toggleAvailability();
             this.gameOrchestrator.updateScore(message);
         }
         else if(message == 0) {
