@@ -42,6 +42,9 @@ class MyGameOrchestrator {
         }
             
         else{
+            if(this.enemyType=="Player"){
+                this.menu.undoButton.toggleAvailability();
+            }
             this.state = new BotState(this);
         }
             
