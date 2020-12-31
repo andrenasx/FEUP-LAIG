@@ -11,6 +11,7 @@ class MyGameSequence {
         this.undoflag = false;
     }
 
+    // Add a new game move to the sequence
     addGameMove(gameMove){
         this.sequence.push(gameMove);
     }
@@ -19,12 +20,14 @@ class MyGameSequence {
         if(this.current_move==this.sequence.length || this.sequence.length==0) return;
 
         let move = this.getCurrentMove();
-        move.update(deltaTime);
-        if(move.finished) this.current_move++;
+        move.update(deltaTime); // Update current move
+        if(move.finished) this.current_move++; // If move is finished go to next
 
+        // If last move is finished notify state
         if(this.sequence[this.sequence.length-1].finished){
             this.gameOrchestrator.state.animationEnd();
             if(this.undoflag){
+                // If moves are from undo, pop added undo moves from the sequence
                 this.undoflag = false;
                 for(let i=0; i<this.lastmoveType; i++){
                     this.sequence.pop();
@@ -34,38 +37,38 @@ class MyGameSequence {
         }
     }
 
+    // Get sequence current move
     getCurrentMove(){
         if(this.sequence.length!==0) return this.sequence[this.current_move];
     }
 
-    getCurrentMoves(){
-        return this.sequence.slice(this.current_move, this.sequence.length);
-    }
-
+    // Get sequence last move
     getLastMove(){
         if(this.sequence.length!==0) return this.sequence[this.sequence.length-1];
     }
 
+    // Undo last added moves
     undo(){
-        let moves;
         if(this.sequence.length!==0){
-            if(this.lastmoveType == 1){
-                moves = [this.sequence.pop()];
+            let moves = [];
+
+            // Pop last added moves
+            for(let i=0; i<this.lastmoveType; i++){
+                moves.push(this.sequence.pop());
                 this.current_move--;
-            } 
-            else{
-                moves = [this.sequence.pop(), this.sequence.pop()];
-                this.current_move-=2;
             }
 
             this.undoflag = true;
 
+            // Add undo moves to the sequence
             for(let move of moves){
-                this.addGameMove(new MyGameMove(move.moveTile, move.selectedTile, this.gameOrchestrator.scene));
+                move.reverse();
+                this.addGameMove(move);
             }
         }
     }
 
+    // Reset all move animations
     movie(){
         for(let move of this.sequence){
             move.resetAnimation()

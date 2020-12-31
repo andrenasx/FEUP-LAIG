@@ -3,14 +3,23 @@ class MyGameMove {
         this.piece = selectedTile.getPiece();
         this.selectedTile = selectedTile;
         this.moveTile = moveTile;
+        this.selectedPosition = JSON.parse(JSON.stringify(this.selectedTile.getPosition()));
+        this.movePosition = JSON.parse(JSON.stringify(this.moveTile.getPosition()));
         this.scene = scene;
 
+        this.createAnimation(this.selectedPosition, this.movePosition);
+
+        this.init = false;
+        this.finished = false;
+    }
+
+    createAnimation(selectedPosition, movePosition) {
         this.animation = new MyKeyframeAnimation(
             [
                 {
                     instant:0,
                     transformations:[
-                        [this.selectedTile.getPosition().x,this.selectedTile.getPosition().y,this.selectedTile.getPosition().z],
+                        [selectedPosition.x, selectedPosition.y, selectedPosition.z],
                         0,0,0,
                         [1,1,1]
                     ]
@@ -18,7 +27,7 @@ class MyGameMove {
                 {
                     instant:0.2,
                     transformations:[
-                        [this.selectedTile.getPosition().x,this.selectedTile.getPosition().y+1,this.selectedTile.getPosition().z],
+                        [selectedPosition.x, selectedPosition.y+1, selectedPosition.z],
                         0,0,0,
                         [1,1,1]
                     ]
@@ -26,7 +35,7 @@ class MyGameMove {
                 {
                     instant:0.4,
                     transformations:[
-                        [this.moveTile.getPosition().x,this.moveTile.getPosition().y+1,this.moveTile.getPosition().z],
+                        [movePosition.x, movePosition.y+1, movePosition.z],
                         0,0,0,
                         [1,1,1]
                     ]
@@ -34,16 +43,13 @@ class MyGameMove {
                 {
                     instant:0.5,
                     transformations:[
-                        [this.moveTile.getPosition().x,this.moveTile.getPosition().y,this.moveTile.getPosition().z],
+                        [movePosition.x, movePosition.y, movePosition.z],
                         0,0,0,
                         [1,1,1]
                     ]
                 }
             ]
         )
-
-        this.init = false;
-        this.finished = false;
     }
 
     update(delta){
@@ -58,6 +64,7 @@ class MyGameMove {
         }
     }
 
+    // Apply animation to piece
     animate(){
         this.scene.pushMatrix();
         this.animation.apply(this.scene);
@@ -65,8 +72,21 @@ class MyGameMove {
         this.scene.popMatrix();
     }
 
+    // Reset animation and flags
     resetAnimation(){
         this.animation.reset();
+        this.init = false;
+        this.finished = false;
+    }
+
+    // Reverse 
+    reverse(){
+        this.piece = this.moveTile.getPiece(); // Piece is now from the destination tile
+        [this.selectedTile, this.moveTile] = [this.moveTile, this.selectedTile]; // Reverse tiles
+        [this.selectedPosition, this.movePosition] = [this.movePosition, this.selectedPosition]; // Reverse positions
+        this.createAnimation(this.selectedPosition, this.movePosition); // Reverse animation to new positions
+
+        // Reset flags
         this.init = false;
         this.finished = false;
     }

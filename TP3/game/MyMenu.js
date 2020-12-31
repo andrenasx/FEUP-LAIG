@@ -76,12 +76,12 @@ class MyMenu extends CGFobject {
     }
 
     toggleAvailability() {
+        this.available = !this.available;
         if(this.available) {
             this.selectedMaterial = this.greenMaterial;
         }
         else {
             this.selectedMaterial = this.lightgreyMaterial;
         }
-
     }
 }

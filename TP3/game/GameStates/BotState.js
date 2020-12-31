@@ -1,6 +1,7 @@
 class BotState extends GameState {
     constructor(gameOrchestrator){
         super(gameOrchestrator);
+        document.getElementById("time").innerHTML = "";
 
         //Choose a play
         this.gameOrchestrator.prolog.botPlay(gameOrchestrator.playerType);

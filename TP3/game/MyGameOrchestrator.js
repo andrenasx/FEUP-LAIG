@@ -12,7 +12,8 @@ class MyGameOrchestrator {
         this.auxiliarboard = new MyAuxiliarBoard(scene, this.size);
         this.menu = new MyMenu(this.scene);
 
-        this.state = new InitialState(this)
+        this.state = new InitialState(this);
+        this.inited = true;
 
         console.log("Red Player: ", this.player1);
         console.log("Blue Player: ", this.player2);
@@ -21,11 +22,13 @@ class MyGameOrchestrator {
     }
 
     play(){
-        this.gameSequence.init();
-        this.animator.init();
-        this.gameboard.init();
-        this.auxiliarboard.init();
-        this.updateTheme(this.scene.getCurrentTheme().game);
+        if(!this.inited){
+            this.gameSequence.init();
+            this.animator.init();
+            this.gameboard.init();
+            this.auxiliarboard.init();
+            this.updateTheme(this.scene.getCurrentTheme().game);
+        }
 
         this.playerType = this.player1;
         this.enemyType = this.player2;
@@ -38,6 +41,7 @@ class MyGameOrchestrator {
         else
             this.state = new BotState(this);
 
+        this.inited = false;
         this.countdown = false;
     }
 
@@ -47,6 +51,7 @@ class MyGameOrchestrator {
     }
 
     display(){
+        // Menu
         this.scene.pushMatrix();
         this.scene.translate(5.5, 1.05, 1.85)
         this.scene.rotate(-Math.PI/8, 1, 0, 0);
@@ -102,12 +107,17 @@ class MyGameOrchestrator {
 
     undo(){
         if(this.gameSequence.sequence.length==0) return;
-        this.gameSequence.undo()
-        this.state = new CheckGameOverState(this)
+        this.countdown = false;
+        this.gameSequence.undo();
+        this.state = new CheckGameOverState(this);
     }
 
     movie(){
+        this.gameboard.getOriginal();
+        this.auxiliarboard.init();
+        this.updateTheme(this.scene.getCurrentTheme().game)
         this.gameSequence.movie();
+        this.state = new MovieState(this);
     }
 
     changeState(state){
@@ -118,8 +128,9 @@ class MyGameOrchestrator {
         this.state.receivedReply(msg);
     }
 
-    updateTheme(theme){
-        this.gameboard.updateTheme(theme);
+    updateTheme(gameProperties){
+        this.gameboard.updateTheme(gameProperties);
+        this.auxiliarboard.updateTheme(gameProperties);
     }
 
     startTimer() {
@@ -138,7 +149,6 @@ class MyGameOrchestrator {
             if(this.timer <= 0) {
                 this.updateScore(-this.currentPlayer);
                 this.countdown = false;
-                this.menu.available = true;
                 this.menu.toggleAvailability();
             }
             else {

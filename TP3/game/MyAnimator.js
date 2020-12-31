@@ -14,6 +14,6 @@ class MyAnimator {
 
     display(){
         let move = this.gameSequence.getCurrentMove();
-        if(move) move.animate();
+        if(move) move.animate(); // Animate current move if any
     }
 }

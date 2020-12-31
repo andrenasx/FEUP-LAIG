@@ -4,12 +4,14 @@ class InitialState extends GameState {
     }
 
     pickObj(id) {
-        if(id==101){
-            this.gameOrchestrator.menu.available = false;
+        if(id==101) {
             this.gameOrchestrator.menu.toggleAvailability();
             // Start game when play button is pressed
             this.gameOrchestrator.play();
             document.getElementById("time").innerHTML = "";
+        }
+        else if (id==102) {
+            this.gameOrchestrator.movie();
         }
     }
 }

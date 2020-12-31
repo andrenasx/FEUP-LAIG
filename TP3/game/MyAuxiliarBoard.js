@@ -25,6 +25,7 @@ class MyAuxiliarBoard extends CGFobject {
     }
 
     display(){
+        // Create auxiliar board box
         this.box.apply();
         this.scene.pushMatrix();
         this.scene.translate(-2, -0.15, this.size/2);
@@ -59,9 +60,10 @@ class MyAuxiliarBoard extends CGFobject {
         this.scene.popMatrix();
 
 
-        this.displayPieces()
+        this.displayPieces();
     }
 
+    // Display all pieces in the correct position
     displayPieces(){
         let y=0, z=0;
         for(let p=0; p<this.pieces.length; p++){
@@ -78,18 +80,22 @@ class MyAuxiliarBoard extends CGFobject {
         }
     }
 
+    // Add a piece to the pieces array
     setPiece(piece){
         this.pieces.push(piece);
     }
 
+    // Get last inserted piece
     getPiece(){
         return this.pieces[this.pieces.length-1];
     }
 
+    // Remove last inserted piece
     removePiece(){
         this.pieces.pop();
     }
 
+    // Get next piece position
     getPosition(){
         let y=0, z=0;
         for(let p=0; p<this.pieces.length; p++){
@@ -101,5 +107,11 @@ class MyAuxiliarBoard extends CGFobject {
         }
 
         return this.nextposition = {x:this.x, y:y, z:this.z+z}
+    }
+
+    updateTheme(game){
+        for(let piece of this.pieces){
+            piece.updateTheme(game);
+        }
     }
 }
