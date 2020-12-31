@@ -33,11 +33,10 @@ class MyGameBoard extends CGFobject {
 
     init(){
         this.board = [];
-        this.createBoard(this.size);
+        this.createBoard();
     }
 
-    createBoard(size){
-        this.size = size;
+    createBoard(){
         let player=1;
         
         for(let row=0; row<this.size; row++){
@@ -131,6 +130,18 @@ class MyGameBoard extends CGFobject {
     
     getTile(row, column){
         return this.board[row][column];
+    }
+
+    getOriginal(){
+        let player=1;
+
+        for(let row=0; row<this.size; row++){
+            for(let column=0; column<this.size; column++){
+                this.board[row][column].piece = new MyPiece(this.scene, player);
+                player = -player;
+            }
+            if(this.size%2===0) player = -player;
+        }
     }
 
     updateTheme(game){
