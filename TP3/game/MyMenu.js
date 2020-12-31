@@ -6,7 +6,8 @@ class MyMenu extends CGFobject {
 
         //buttons
         this.undoButton = new MyButton(this.scene, "UNDO");
-        this.pauseButton = new MyButton(this.scene, "PLAY");
+        this.playButton = new MyButton(this.scene, "PLAY");
+        this.movieButton = new MyButton(this.scene, "MOVIE");
 
         //Materials
         this.greyMaterial = new CGFappearance(this.scene);
@@ -22,6 +23,17 @@ class MyMenu extends CGFobject {
         this.lightgreyMaterial.setAmbient(0.76, 0.77, 0.8, 1);
         this.lightgreyMaterial.setDiffuse(0.76, 0.77, 0.8, 1),
         this.lightgreyMaterial.setSpecular(0, 0, 0, 1);
+
+        this.greenMaterial = new CGFappearance(this.scene);
+        this.greenMaterial.setShininess(5);
+        this.greenMaterial.setEmission(0, 0, 0, 1);
+        this.greenMaterial.setAmbient(0.04, 0.58, 0.25, 1);
+        this.greenMaterial.setDiffuse(0.04, 0.58, 0.25, 1),
+        this.greenMaterial.setSpecular(0, 0, 0, 1);
+
+        this.selectedMaterial = this.greenMaterial;
+        this.available = true;
+
     }
 
     display() {
@@ -46,12 +58,30 @@ class MyMenu extends CGFobject {
         this.undoButton.display();
         this.scene.popMatrix();
 
-        //Pause Button
+        //Play Button
          this.scene.pushMatrix();
-         this.scene.translate(0, -0.2, 0.65);
-         this.lightgreyMaterial.apply();
-         this.scene.registerForPick(101, this.pauseButton);
-         this.pauseButton.display();
+         this.scene.translate(0, -0.17, 0.65);
+         this.selectedMaterial.apply();
+         this.scene.registerForPick(101, this.playButton);
+         this.playButton.display();
          this.scene.popMatrix();
+
+         //Movie Button
+         this.scene.pushMatrix();
+         this.scene.translate(0, -0.34, 0.65);
+         this.lightgreyMaterial.apply();
+         this.scene.registerForPick(102, this.movieButton);
+         this.movieButton.display();
+         this.scene.popMatrix();
+    }
+
+    toggleAvailability() {
+        if(this.available) {
+            this.selectedMaterial = this.greenMaterial;
+        }
+        else {
+            this.selectedMaterial = this.lightgreyMaterial;
+        }
+
     }
 }
