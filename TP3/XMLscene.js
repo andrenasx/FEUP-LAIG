@@ -43,7 +43,6 @@ class XMLscene extends CGFscene {
         this.gl.depthFunc(this.gl.LEQUAL);
 
         this.axis = new CGFaxis(this);
-        this.displayAxis = false;    // Boolean for axis display
         this.selectedCamera = null; // Stores the ID of the currently selected camera
         this.lightsAux = [];    // Auxiliar map ([lightID, True/False]) to enable or disable lights
 
@@ -261,11 +260,7 @@ class XMLscene extends CGFscene {
             this.lights[i].update();
         }
 
-        if (this.sceneInited) {
-            // Draw axis
-            if (this.displayAxis)
-                this.axis.display();
- 
+        if (this.sceneInited) { 
             this.defaultAppearance.apply();
 
             this.managePick(this.pickMode, this.pickResults);

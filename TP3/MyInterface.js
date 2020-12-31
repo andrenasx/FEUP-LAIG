@@ -52,17 +52,9 @@ class MyInterface extends CGFinterface {
      * Creates all checkboxes or dropdowns needed for the GUI.
      */
     createGUI() {
-        this.createAxisCheckbox();
         this.createThemeDropdown();
         this.createCamerasDropdown();
         this.createLightsCheckbox();
-    }
-
-    /**
-     * Create axis checkbox.
-     */
-    createAxisCheckbox() {
-        this.gui.add(this.scene, 'displayAxis').name('Display Axis');
     }
 
     /**
