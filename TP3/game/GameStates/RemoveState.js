@@ -10,7 +10,6 @@ class RemoveState extends GameState {
     }
 
     receivedReply(message) {
-        console.log(message);
         if(message == 1){
             // Valid piece to remove
             this.gameOrchestrator.performRemove(this.tile);

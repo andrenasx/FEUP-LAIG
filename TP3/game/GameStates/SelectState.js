@@ -13,7 +13,6 @@ class SelectState extends GameState {
     }
 
     receivedReply(message) {
-        console.log(message)
         if(message == 1){
             // Selected a valid piece, highlight it
             this.tile.piece.highlightPiece();

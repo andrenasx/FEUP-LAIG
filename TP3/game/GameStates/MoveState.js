@@ -15,7 +15,6 @@ class MoveState extends GameState {
     }
 
     receivedReply(message) {
-        console.log(message);
         this.gameOrchestrator.selectedTile.piece.unlightPiece();
         if(message == 1){
             // Valid destination piece, performe move and reset timer

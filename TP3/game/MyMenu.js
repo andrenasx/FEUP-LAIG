@@ -41,18 +41,18 @@ class MyMenu extends CGFobject {
         this.scene.popMatrix();
 
         //Play Button
-         this.scene.pushMatrix();
-         this.scene.translate(0, -0.17, 0.65);
-         this.scene.registerForPick(101, this.playButton);
-         this.playButton.display();
-         this.scene.popMatrix();
+        this.scene.pushMatrix();
+        this.scene.translate(0, -0.17, 0.65);
+        this.scene.registerForPick(101, this.playButton);
+        this.playButton.display();
+        this.scene.popMatrix();
 
-         //Movie Button
-         this.scene.pushMatrix();
-         this.scene.translate(0, -0.34, 0.65);
-         this.scene.registerForPick(102, this.movieButton);
-         this.movieButton.display();
-         this.scene.popMatrix();
+        //Movie Button
+        this.scene.pushMatrix();
+        this.scene.translate(0, -0.34, 0.65);
+        this.scene.registerForPick(102, this.movieButton);
+        this.movieButton.display();
+        this.scene.popMatrix();
     }
 
 }

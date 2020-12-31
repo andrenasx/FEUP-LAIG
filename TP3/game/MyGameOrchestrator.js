@@ -1,10 +1,10 @@
 class MyGameOrchestrator {
-    constructor(scene, player1, player2, size, time){
+    constructor(scene){
         this.scene = scene;
-        this.player1 = player1;
-        this.player2 = player2;
-        this.size = size;
-        this.time = time;
+        this.redplayer = "Human";
+        this.blueplayer = "Human";
+        this.size = 8;
+        this.time = 30;
         this.gameSequence = new MyGameSequence(this);
         this.animator = new MyAnimator(this.gameSequence);
         this.prolog = new MyPrologInterface(this);
@@ -14,11 +14,6 @@ class MyGameOrchestrator {
 
         this.state = new InitialState(this);
         this.inited = true;
-
-        console.log("Red Player: ", this.player1);
-        console.log("Blue Player: ", this.player2);
-        console.log("Board Size: ", this.size);
-        console.log("Time for play: ", this.time);
     }
 
     play(){
@@ -30,19 +25,21 @@ class MyGameOrchestrator {
             this.updateTheme(this.scene.getCurrentTheme().game);
         }
 
-        this.playerType = this.player1;
-        this.enemyType = this.player2;
+        this.playerType = this.redplayer;
+        this.enemyType = this.blueplayer;
 
         this.currentPlayer = 1;
         this.selectedTile = null;
 
-        if(this.playerType=="Player"){
+        this.scene.interface.hideGameConf();
+
+        if(this.playerType=="Human"){
             this.menu.undoButton.toggleAvailability();
             this.state = new CheckMovesState(this);
         }
             
         else{
-            if(this.enemyType=="Player"){
+            if(this.enemyType=="Human"){
                 this.menu.undoButton.toggleAvailability();
             }
             this.state = new BotState(this);
@@ -68,17 +65,10 @@ class MyGameOrchestrator {
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
-        if(this.size == 8){
-            this.scene.translate(5.1, 0.857, 2.9);
-            this.scene.scale(0.1, 0.1, 0.1);
-            this.scene.rotate(Math.PI/2, 0, 1, 0);
-        }
-        else if(this.size == 6) {
-            this.scene.translate(5.2, 0.857, 2.8);
-            this.scene.scale(0.1, 0.1, 0.1);
-            this.scene.rotate(Math.PI/2, 0, 1, 0);
-            
-        }
+        this.scene.translate(5.1, 0.857, 2.9);
+        this.scene.scale(0.1, 0.1, 0.1);
+        this.scene.rotate(Math.PI/2, 0, 1, 0);
+
         //Game Board
         this.gameboard.display();
         
@@ -157,7 +147,7 @@ class MyGameOrchestrator {
             this.timer -= delta;
             if(this.timer <= 0) {
                 this.updateScore(-this.currentPlayer);
-                this.countdown = false;
+                this.resetTimer();
                 this.menu.playButton.toggleAvailability();
                 this.menu.movieButton.toggleAvailability();
                 if(this.menu.undoButton.available)
@@ -178,6 +168,9 @@ class MyGameOrchestrator {
             document.getElementById('blue-score').innerHTML = parseInt(document.getElementById('blue-score').innerHTML) + 1;
             document.getElementById("time").innerHTML = "Blue player won!";
         }
+
+        this.scene.interface.showGameConf();
+
         this.state = new InitialState(this)
     }
 }

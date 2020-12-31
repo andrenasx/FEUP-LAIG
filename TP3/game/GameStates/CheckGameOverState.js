@@ -9,9 +9,7 @@ class CheckGameOverState extends GameState {
     }
 
     receivedReply(message) {
-        console.log(message);
-        if(message == 1) {
-            console.log("Red player won");
+        if(message == 1 || message == -1) {
             this.gameOrchestrator.menu.playButton.toggleAvailability();
             this.gameOrchestrator.menu.movieButton.toggleAvailability();
             if(this.gameOrchestrator.menu.undoButton.available){
@@ -19,14 +17,7 @@ class CheckGameOverState extends GameState {
             }
             this.gameOrchestrator.updateScore(message);
         }
-        else if(message == -1) {
-            console.log("Blue player won");
-            this.gameOrchestrator.menu.playButton.toggleAvailability();
-            this.gameOrchestrator.menu.movieButton.toggleAvailability();
-            this.gameOrchestrator.updateScore(message);
-        }
         else if(message == 0) {
-            console.log("No winners yet");
             this.gameOrchestrator.changeState(new ChangePlayerState(this.gameOrchestrator));
             this.gameOrchestrator.state.animateCamera();
         }

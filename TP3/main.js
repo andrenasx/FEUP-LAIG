@@ -20,69 +20,22 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 'MyInterface.j
                 './connection_prolog/MyPrologInterface.js',
 
 main=function()
-{   
+{
+  // Standard application, scene and interface setup
+  var app = new CGFapplication(document.body);
+  var myInterface = new MyInterface();
+  var myScene = new XMLscene(myInterface);
 
-  let timeSelected = 30;
-  const time = document.getElementById('myRange');
-  time.addEventListener('change', function(e)  {
-    timeSelected = e.target.value
-  });
+  app.init();
 
-  let selected = 8;
-  const size = document.querySelector('#board-size');
-  size.addEventListener('click', () => {
-    selected = size.querySelector('input[value="6"]').checked ? "6" 
-    : size.querySelector('input[value="8"]').checked ? "8" 
-    : null
-  });
+  app.setScene(myScene);
+  app.setInterface(myInterface);
 
-  document.querySelectorAll('article').forEach((player) => addDropdown(player));
-  document.querySelector('div > input').addEventListener('click', () => {
-    let error = false;
-    const values = ['player-1', 'player-2'].map((player) => {
-      const playerArticle = document.querySelector(`#${player}`);
-      let playerType = playerArticle.querySelector('input[value="human"]').checked ? "Player" 
-      : playerArticle.querySelector('input[value="robot"]').checked ? playerArticle.querySelector('select').value
-      : null;
-      if(!playerType){
-        error = true;
-        return null;
-      }
-      return {
-        type: playerType
-      }
-    });
+  myInterface.setActiveCamera(myScene.camera);
 
-    if(!error && selected){
-      document.querySelector('.wrapper').style.display = "none";
-      document.querySelector('#panel').style.display = "block";
-      // Standard application, scene and interface setup
-      var app = new CGFapplication(document.body);
-      var myInterface = new MyInterface();
-      var myScene = new XMLscene(myInterface, values[0].type, values[1].type, parseInt(selected), parseInt(timeSelected));
-
-      app.init();
-
-      app.setScene(myScene);
-      app.setInterface(myInterface);
-
-      myInterface.setActiveCamera(myScene.camera);
-
-      // start
-      app.run();
-    }
-  });
+  // start
+  app.run();
+  document.querySelector('#panel').style.display = "block";
 }
 
 ]);
-
-function addDropdown(player){
-  
-    player.querySelector('input[value="robot"]').addEventListener('change', () => {
-      player.querySelector('select').style.display="block";
-    });
-  
-    player.querySelector('input[value="human"]').addEventListener('change', () => {
-      player.querySelector('select').style.display="none";
-    });
-  }

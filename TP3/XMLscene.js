@@ -6,14 +6,10 @@ class XMLscene extends CGFscene {
      * @constructor
      * @param {MyInterface} myinterface 
      */
-    constructor(myinterface, player1, player2, size, time) {
+    constructor(myinterface) {
         super();
 
         this.interface = myinterface;
-        this.player1 = player1;
-        this.player2 = player2;
-        this.size = size;
-        this.time = time;
         this.themes = ["Theme1", "Theme2", "Theme3"];
         this.selectedTheme = "Theme1";
         this.filenames = new Map();
@@ -57,7 +53,7 @@ class XMLscene extends CGFscene {
         // enable picking
 		this.setPickEnabled(true);
 
-        this.gameOrchestrator = new MyGameOrchestrator(this, this.player1, this.player2, this.size, this.time);
+        this.gameOrchestrator = new MyGameOrchestrator(this);
     }
 
     /**

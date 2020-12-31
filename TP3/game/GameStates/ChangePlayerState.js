@@ -15,7 +15,7 @@ class ChangePlayerState extends GameState {
         [this.gameOrchestrator.playerType, this.gameOrchestrator.enemyType] = [this.gameOrchestrator.enemyType, this.gameOrchestrator.playerType];
 
         // Change state according to current type
-        if(this.gameOrchestrator.playerType=="Player"){
+        if(this.gameOrchestrator.playerType=="Human"){
             if(!this.gameOrchestrator.menu.undoButton.available){
                 this.gameOrchestrator.menu.undoButton.toggleAvailability();
             }

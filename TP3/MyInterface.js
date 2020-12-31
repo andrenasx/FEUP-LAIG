@@ -52,6 +52,7 @@ class MyInterface extends CGFinterface {
      * Creates all checkboxes or dropdowns needed for the GUI.
      */
     createGUI() {
+        this.createGameConfiguration();
         this.createThemeDropdown();
         this.createCamerasDropdown();
         this.createLightsCheckbox();
@@ -84,7 +85,6 @@ class MyInterface extends CGFinterface {
      */
     createLightsCheckbox(){
         this.lights = this.gui.addFolder("Lights");
-        this.lights.open();
 
         const lights = this.scene.getCurrentTheme().lights;
         this.scene.lightsAux = [];
@@ -94,6 +94,23 @@ class MyInterface extends CGFinterface {
                 this.lights.add(this.scene.lightsAux, key).onChange(this.scene.updateLights.bind(this.scene));
             }
         }
+    }
+
+    createGameConfiguration(){
+        this.game = this.gui.addFolder("Game Configuration");
+        this.game.open();
+
+        this.game.add(this.scene.gameOrchestrator, 'redplayer', ['Human', 'Easy', 'Normal']).name('Red Player');
+        this.game.add(this.scene.gameOrchestrator, 'blueplayer', ['Human', 'Easy', 'Normal']).name('Blue Player');
+        this.game.add(this.scene.gameOrchestrator, 'time', 15, 60, 1).name('Max turn time');
+    }
+
+    showGameConf(){
+        this.game.domElement.hidden = false;
+    }
+
+    hideGameConf(){
+        this.game.domElement.hidden = true;
     }
 
     changeTheme(){
