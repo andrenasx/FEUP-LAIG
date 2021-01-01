@@ -25,6 +25,8 @@ class MyGameOrchestrator {
             this.updateTheme(this.scene.getCurrentTheme().game);
         }
 
+        if(this.playerType != this.redplayer || this.enemyType != this.blueplayer) this.resetScore();
+
         this.playerType = this.redplayer;
         this.enemyType = this.blueplayer;
 
@@ -105,7 +107,7 @@ class MyGameOrchestrator {
     }
 
     movie(){
-        this.gameboard.getOriginal();
+        this.gameboard.setOriginal();
         this.auxiliarboard.init();
         this.updateTheme(this.scene.getCurrentTheme().game)
         this.gameSequence.movie();
@@ -147,6 +149,11 @@ class MyGameOrchestrator {
                 document.getElementById("time").innerHTML = "Time: " + this.timer.toFixed(1);
             }
         }
+    }
+
+    resetScore() {
+        document.getElementById('red-score').innerHTML = 0;
+        document.getElementById('blue-score').innerHTML = 0;
     }
 
     updateScore(player) {
