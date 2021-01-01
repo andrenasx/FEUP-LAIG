@@ -107,7 +107,7 @@ print_header_line(_).
 
 % Require your Prolog Files here
 
-parse_input(handshake, handshake).
+parse_input(handshake, '"handshake"').
 parse_input(test(C,N), Res) :- test(C,Res,N).
 parse_input(len(List), Res) :- length(List, Res).
 
@@ -119,7 +119,7 @@ parse_input(checkMove(GameState, Size, SelRow, SelColumn, Player), ListOfMoves) 
 parse_input(verifyPlayer(GameState, SelRow-SelColumn, Player), Res) :- (verifyPlayer(GameState, SelRow-SelColumn, Player), Res=1); Res=0.
 parse_input(choose_move(GameState, Size, Player, Level), Res) :- choose_move(GameState, Size, Player, Level, Move), ((length(Move, 2), Move=[SelRow-SelCol,MovRow-MovCol], Res=[SelRow,SelCol,MovRow,MovCol]) ; (Move=SelRow-SelCol, Res=[SelRow,SelCol])).
 
-parse_input(quit, goodbye).
+parse_input(quit, '"goodbye"').
 
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).

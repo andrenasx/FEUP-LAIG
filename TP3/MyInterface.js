@@ -52,7 +52,7 @@ class MyInterface extends CGFinterface {
      * Creates all checkboxes or dropdowns needed for the GUI.
      */
     createGUI() {
-        this.createGameConfiguration();
+        this.createGameFolder();
         this.createThemeDropdown();
         this.createCamerasDropdown();
         this.createLightsCheckbox();
@@ -62,10 +62,10 @@ class MyInterface extends CGFinterface {
      * Create theme dropdown.
      */
     createThemeDropdown(){
-        const group = this.gui.addFolder("Themes");
-        group.open();
+        const themes = this.gui.addFolder("Themes");
+        themes.open();
 
-        group.add(this.scene, 'selectedTheme', Array.from(this.scene.filenames.keys())).name('Themes').onChange(this.scene.updateTheme.bind(this.scene));
+        themes.add(this.scene, 'selectedTheme', Array.from(this.scene.filenames.keys())).name('Themes').onChange(this.scene.updateTheme.bind(this.scene));
     }
 
     /**
@@ -96,21 +96,35 @@ class MyInterface extends CGFinterface {
         }
     }
 
-    createGameConfiguration(){
-        this.game = this.gui.addFolder("Game Configuration");
-        this.game.open();
+    createGameFolder(){
+        this.game = this.gui.addFolder("Game");
+        this.createPrologConnection();
+        this.createGameConfiguration();
+    }
 
-        this.game.add(this.scene.gameOrchestrator, 'redplayer', ['Human', 'Easy', 'Normal']).name('Red Player');
-        this.game.add(this.scene.gameOrchestrator, 'blueplayer', ['Human', 'Easy', 'Normal']).name('Blue Player');
-        this.game.add(this.scene.gameOrchestrator, 'time', 15, 60, 1).name('Max turn time');
+    createPrologConnection(){
+        const pl =  this.game.addFolder("Prolog Connection");
+        pl.open();
+
+        pl.add({Handshake: () => { this.scene.gameOrchestrator.prolog.handshake()}}, "Handshake");
+        pl.add({Quit: () => { this.scene.gameOrchestrator.prolog.quit()}}, "Quit");
+    }
+
+    createGameConfiguration(){
+        this.gameconf = this.game.addFolder("Game Configuration");
+        this.gameconf.open();
+
+        this.gameconf.add(this.scene.gameOrchestrator, 'redplayer', ['Human', 'Easy', 'Normal']).name('Red Player');
+        this.gameconf.add(this.scene.gameOrchestrator, 'blueplayer', ['Human', 'Easy', 'Normal']).name('Blue Player');
+        this.gameconf.add(this.scene.gameOrchestrator, 'time', 15, 60, 1).name('Max turn time');
     }
 
     showGameConf(){
-        this.game.domElement.hidden = false;
+        this.gameconf.domElement.hidden = false;
     }
 
     hideGameConf(){
-        this.game.domElement.hidden = true;
+        this.gameconf.domElement.hidden = true;
     }
 
     changeTheme(){
