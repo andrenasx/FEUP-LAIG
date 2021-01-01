@@ -5,8 +5,6 @@ class MyButton extends CGFobject {
         this.cube = new MyCube(this.scene);
         this.buttonText = new MySpriteText(this.scene, this.text);
 
-        //Materials
-
         this.lightgreyMaterial = new CGFappearance(this.scene);
         this.lightgreyMaterial.setShininess(5);
         this.lightgreyMaterial.setEmission(0, 0, 0, 1);
@@ -22,7 +20,6 @@ class MyButton extends CGFobject {
         this.greenMaterial.setSpecular(0, 0, 0, 1);
 
         this.selectedMaterial = this.lightgreyMaterial;
-        this.available = false;
     }
 
     display() {

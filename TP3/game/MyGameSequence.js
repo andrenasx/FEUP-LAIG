@@ -76,6 +76,7 @@ class MyGameSequence {
         this.current_move=0;
     }
 
+    // Update theme of all pieces from moves
     updateTheme(gameProperties) {
         for(let move of this.sequence){
             move.piece.updateTheme(gameProperties);

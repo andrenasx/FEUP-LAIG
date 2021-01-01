@@ -96,6 +96,9 @@ class MyInterface extends CGFinterface {
         }
     }
 
+    /**
+     * Create game folder and subfolders.
+     */
     createGameFolder(){
         this.game = this.gui.addFolder("Game");
         this.game.open();
@@ -104,6 +107,9 @@ class MyInterface extends CGFinterface {
         this.createGameConfiguration();
     }
 
+    /**
+     * Create prolog connection folder.
+     */
     createPrologConnection(){
         const pl =  this.game.addFolder("Prolog Connection");
         pl.open();
@@ -112,6 +118,9 @@ class MyInterface extends CGFinterface {
         pl.add({Quit: () => { this.scene.gameOrchestrator.prolog.quit()}}, "Quit");
     }
 
+    /**
+     * Create game configuration folder.
+     */
     createGameConfiguration(){
         this.gameconf = this.game.addFolder("Game Configuration");
         this.gameconf.open();
@@ -129,6 +138,9 @@ class MyInterface extends CGFinterface {
         this.gameconf.domElement.hidden = true;
     }
 
+    /**
+     * Delete previous cameras and lights folder and create new ones with values from the new scenegraph
+     */
     changeTheme(){
         this.gui.removeFolder(this.cameras);
         this.gui.removeFolder(this.lights);

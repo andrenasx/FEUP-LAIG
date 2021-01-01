@@ -54,13 +54,16 @@ class MyGameMove {
 
     update(delta){
         if(!this.init){
+            // If not inited change flag and remove piece from selected tile
             this.init = true;
             this.selectedTile.removePiece();
         }
+
         this.animation.update(delta);
+
         if(this.animation.finished && !this.finished){
             this.finished = true;
-            this.moveTile.setPiece(this.piece);
+            this.moveTile.setPiece(this.piece); //Set piece in the destination tile when animation is done
         }
     }
 

@@ -109,6 +109,7 @@ class MyAuxiliarBoard extends CGFobject {
         return this.nextposition = {x:this.x, y:y, z:this.z+z}
     }
 
+    // Update all pieces
     updateTheme(game){
         for(let piece of this.pieces){
             piece.updateTheme(game);

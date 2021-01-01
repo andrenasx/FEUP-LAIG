@@ -6,9 +6,9 @@ class MyPiece extends CGFobject {
         this.highlight_material = new CGFappearance(scene);
         this.highlight_material.setShininess(5);
         this.highlight_material.setEmission(0, 0, 0, 1);
-        this.highlight_material.setAmbient(0.1, 0.1, 0.1, 1);
-        this.highlight_material.setDiffuse(1, 1, 1, 1),
-        this.highlight_material.setSpecular(0.5, 0.5, 0.5, 1);
+        this.highlight_material.setAmbient(0.04, 0.58, 0.25, 1);
+        this.highlight_material.setDiffuse(0.04, 0.58, 0.25, 1),
+        this.highlight_material.setSpecular(0, 0, 0, 1);
     }
 
     display(){

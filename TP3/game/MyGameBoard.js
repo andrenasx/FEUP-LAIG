@@ -37,6 +37,7 @@ class MyGameBoard extends CGFobject {
         this.createBoard();
     }
 
+    // Create tiles and set pieces
     createBoard(){
         let player=1;
         
@@ -56,6 +57,7 @@ class MyGameBoard extends CGFobject {
     }
 
     display(){
+        // Display tiles and register for picking
         for(let row=0; row<this.size; row++){
             for(let column=0; column<this.size; column++){
                 this.scene.pushMatrix();
@@ -67,7 +69,7 @@ class MyGameBoard extends CGFobject {
             }
         }
         
-        //top
+        // Top side
         this.scene.pushMatrix();
         this.scene.translate(-0.5,0,-0.5);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
@@ -75,7 +77,7 @@ class MyGameBoard extends CGFobject {
         this.side.display();
         this.scene.popMatrix();
         
-        //right
+        // Right side
         this.scene.pushMatrix();
         this.scene.translate(this.size+0.5,0,-0.5);
         this.scene.rotate(Math.PI/2, 0, 0, 1);
@@ -84,7 +86,7 @@ class MyGameBoard extends CGFobject {
         this.side.display();
         this.scene.popMatrix();
         
-        //bottom
+        // Bottom side
         this.scene.pushMatrix();
         this.scene.translate(-0.5,0,this.size+0.5);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
@@ -92,7 +94,7 @@ class MyGameBoard extends CGFobject {
         this.side.display();
         this.scene.popMatrix();
         
-        //left
+        // Left side
         this.scene.pushMatrix();
         this.scene.translate(-0.5,0,-0.5);
         this.scene.rotate(-Math.PI/2, 0, 1, 0);
@@ -101,6 +103,7 @@ class MyGameBoard extends CGFobject {
         this.side.display();
         this.scene.popMatrix();
 
+        // Base
         this.scene.pushMatrix();
         this.wood.apply();
         this.scene.translate(this.size/2, -0.155, this.size/2);
@@ -110,6 +113,7 @@ class MyGameBoard extends CGFobject {
 
     }
 
+    // Return a string version used for prolog 
     toString() {
         let board = [];
         for (let row = 0; row < this.size; row++) {
@@ -126,11 +130,13 @@ class MyGameBoard extends CGFobject {
         return JSON.stringify(board)
     }
     
+    // Return tile in the given position
     getTile(row, column){
         return this.board[row][column];
     }
 
-    getOriginal(){
+    // Set original pieces on board
+    setOriginal(){
         let player=1;
 
         for(let row=0; row<this.size; row++){
@@ -142,6 +148,7 @@ class MyGameBoard extends CGFobject {
         }
     }
 
+    // Update tiles theme
     updateTheme(game){
         for(let row=0; row<this.size; row++){
             for(let column=0; column<this.size; column++){
