@@ -67,13 +67,18 @@ class XMLscene extends CGFscene {
      * Changes active camera.
      */
     updateCamera() {
-        this.gameOrchestrator.state.cameraEnd()
+        if(this.camera instanceof MyAnimatedCamera){
+            this.camera.disable();
+        }
         this.camera = this.getCurrentTheme().views[this.selectedCamera]; //changes camera to selected one
         if(this.selectedCamera != this.getCurrentTheme().viewsDefaultID){
             this.interface.setActiveCamera(this.camera); //enable to control with mouse
         }
     }
 
+    /**
+     * Animates current camera if it is the default
+     */
     animateCamera(){
         if(this.selectedCamera == this.getCurrentTheme().viewsDefaultID){
             this.camera.activate();

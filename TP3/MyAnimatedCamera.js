@@ -15,14 +15,18 @@ class MyAnimatedCamera extends CGFcamera {
         this.active = true;
     }
 
+    disable(){
+        this.orbit(CGFcameraAxis.Y, Math.PI-this.angle);
+        this.gameOrchestrator.state.cameraEnd();
+        this.active = false;
+    }
+
     update(deltaTime){
         if(this.active){
             this.elapsedTime += deltaTime;
 
             if(this.elapsedTime >= this.animationTime) {
-                this.orbit(CGFcameraAxis.Y, Math.PI-this.angle);
-                this.gameOrchestrator.state.cameraEnd();
-                this.active = false;
+                this.disable();
                 return;
             }
 
