@@ -29,8 +29,6 @@ class MyGameOrchestrator {
         this.enemyType = this.blueplayer;
 
         this.currentPlayer = 1;
-        this.selectedTile = null;
-
         this.scene.interface.hideGameConf();
 
         if(this.playerType=="Human"){
@@ -77,9 +75,9 @@ class MyGameOrchestrator {
         this.scene.popMatrix();
     }
 
-    performMove(moveTile){
+    performMove(selectedTile, moveTile){
         this.gameSequence.addGameMove(new MyGameMove(moveTile, this.auxiliarboard, this.scene));
-        this.gameSequence.addGameMove(new MyGameMove(this.selectedTile, moveTile, this.scene));
+        this.gameSequence.addGameMove(new MyGameMove(selectedTile, moveTile, this.scene));
         this.gameSequence.lastmoveType = 2;
     }
 

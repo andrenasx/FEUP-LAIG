@@ -3,8 +3,8 @@ class MyGameMove {
         this.piece = selectedTile.getPiece();
         this.selectedTile = selectedTile;
         this.moveTile = moveTile;
-        this.selectedPosition = JSON.parse(JSON.stringify(this.selectedTile.getPosition()));
-        this.movePosition = JSON.parse(JSON.stringify(this.moveTile.getPosition()));
+        this.selectedPosition = this.selectedTile.getPosition();
+        this.movePosition = this.moveTile.getPosition();
         this.scene = scene;
 
         this.createAnimation(this.selectedPosition, this.movePosition);

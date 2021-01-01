@@ -27,6 +27,7 @@ class MyGameBoard extends CGFobject {
         this.wood.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
 
         this.base = new MyCube(this.scene);
+        this.side = new MyTrapeze(this.scene, this.size, this.size + 1, 0.5);
 
         this.init();
     }
@@ -55,7 +56,6 @@ class MyGameBoard extends CGFobject {
     }
 
     display(){
-		this.scene.clearPickRegistration();
         for(let row=0; row<this.size; row++){
             for(let column=0; column<this.size; column++){
                 this.scene.pushMatrix();
@@ -66,15 +66,13 @@ class MyGameBoard extends CGFobject {
                 this.scene.popMatrix();
             }
         }
-
-        let side = new MyTrapeze(this.scene, this.size, this.size + 1, 0.5);
         
         //top
         this.scene.pushMatrix();
         this.scene.translate(-0.5,0,-0.5);
         this.scene.rotate(Math.PI/2, 1, 0, 0);
         this.blueMaterial.apply();
-        side.display();
+        this.side.display();
         this.scene.popMatrix();
         
         //right
@@ -83,7 +81,7 @@ class MyGameBoard extends CGFobject {
         this.scene.rotate(Math.PI/2, 0, 0, 1);
         this.scene.rotate(-Math.PI/2, 0, 1, 0);
         this.redMaterial.apply();
-        side.display();
+        this.side.display();
         this.scene.popMatrix();
         
         //bottom
@@ -91,7 +89,7 @@ class MyGameBoard extends CGFobject {
         this.scene.translate(-0.5,0,this.size+0.5);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
         this.blueMaterial.apply();
-        side.display();
+        this.side.display();
         this.scene.popMatrix();
         
         //left
@@ -100,7 +98,7 @@ class MyGameBoard extends CGFobject {
         this.scene.rotate(-Math.PI/2, 0, 1, 0);
         this.scene.rotate(-Math.PI/2, 1, 0, 0);
         this.redMaterial.apply();
-        side.display();
+        this.side.display();
         this.scene.popMatrix();
 
         this.scene.pushMatrix();
@@ -137,7 +135,7 @@ class MyGameBoard extends CGFobject {
 
         for(let row=0; row<this.size; row++){
             for(let column=0; column<this.size; column++){
-                this.board[row][column].piece = new MyPiece(this.scene, player);
+                this.board[row][column].setPiece(new MyPiece(this.scene, player));
                 player = -player;
             }
             if(this.size%2===0) player = -player;

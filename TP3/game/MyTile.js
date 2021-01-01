@@ -21,7 +21,7 @@ class MyTile extends CGFobject {
         this.scene.pushMatrix();
         this.square.apply();
         this.tile.display();
-        if(this.piece!=null) this.piece.display();
+        if(this.piece) this.piece.display();
         this.scene.popMatrix();
     }
 

@@ -2,7 +2,6 @@ class MyPiece extends CGFobject {
     constructor(scene, player){
         super(scene);
         this.player = player;
-        this.piece = null;
 
         this.highlight_material = new CGFappearance(scene);
         this.highlight_material.setShininess(5);
@@ -15,8 +14,10 @@ class MyPiece extends CGFobject {
     display(){
         this.scene.pushMatrix();
         this.scene.rotate(-Math.PI/2, 1,0,0);
-        this.current_material.apply();
-        this.piece.display();
+        if(this.piece){
+            this.current_material.apply();
+            this.piece.display();
+        }
         this.scene.popMatrix();
     }
 

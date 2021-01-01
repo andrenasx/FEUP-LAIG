@@ -1,24 +1,25 @@
 class MoveState extends GameState {
-    constructor(gameOrchestrator){
+    constructor(gameOrchestrator, selectedTile){
         super(gameOrchestrator);
+        this.selectedTile = selectedTile;
     }
 
-    pickTile(tile) {
-        this.tile = tile;
-        this.gameOrchestrator.prolog.canMoveToTile(tile);
+    pickTile(moveTile) {
+        this.moveTile = moveTile;
+        this.gameOrchestrator.prolog.canMoveToTile(this.selectedTile, moveTile);
     }
 
     pickObj(id) {
         // Unlight selected piece when choosing another obj
-        this.gameOrchestrator.selectedTile.piece.unlightPiece();
+        this.selectedTile.getPiece().unlightPiece();
         if(id==100) this.gameOrchestrator.undo()
     }
 
     receivedReply(message) {
-        this.gameOrchestrator.selectedTile.piece.unlightPiece();
+        this.selectedTile.getPiece().unlightPiece();
         if(message == 1){
             // Valid destination piece, performe move and reset timer
-            this.gameOrchestrator.performMove(this.tile);
+            this.gameOrchestrator.performMove(this.selectedTile, this.moveTile);
             this.gameOrchestrator.changeState(new CheckGameOverState(this.gameOrchestrator));
             this.gameOrchestrator.resetTimer();
         }

@@ -52,6 +52,8 @@ class MyMenu extends CGFobject {
         this.scene.registerForPick(102, this.movieButton);
         this.movieButton.display();
         this.scene.popMatrix();
+
+        this.scene.clearPickRegistration();
     }
 
 }

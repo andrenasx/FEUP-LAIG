@@ -98,6 +98,8 @@ class MyInterface extends CGFinterface {
 
     createGameFolder(){
         this.game = this.gui.addFolder("Game");
+        this.game.open();
+
         this.createPrologConnection();
         this.createGameConfiguration();
     }

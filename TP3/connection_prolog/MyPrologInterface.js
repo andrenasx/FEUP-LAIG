@@ -15,8 +15,8 @@ class MyPrologInterface {
         this.getRequest(`validateContent(${this.orchestrator.gameboard.toString()},${this.orchestrator.gameboard.size},${tile.row}-${tile.column},${this.orchestrator.currentPlayer})`);
     }
 
-    canMoveToTile(tile) {
-        this.getRequest(`verifyOrtMove(${this.orchestrator.gameboard.toString()},${this.orchestrator.currentPlayer},${this.orchestrator.selectedTile.row}-${this.orchestrator.selectedTile.column},${tile.row}-${tile.column})`);
+    canMoveToTile(selectedTile, moveTile) {
+        this.getRequest(`verifyOrtMove(${this.orchestrator.gameboard.toString()},${this.orchestrator.currentPlayer},${selectedTile.row}-${selectedTile.column},${moveTile.row}-${moveTile.column})`);
     }
 
     canRemovePiece(tile) {
