@@ -11,7 +11,7 @@ class XMLscene extends CGFscene {
 
         this.interface = myinterface;
         this.themes = ["Theme1", "Theme2", "Theme3"];
-        this.selectedTheme = "Theme1";
+        this.selectedThemeName = "Theme1";
         this.filenames = new Map();
         this.themesGraphs = new Map();
         this.filenames.set("Theme1", "scene1.xml").set("Theme2", "LAIG_TP2_T2_G01.xml");
@@ -70,8 +70,8 @@ class XMLscene extends CGFscene {
         if(this.camera instanceof MyAnimatedCamera){
             this.camera.disable();
         }
-        this.camera = this.getCurrentTheme().views[this.selectedCamera]; //changes camera to selected one
-        if(this.selectedCamera != this.getCurrentTheme().viewsDefaultID){
+        this.camera = this.selectedTheme.views[this.selectedCamera]; //changes camera to selected one
+        if(this.selectedCamera != this.selectedTheme.viewsDefaultID){
             this.interface.setActiveCamera(this.camera); //enable to control with mouse
         }
     }
@@ -80,7 +80,7 @@ class XMLscene extends CGFscene {
      * Animates current camera if it is the default
      */
     animateCamera(){
-        if(this.selectedCamera == this.getCurrentTheme().viewsDefaultID){
+        if(this.selectedCamera == this.selectedTheme.viewsDefaultID){
             this.camera.activate();
         }
         else {
@@ -101,7 +101,7 @@ class XMLscene extends CGFscene {
                 break;              // Only eight lights allowed by WebCGF on default shaders.
 
             if (this.lightsAux.hasOwnProperty(key)) {
-                var graphLight = this.getCurrentTheme().lights[key];
+                var graphLight = this.selectedTheme.lights[key];
 
                 this.lights[i].setPosition(...graphLight[1]);
                 this.lights[i].setAmbient(...graphLight[2]);
@@ -152,16 +152,17 @@ class XMLscene extends CGFscene {
     }
 
     getCurrentTheme(){
-        return this.themesGraphs[this.selectedTheme];
+        return this.selectedTheme;
     }
 
     updateTheme() {
+        this.selectedTheme = this.themesGraphs[this.selectedThemeName];
         this.interface.changeTheme();
-        let default_camera = this.getCurrentTheme().views[this.getCurrentTheme().viewsDefaultID];
-        this.getCurrentTheme().views[this.getCurrentTheme().viewsDefaultID] = new MyAnimatedCamera(this.gameOrchestrator, default_camera.fov, default_camera.near, default_camera.far, default_camera.position, default_camera.target);
+        let default_camera = this.selectedTheme.views[this.selectedTheme.viewsDefaultID];
+        this.selectedTheme.views[this.selectedTheme.viewsDefaultID] = new MyAnimatedCamera(this.gameOrchestrator, default_camera.fov, default_camera.near, default_camera.far, default_camera.position, default_camera.target);
         this.updateCamera();
         this.initLights();
-        this.gameOrchestrator.updateTheme(this.getCurrentTheme().game);
+        this.gameOrchestrator.updateTheme(this.selectedTheme.gameProperties);
     }
 
     update(t){
@@ -175,18 +176,18 @@ class XMLscene extends CGFscene {
 
         this.gameOrchestrator.update(deltaTime);
 
-        if(this.selectedCamera == this.getCurrentTheme().viewsDefaultID){
+        if(this.selectedCamera === this.selectedTheme.viewsDefaultID){
             this.camera.update(deltaTime);
         }
 
-        if(this.getCurrentTheme().animations != undefined){
-            for(let [id, animation] of Object.entries(this.getCurrentTheme().animations)){
+        if(this.selectedTheme.animations != undefined){
+            for(let [id, animation] of Object.entries(this.selectedTheme.animations)){
                 animation.update(deltaTime);
             }
         }
             
-        if(this.getCurrentTheme().spriteanims != undefined){
-            for(let spriteanim of this.getCurrentTheme().spriteanims){
+        if(this.selectedTheme.spriteanims != undefined){
+            for(let spriteanim of this.selectedTheme.spriteanims){
                 spriteanim.update(deltaTime);
             }
         }
@@ -197,20 +198,19 @@ class XMLscene extends CGFscene {
      */
     onGraphLoaded() {
         if(!this.sceneInited){
-            this.axis = new CGFaxis(this, this.getCurrentTheme().referenceLength);
+            this.updateTheme();
 
-            this.gl.clearColor(...this.getCurrentTheme().background);
-    
-            this.setGlobalAmbientLight(...this.getCurrentTheme().ambient);
-    
             this.interface.createGUI();
-    
-            let default_camera = this.getCurrentTheme().views[this.getCurrentTheme().viewsDefaultID];
-            this.getCurrentTheme().views[this.getCurrentTheme().viewsDefaultID] = new MyAnimatedCamera(this.gameOrchestrator, default_camera.fov, default_camera.near, default_camera.far, default_camera.position, default_camera.target);
+
+            this.camera = this.selectedTheme.views[this.selectedCamera];
             this.initLights();
-            this.updateCamera();
-            this.gameOrchestrator.updateTheme(this.getCurrentTheme().game);
-    
+
+            this.axis = new CGFaxis(this, this.selectedTheme.referenceLength);
+
+            this.gl.clearColor(...this.selectedTheme.background);
+
+            this.setGlobalAmbientLight(...this.selectedTheme.ambient);
+
             this.setUpdatePeriod(50);
             this.sceneInited = true;
         }
@@ -268,7 +268,7 @@ class XMLscene extends CGFscene {
             this.gameOrchestrator.display();
 
             // Displays the scene (MySceneGraph function).
-            this.getCurrentTheme().displayScene();
+            this.selectedTheme.displayScene();
         }
         else
         {

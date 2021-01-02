@@ -65,7 +65,7 @@ class MyInterface extends CGFinterface {
         const themes = this.gui.addFolder("Themes");
         themes.open();
 
-        themes.add(this.scene, 'selectedTheme', Array.from(this.scene.filenames.keys())).name('Themes').onChange(this.scene.updateTheme.bind(this.scene));
+        themes.add(this.scene, 'selectedThemeName', Array.from(this.scene.filenames.keys())).name('Themes').onChange(this.scene.updateTheme.bind(this.scene));
     }
 
     /**
@@ -142,9 +142,13 @@ class MyInterface extends CGFinterface {
      * Delete previous cameras and lights folder and create new ones with values from the new scenegraph
      */
     changeTheme(){
-        this.gui.removeFolder(this.cameras);
-        this.gui.removeFolder(this.lights);
-        this.createCamerasDropdown();
-        this.createLightsCheckbox();
+        if(this.cameras){
+            this.gui.removeFolder(this.cameras);
+            this.createCamerasDropdown();
+        }
+        if(this.lights){
+            this.gui.removeFolder(this.lights);
+            this.createLightsCheckbox();
+        }
     }
 }
