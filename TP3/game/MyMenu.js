@@ -19,6 +19,11 @@ class MyMenu extends CGFobject {
     }
 
     display() {
+        this.scene.pushMatrix();
+        this.scene.translate(0.4, 0.2, -1.05)
+        this.scene.rotate(-Math.PI/8, 1, 0, 0);
+        this.scene.scale(0.7, 0.5, 0.03);
+
         //Back
         this.scene.pushMatrix();
         this.greyMaterial.apply();
@@ -51,6 +56,8 @@ class MyMenu extends CGFobject {
         this.scene.translate(0, -0.34, 0.65);
         this.scene.registerForPick(102, this.movieButton);
         this.movieButton.display();
+        this.scene.popMatrix();
+
         this.scene.popMatrix();
 
         this.scene.clearPickRegistration();

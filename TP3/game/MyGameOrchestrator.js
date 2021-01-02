@@ -52,16 +52,12 @@ class MyGameOrchestrator {
     }
 
     display(){
-        // Menu
         this.scene.pushMatrix();
-        this.scene.translate(5.5, 1.05, 1.85)
-        this.scene.rotate(-Math.PI/8, 1, 0, 0);
-        this.scene.scale(0.7, 0.5, 0.03);
-        this.menu.display();
-        this.scene.popMatrix();
+        this.scene.translate(this.boards_position[0],this.boards_position[1],this.boards_position[2]);
 
-        this.scene.pushMatrix();
-        this.scene.translate(5.1, 0.857, 2.9);
+        // Menu
+        this.menu.display();
+        
         this.scene.scale(0.1, 0.1, 0.1);
         this.scene.rotate(Math.PI/2, 0, 1, 0);
 
@@ -123,6 +119,7 @@ class MyGameOrchestrator {
     }
 
     updateTheme(gameProperties){
+        this.boards_position = gameProperties["boards"].position;
         this.gameboard.updateTheme(gameProperties);
         this.auxiliarboard.updateTheme(gameProperties);
         this.gameSequence.updateTheme(gameProperties);

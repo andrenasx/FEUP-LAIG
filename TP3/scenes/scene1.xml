@@ -50,6 +50,9 @@
         <texture id="floor_texture" path="./scenes/images/floor.jpg" />
         <texture id="blue_pillow_texture" path="./scenes/images/blue_pillow.jpg" />
         <texture id="metal_texture" path="./scenes/images/metal.jpg" />
+
+        <texture id="board_wood_texture" path="./scenes/images/white_wood.jpg" />
+        <texture id="tile_texture" path="./scenes/images/square.jpg" />
     </textures>
 
     <spritesheets>
@@ -599,6 +602,8 @@
     </nodes>
 
     <game>
+        <boards x="5.1" y="0.857" z="2.9" material="white_diffuse_material" texture="board_wood_texture"/>
+        <tiles material="white_diffuse_material" texture="tile_texture" />
         <piecetype id="player1" geometry="cylinder" material="red_material" />
         <piecetype id="player-1" geometry="cylinder" material="blue_material" />
     </game>

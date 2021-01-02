@@ -17,15 +17,6 @@ class MyGameBoard extends CGFobject {
         this.blueMaterial.setDiffuse(0, 0, 1, 1),
         this.blueMaterial.setSpecular(0, 0, 0, 1);
 
-        this.wood = new CGFappearance(this.scene);
-        this.wood.setShininess(1);
-        this.wood.setEmission(0, 0, 0, 1);
-        this.wood.setAmbient(1, 1, 1, 1);
-        this.wood.setDiffuse(0.8, 0.8, 0.8, 1),
-        this.wood.setSpecular(0.3, 0.3, 0.3, 1);
-        this.wood.loadTexture("./scenes/images/white_wood.jpg");
-        this.wood.setTextureWrap('CLAMP_TO_EDGE', 'CLAMP_TO_EDGE');
-
         this.base = new MyCube(this.scene);
         this.side = new MyTrapeze(this.scene, this.size, this.size + 1, 0.5);
 
@@ -105,9 +96,10 @@ class MyGameBoard extends CGFobject {
 
         // Base
         this.scene.pushMatrix();
-        this.wood.apply();
         this.scene.translate(this.size/2, -0.155, this.size/2);
         this.scene.scale(this.size + 1.5, 0.3, this.size + 1.5);
+        this.base_material.apply();
+        this.base_texture.bind();
         this.base.display();
         this.scene.popMatrix();
 
@@ -149,10 +141,12 @@ class MyGameBoard extends CGFobject {
     }
 
     // Update tiles theme
-    updateTheme(game){
+    updateTheme(gameProperties){
+        this.base_material = gameProperties["boards"].material;
+        this.base_texture = gameProperties["boards"].texture;
         for(let row=0; row<this.size; row++){
             for(let column=0; column<this.size; column++){
-                this.board[row][column].updateTheme(game);
+                this.board[row][column].updateTheme(gameProperties);
             }
         }
     }

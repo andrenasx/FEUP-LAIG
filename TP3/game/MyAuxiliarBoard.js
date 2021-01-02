@@ -26,7 +26,8 @@ class MyAuxiliarBoard extends CGFobject {
 
     display(){
         // Create auxiliar board box
-        this.box.apply();
+        this.base_material.apply();
+        this.base_texture.bind();
         this.scene.pushMatrix();
         this.scene.translate(-2, -0.15, this.size/2);
         this.scene.scale(1, 0.3, this.size);
@@ -110,9 +111,11 @@ class MyAuxiliarBoard extends CGFobject {
     }
 
     // Update all pieces
-    updateTheme(game){
+    updateTheme(gameProperties){
+        this.base_material = gameProperties["boards"].material;
+        this.base_texture = gameProperties["boards"].texture;
         for(let piece of this.pieces){
-            piece.updateTheme(game);
+            piece.updateTheme(gameProperties);
         }
     }
 }

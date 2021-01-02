@@ -68,6 +68,9 @@
         <texture id="soil_texture" path="./scenes/images/soil.jpg" />
         <texture id="pot_texture" path="./scenes/images/pot.jpg" />
         <texture id="orange_plastic_texture" path="./scenes/images/slide_plastic.jpg" />
+
+        <texture id="board_wood_texture" path="./scenes/images/white_wood.jpg" />
+        <texture id="tile_texture" path="./scenes/images/square.jpg" />
     </textures>
 
     <spritesheets>
@@ -1785,6 +1788,8 @@
     </nodes>
 
     <game>
+        <boards x="5.1" y="0.857" z="2.9" material="white_diffuse_material" texture="board_wood_texture"/>
+        <tiles material="white_diffuse_material" texture="tile_texture" />
         <piecetype id="player1" geometry="pyramid" material="red_material" />
         <piecetype id="player-1" geometry="cone" material="blue_material" />
     </game>

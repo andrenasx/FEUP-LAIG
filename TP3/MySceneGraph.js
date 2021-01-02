@@ -1430,7 +1430,7 @@ class MySceneGraph {
 
     parseGame(gameNode){
         const children = gameNode.children;
-        this.game = [];
+        this.gameProperties = [];
 
         // Checks if there are child nodes declared
         if(children.length === 0) {
@@ -1442,6 +1442,7 @@ class MySceneGraph {
             if (grandChildren.nodeName == "piecetype") {
                 const id = this.reader.getString(grandChildren, "id");
 
+                //Parse Geometry
                 const geometry = this.reader.getString(grandChildren, "geometry");
                 let obj = null;
                 switch (geometry){
@@ -1458,28 +1459,30 @@ class MySceneGraph {
                         break;
                 }
 
-                // Get index on XML
-                let materialID = null;
-                // Parse material if defined
-                materialID = this.reader.getString(grandChildren, "material");
-
-                if (materialID == null) {
-                    materialID = "error";
-                }
-
-                // Check if parsed materialID is in materials map
-                if (materialID !== "null") {
-                    if (this.materials[materialID] == null) {
-                        materialID= "error";
-                    }
-                }
-
-                let piece = {
+                this.gameProperties[id] = {
                     geometry: obj,
-                    material: this.materials[materialID]
+                    material: this.parseMaterialIDSimple(grandChildren)
+                };
+            }
+            else if (grandChildren.nodeName == "boards"){
+                const xyz = this.parseCoordinates3D(grandChildren, "gameboard position");
+
+                if(!Array.isArray(xyz)){
+                    this.onXMLMinorError("Wrong value on Gameboard position");
+                    continue;
                 }
 
-                this.game[id] = piece;
+                this.gameProperties["boards"] = {
+                    position: xyz,
+                    material: this.parseMaterialIDSimple(grandChildren),
+                    texture: this.parseTextureIDSimple(grandChildren)
+                }
+            }
+            else if (grandChildren.nodeName == "tiles"){
+                this.gameProperties["tiles"] = {
+                    material: this.parseMaterialIDSimple(grandChildren),
+                    texture: this.parseTextureIDSimple(grandChildren)
+                }
             }
         }
 
@@ -1590,6 +1593,40 @@ class MySceneGraph {
         color.push(...[r, g, b, a]);
 
         return color;
+    }
+
+    parseMaterialIDSimple(node){
+        let materialID = null;
+
+        materialID = this.reader.getString(node, "material");
+
+        if (materialID == null) {
+            materialID = "error";
+        }
+
+        // Check if parsed materialID is in materials map
+        if (this.materials[materialID] == null) {
+            materialID= "error";
+        }
+
+        return this.materials[materialID];
+    }
+
+    parseTextureIDSimple(node){
+        let textureID = null;
+
+        textureID = this.reader.getString(node, "texture");
+
+        if (textureID == null) {
+            textureID = "error";
+        }
+
+        // Check if parsed textureID is in materials map
+        if (this.textures[textureID] == null) {
+            textureID= "error";
+        }
+
+        return this.textures[textureID];
     }
 
     /**
