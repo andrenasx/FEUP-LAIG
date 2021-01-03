@@ -37,6 +37,15 @@
 
 ----
 
-### [TP3 - ...](TP3)
-- (items briefly describing main strong points)
+### [TP3 - 3D Game Interface](TP3)
+
+- Main strong points: 
+
+  - O menu das configurações do jogo é bastante intuitivo;
+  - O tabuleiro ficou extremamente próximo do real;
+  - A experiência para o utilizador tornou-se muito divertida.
+
+- Issues/Problems
+
+  - O projeto não corre em Firefox.
 
