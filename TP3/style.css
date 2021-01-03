@@ -12,71 +12,16 @@ canvas {
 }
 
 #panel {
-  display: none;
+  display: block;
   margin: 2em 0 0 2em;
   position: absolute;
   width: 20vw;
   padding: 1em;
   color: #e2f2e1;
-  background-color: rgba(52, 64, 85, 0.7);
+  background-color: rgba(0, 36, 97, 0.7);
   border-radius: 25%;
 }
 
 #panel h1, #panel div {
   text-align: center;
-}
-
-.wrapper {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    background-color: #f5fcff;
-  }
-
-  
-#menu {
-  flex-wrap: wrap;
-  margin: auto;
-  background-color: #b5d3e7;
-  width: 33em;
-  padding: 2em;
-  border-radius: 10%;
-}
-
-#menu h1, #menu h2, #menu h4, #menu h3, #menu div, #menu section {
-  text-align: center;
-  color:white
-}
-
-#menu select {
-  display: none;
-}
-
-#menu input[type="submit"] {
-  margin-top: 10px;
-  border-radius: 10px;
-  border: 2px solid #f5fcff;
-  color: white;
-  background-color: #b5d3e7;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-#menu input[type="submit"]:hover {
-  color: #3cb043;
-  border: 2px solid #3cb043;
-}
-
-#menu select {
-  border: none;
-  border-radius: 5px;
-}
-
-#menu .select-diff {
-  padding-top: 10px;
-}
-
-#menu select {
-  display: none;
-  margin: 0 auto;
 }

@@ -35,7 +35,6 @@ main=function()
 
   // start
   app.run();
-  document.querySelector('#panel').style.display = "block";
 }
 
 ]);
