@@ -17,8 +17,8 @@ canvas {
   position: absolute;
   width: 20vw;
   padding: 1em;
-  color: #e2f2e1;
-  background-color: rgba(0, 36, 97, 0.7);
+  color: white;
+  background-color: rgba(86.7, 89.25, 91.8, 0.7);
   border-radius: 25%;
 }
 
