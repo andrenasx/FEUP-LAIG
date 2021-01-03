@@ -67,7 +67,7 @@ class XMLscene extends CGFscene {
      * Changes active camera.
      */
     updateCamera() {
-        if(this.camera instanceof MyAnimatedCamera){
+        if(this.camera instanceof MyAnimatedCamera && this.camera.active){
             this.camera.disable();
         }
         this.camera = this.selectedTheme.views[this.selectedCamera]; //changes camera to selected one
