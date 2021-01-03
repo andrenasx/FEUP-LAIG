@@ -16,6 +16,7 @@ class MyGameOrchestrator {
         this.inited = true;
     }
 
+    //Play
     play(){
         if(!this.inited){
             this.gameSequence.init();
@@ -46,11 +47,13 @@ class MyGameOrchestrator {
         this.countdown = false;
     }
 
+    //Update
     update(delta){
         this.animator.update(delta);
         this.updateTimer(delta);
     }
 
+    //Display menu, gameboard, auxiliarboard and animator
     display(){
         this.scene.pushMatrix();
         this.scene.translate(this.boards_position[0],this.boards_position[1],this.boards_position[2]);
@@ -73,28 +76,33 @@ class MyGameOrchestrator {
         this.scene.popMatrix();
     }
 
+    //While exists moves avialable, perform two moves, select and move - Human Player
     performMove(selectedTile, moveTile){
         this.gameSequence.addGameMove(new MyGameMove(moveTile, this.auxiliarboard, this.scene));
         this.gameSequence.addGameMove(new MyGameMove(selectedTile, moveTile, this.scene));
         this.gameSequence.lastmoveType = 2;
     }
 
+    //If there are no moves available, perfom one move - Human Player
     performRemove(selectedTile){
         this.gameSequence.addGameMove(new MyGameMove(selectedTile, this.auxiliarboard, this.scene));
         this.gameSequence.lastmoveType = 1;
     }
 
+    //While exists moves avialable, perform two moves, select and move - Bot Player
     performBotMove(selRow,selCol,movRow,movCol){
         this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(movRow,movCol), this.auxiliarboard, this.scene));
         this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.gameboard.getTile(movRow,movCol), this.scene));
         this.gameSequence.lastmoveType = 2;
     }
 
+    //If there are no moves available, perfom one move - Bot Player
     performBotRemove(selRow,selCol){
         this.gameSequence.addGameMove(new MyGameMove(this.gameboard.getTile(selRow,selCol), this.auxiliarboard, this.scene));
         this.gameSequence.lastmoveType = 1;
     }
 
+    //Undo
     undo(){
         if(this.gameSequence.sequence.length==0) return;
         this.countdown = false;
@@ -102,6 +110,7 @@ class MyGameOrchestrator {
         this.state = new CheckGameOverState(this);
     }
 
+    //Movie
     movie(){
         this.gameboard.setOriginal();
         this.auxiliarboard.init();
@@ -110,14 +119,17 @@ class MyGameOrchestrator {
         this.state = new MovieState(this);
     }
 
+    //Change game state
     changeState(state){
         this.state = state;
     }
 
+    //Received reply
     receivedReply(msg){
         this.state.receivedReply(msg);
     }
 
+    //Update Theme
     updateTheme(gameProperties){
         this.boards_position = gameProperties["boards"].position;
         this.gameboard.updateTheme(gameProperties);
@@ -125,16 +137,19 @@ class MyGameOrchestrator {
         this.gameSequence.updateTheme(gameProperties);
     }
 
+    //Start timer
     startTimer() {
         this.timer = this.time;
         this.countdown = true;
    }
 
+   //Reset timer
     resetTimer() {
         this.timer = this.time;
         this.countdown = false;
     }
 
+    //Update score board timer
     updateTimer(delta) {
         if(this.countdown){
             this.timer -= delta;
@@ -148,11 +163,13 @@ class MyGameOrchestrator {
         }
     }
 
+    //Score board score reset
     resetScore() {
         document.getElementById('red-score').innerHTML = 0;
         document.getElementById('blue-score').innerHTML = 0;
     }
 
+    //Score board score update
     updateScore(player) {
         this.menu.playButton.makeAvailable();
         this.menu.undoButton.makeUnavailable();
