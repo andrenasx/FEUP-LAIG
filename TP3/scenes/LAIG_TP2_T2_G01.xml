@@ -69,7 +69,7 @@
         <texture id="pot_texture" path="./scenes/images/pot.jpg" />
         <texture id="orange_plastic_texture" path="./scenes/images/slide_plastic.jpg" />
 
-        <texture id="board_wood_texture" path="./scenes/images/white_wood.jpg" />
+        <texture id="board_wood_texture" path="./scenes/images/brown_wood.jpg" />
         <texture id="tile_texture" path="./scenes/images/square.jpg" />
     </textures>
 
