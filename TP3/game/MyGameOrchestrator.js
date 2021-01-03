@@ -16,14 +16,14 @@ class MyGameOrchestrator {
         this.inited = true;
     }
 
-    //Play
+    //Start a new game, initing all variables
     play(){
         if(!this.inited){
             this.gameSequence.init();
             this.animator.init();
             this.gameboard.init();
             this.auxiliarboard.init();
-            this.updateTheme(this.scene.getCurrentTheme().game);
+            this.updateTheme(this.scene.getCurrentTheme().gameProperties);
         }
 
         if(this.playerType != this.redplayer || this.enemyType != this.blueplayer) this.resetScore();
@@ -76,7 +76,7 @@ class MyGameOrchestrator {
         this.scene.popMatrix();
     }
 
-    //While exists moves avialable, perform two moves, select and move - Human Player
+    //While exists moves available, perform two moves, select and move - Human Player
     performMove(selectedTile, moveTile){
         this.gameSequence.addGameMove(new MyGameMove(moveTile, this.auxiliarboard, this.scene));
         this.gameSequence.addGameMove(new MyGameMove(selectedTile, moveTile, this.scene));
@@ -102,7 +102,7 @@ class MyGameOrchestrator {
         this.gameSequence.lastmoveType = 1;
     }
 
-    //Undo
+    //Undo last move
     undo(){
         if(this.gameSequence.sequence.length==0) return;
         this.countdown = false;
@@ -110,11 +110,11 @@ class MyGameOrchestrator {
         this.state = new CheckGameOverState(this);
     }
 
-    //Movie
+    //Starts game movie
     movie(){
         this.gameboard.setOriginal();
         this.auxiliarboard.init();
-        this.updateTheme(this.scene.getCurrentTheme().game)
+        this.updateTheme(this.scene.getCurrentTheme().gameProperties)
         this.gameSequence.movie();
         this.state = new MovieState(this);
     }
@@ -124,7 +124,7 @@ class MyGameOrchestrator {
         this.state = state;
     }
 
-    //Received reply
+    //Received reply from prolog
     receivedReply(msg){
         this.state.receivedReply(msg);
     }
@@ -137,23 +137,24 @@ class MyGameOrchestrator {
         this.gameSequence.updateTheme(gameProperties);
     }
 
-    //Start timer
+    //Start turn timer
     startTimer() {
         this.timer = this.time;
         this.countdown = true;
    }
 
-   //Reset timer
+   //Reset turn timer
     resetTimer() {
         this.timer = this.time;
         this.countdown = false;
     }
 
-    //Update score board timer
+    //Update turn timer
     updateTimer(delta) {
         if(this.countdown){
             this.timer -= delta;
-            if(this.timer <= 0) {
+            if(this.timer <= 0) {~
+                // When timer reaches 0 enemy player wins
                 this.updateScore(-this.currentPlayer);
                 this.resetTimer();
             }
@@ -169,7 +170,7 @@ class MyGameOrchestrator {
         document.getElementById('blue-score').innerHTML = 0;
     }
 
-    //Score board score update
+    //Score board score update, called when a player wins
     updateScore(player) {
         this.menu.playButton.makeAvailable();
         this.menu.undoButton.makeUnavailable();
