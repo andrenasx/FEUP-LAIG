@@ -23,7 +23,7 @@ class MyGameOrchestrator {
             this.animator.init();
             this.gameboard.init();
             this.auxiliarboard.init();
-            this.updateTheme(this.scene.getCurrentTheme().game);
+            this.updateTheme(this.scene.getCurrentTheme().gameProperties);
         }
 
         if(this.playerType != this.redplayer || this.enemyType != this.blueplayer) this.resetScore();
@@ -114,7 +114,7 @@ class MyGameOrchestrator {
     movie(){
         this.gameboard.setOriginal();
         this.auxiliarboard.init();
-        this.updateTheme(this.scene.getCurrentTheme().game)
+        this.updateTheme(this.scene.getCurrentTheme().gameProperties)
         this.gameSequence.movie();
         this.state = new MovieState(this);
     }
