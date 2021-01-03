@@ -151,10 +151,16 @@ class XMLscene extends CGFscene {
         }
     }
 
+    /**
+     * Return current selected theme
+     */
     getCurrentTheme(){
         return this.selectedTheme;
     }
 
+    /**
+     * update theme setting all new variables
+     */
     updateTheme() {
         this.selectedTheme = this.themesGraphs[this.selectedThemeName];
         this.interface.changeTheme();
