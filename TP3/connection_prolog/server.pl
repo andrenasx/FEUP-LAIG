@@ -1,10 +1,10 @@
-:-use_module(library(sockets)).
-:-use_module(library(lists)).
-:-use_module(library(between)).
-:-use_module(library(random)).
-:-use_module(library(system)).
-:-use_module(library(codesio)).
-:-include('requests.pl').
+:-compile(library(sockets)).
+:-compile(library(lists)).
+:-compile(library(between)).
+:-compile(library(random)).
+:-compile(library(system)).
+:-compile(library(codesio)).
+:-compile('requests.pl').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%                                        Server                                                   %%%%
